@@ -10,6 +10,11 @@ public abstract class PhysicalHudObject implements HudObject{
     public abstract double getSlipperiness();
 
 
+    public PhysicalHudObject(HudLocation location, HudLocation velocity) {
+        this.location = location;
+        this.velocity = velocity;
+    }
+
     @Override
     public void tick() {
         location.add(velocity);
