@@ -6,5 +6,7 @@ public class FancyHealthBarClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
+
+
     }
 }
