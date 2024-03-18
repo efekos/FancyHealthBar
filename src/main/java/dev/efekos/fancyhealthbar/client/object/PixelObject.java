@@ -29,7 +29,7 @@ public class PixelObject extends PhysicalHudObject{
     @Override
     public void draw(DrawContext context) {
         RenderSystem.setShaderColor(color.getR()/255f,color.getG()/255f,color.getB()/255f,1f);
-        context.drawTexture(TEXTURE_ID,getLocation().getX(),getLocation().getY(),0,0,1,1);
+        context.drawGuiTexture(TEXTURE_ID,getLocation().getX(),getLocation().getY(),1,1);
     }
 
     @Override

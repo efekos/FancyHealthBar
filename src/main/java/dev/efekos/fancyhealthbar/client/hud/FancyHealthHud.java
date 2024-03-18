@@ -7,9 +7,7 @@ import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawContext;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class FancyHealthHud implements HudRenderCallback {
 
@@ -20,7 +18,7 @@ public class FancyHealthHud implements HudRenderCallback {
     @Override
     public void onHudRender(DrawContext drawContext, float tickDelta) {
 
-        for (HudObject object : OBJECTS) {
+        for (HudObject object : new ArrayList<>(OBJECTS)) {
 
             if(gameTicks%20==0) object.tick();
 
