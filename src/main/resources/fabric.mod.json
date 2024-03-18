@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "fancyhealthbar",
+  "version": "${version}",
+  "name": "FancyHealthBar",
+  "description": "Rework of the original health bar.",
+  "authors": [
+    "efekos"
+  ],
+  "contact": {
+    "repo": "https://github.com/efekos/FancyHealthBar"
+  },
+  "license": "MIT",
+  "icon": "assets/fancyhealthbar/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.efekos.fancyhealthbar.client.FancyHealthBarClient"
+    ],
+    "main": [
+      "dev.efekos.fancyhealthbar.FancyHealthBar"
+    ]
+  },
+  "mixins": [
+    "fancyhealthbar.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
