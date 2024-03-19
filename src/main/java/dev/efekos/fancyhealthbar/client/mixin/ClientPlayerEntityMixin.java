@@ -20,7 +20,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Inject(method = "damage",at = @At("HEAD"))
     public void damageMixin(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
-        FancyHealthBarClient.FANCY_HEALTH_HUD.onDamage(getHealth(),getHealth()-amount);
+        if(!super.isInvulnerableTo(source)) FancyHealthBarClient.FANCY_HEALTH_HUD.onDamage(getHealth(),getHealth()-amount);
     }
 
 }

@@ -29,7 +29,7 @@ public class FancyHealthHud implements HudRenderCallback {
 
         for (HudObject object : new ArrayList<>(OBJECTS)) {
 
-            if (gameTicks % 40 == 0 && notPaused) object.tick();
+            if (gameTicks % 5 == 0 && notPaused) object.tick();
 
             if (object.getLocation().getX() > drawContext.getScaledWindowWidth() + 5 || object.getLocation().getY() > drawContext.getScaledWindowHeight() + 5) {
                 OBJECTS.remove(object);
@@ -51,7 +51,7 @@ public class FancyHealthHud implements HudRenderCallback {
 
         System.out.println(oldHeart+", "+newHeart+", "+difference);
 
-        if(difference==0)return;
+        if(difference<=0)return;
 
 
         for (int i = 0; i < (int)(difference/2); i++) {
@@ -165,7 +165,7 @@ public class FancyHealthHud implements HudRenderCallback {
                 new PixelObject(x + 5, y + 4, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
                 //7
 
-                new PixelObject(x + 4, y + 5, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                new PixelObject(x + 4, y + 5, random.nextInt(15) - 7, random.nextInt(10), shadowColor)
                 //6
                 //7
         );
