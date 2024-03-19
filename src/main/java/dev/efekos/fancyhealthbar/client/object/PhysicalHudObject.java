@@ -17,7 +17,7 @@ public abstract class PhysicalHudObject implements HudObject{
 
     @Override
     public void tick() {
-        location.add(velocity);
+        location.add(velocity.getX(),-velocity.getY());
 
         int velocityX = velocity.getX();
         int velocityY = velocity.getY();

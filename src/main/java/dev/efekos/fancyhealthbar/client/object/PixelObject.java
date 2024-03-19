@@ -39,6 +39,6 @@ public class PixelObject extends PhysicalHudObject{
 
     @Override
     public double getSlipperiness() {
-        return 0.5;
+        return 0.9;
     }
 }
