@@ -4,7 +4,6 @@ import dev.efekos.fancyhealthbar.client.FancyHealthBarClient;
 import dev.efekos.fancyhealthbar.client.object.HudObject;
 import dev.efekos.fancyhealthbar.client.object.PixelObject;
 import dev.efekos.fancyhealthbar.client.utils.Color;
-import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -23,19 +22,31 @@ public class FancyHealthHud implements HudRenderCallback {
 
     private int lastHeartStartX;
     private int lastHeartStartY;
+    private int lastHealthLost;
 
-    public static final Identifier HEART_BASE_TEXTURE = new Identifier(FancyHealthBarClient.MOD_ID,"base_hearts");
+    public static final Identifier HEART_BASE_TEXTURE = new Identifier(FancyHealthBarClient.MOD_ID, "base_hearts");
+
+    public static final Identifier HEART_TEXTURE = new Identifier("hud/heart/full");
+    public static final Identifier HALF_HEART_TEXTURE = new Identifier("hud/heart/half");
 
     @Override
     public void onHudRender(DrawContext drawContext, float tickDelta) {
 
-        boolean notPaused = !MinecraftClient.getInstance().isPaused();
+        MinecraftClient client = MinecraftClient.getInstance();
+        boolean notPaused = !client.isPaused();
+        float health = client.player.getHealth();
 
+        lastHeartStartY = drawContext.getScaledWindowHeight() - 38;
+        lastHeartStartX = (drawContext.getScaledWindowWidth() / 2) - 90;
 
-        lastHeartStartY = drawContext.getScaledWindowHeight()-38;
-        lastHeartStartX = (drawContext.getScaledWindowWidth()/2)-90;
+        drawContext.drawGuiTexture(HEART_BASE_TEXTURE, lastHeartStartX - 1, lastHeartStartY - 1, 81, 9);
 
-        drawContext.drawGuiTexture(HEART_BASE_TEXTURE,lastHeartStartX-1,lastHeartStartY-1,81,9);
+        for (int i = 0; i < 10; i++) {
+
+            if((i*2)+1<health) drawContext.drawGuiTexture(HEART_TEXTURE,lastHeartStartX+(i*8)-1,lastHeartStartY-1,9,9);
+            else if ((i*2)+1==health) drawContext.drawGuiTexture(HALF_HEART_TEXTURE,lastHeartStartX+(i*8)-1,lastHeartStartY-1,9,9);
+
+        }
 
 
         for (HudObject object : new ArrayList<>(OBJECTS)) {
@@ -53,21 +64,20 @@ public class FancyHealthHud implements HudRenderCallback {
         gameTicks++;
     }
 
-    public void onDamage(double oldHeart,double newHeart){
+    public void onDamage(double oldHeart, double newHeart) {
 
-        double difference = oldHeart-newHeart;
+        double difference = oldHeart - newHeart;
 
-        System.out.println(oldHeart+", "+newHeart+", "+difference);
+        System.out.println(oldHeart + ", " + newHeart + ", " + difference);
 
-        if(difference<=0)return;
+        if (difference <= 0) return;
 
-
-        for (int i = 0; i < (int)(difference/2); i++) {
-            summonHeart(lastHeartStartX+((int)(newHeart/2)*8)+(i*8),lastHeartStartY);
+        for (int i = 0; i < (int) (difference / 2); i++) {
+            summonHeart(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY);
         }
 
-        if(difference%2!=0) { // so there is a half health loss that should be rendered
-            summonHalfHeart(lastHeartStartX+((int)(newHeart/2)*8),lastHeartStartY);
+        if (difference % 2 != 0) { // so there is a half health loss that should be rendered
+            summonHalfHeart(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY);
         }
 
     }
