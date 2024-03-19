@@ -77,58 +77,58 @@ public class FancyHealthHud implements HudRenderCallback {
 
 
         List<PixelObject> list = Arrays.asList(
-                new PixelObject(x + 1, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 2, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 1, y, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 2, y, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
                 //3
-                new PixelObject(x + 4, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 5, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 4, y, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 5, y, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
                 //6
                 //7
 
-                new PixelObject(x, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 1, y + 1, random.nextInt(15) - 7, random.nextInt(10), lightColor),
-                new PixelObject(x + 2, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 3, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 4, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 5, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 6, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x, y + 1, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 1, y + 1, random.nextInt(30) - 15, random.nextInt(20)-5, lightColor),
+                new PixelObject(x + 2, y + 1, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 3, y + 1, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 4, y + 1, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 5, y + 1, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 6, y + 1, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
 
-                new PixelObject(x, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 1, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 2, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 3, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 4, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 5, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 6, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x, y + 2, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 1, y + 2, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 2, y + 2, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 3, y + 2, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 4, y + 2, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 5, y + 2, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 6, y + 2, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
 
-                new PixelObject(x, y + 3, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
-                new PixelObject(x + 1, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 2, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 3, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 4, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 5, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 6, y + 3, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                new PixelObject(x, y + 3, random.nextInt(30) - 15, random.nextInt(20)-5, shadowColor),
+                new PixelObject(x + 1, y + 3, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 2, y + 3, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 3, y + 3, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 4, y + 3, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 5, y + 3, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 6, y + 3, random.nextInt(30) - 15, random.nextInt(20)-5, shadowColor),
 
                 //1
-                new PixelObject(x + 1, y + 4, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
-                new PixelObject(x + 2, y + 4, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 3, y + 4, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 4, y + 4, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 5, y + 4, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                new PixelObject(x + 1, y + 4, random.nextInt(30) - 15, random.nextInt(20)-5, shadowColor),
+                new PixelObject(x + 2, y + 4, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 3, y + 4, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 4, y + 4, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 5, y + 4, random.nextInt(30) - 15, random.nextInt(20)-5, shadowColor),
                 //7
 
                 //1
                 //2
-                new PixelObject(x + 2, y + 5, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
-                new PixelObject(x + 3, y + 5, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 4, y + 5, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                new PixelObject(x + 2, y + 5, random.nextInt(30) - 15, random.nextInt(20)-5, shadowColor),
+                new PixelObject(x + 3, y + 5, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 4, y + 5, random.nextInt(30) - 15, random.nextInt(20)-5, shadowColor),
                 //6
                 //7
 
                 //1
                 //2
                 //3
-                new PixelObject(x + 3, y + 6, random.nextInt(15) - 7, random.nextInt(10), shadowColor)
+                new PixelObject(x + 3, y + 6, random.nextInt(30) - 15, random.nextInt(20)-5, shadowColor)
                 //5
                 //6
                 //7
@@ -146,28 +146,28 @@ public class FancyHealthHud implements HudRenderCallback {
 
 
         List<PixelObject> list = Arrays.asList(
-                new PixelObject(x + 4, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 5, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 4, y, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 5, y, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
                 //6
                 //7
 
-                new PixelObject(x + 4, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 5, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 6, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 4, y + 1, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 5, y + 1, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 6, y + 1, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
 
-                new PixelObject(x + 4, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 5, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 6, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 4, y + 2, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 5, y + 2, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 6, y + 2, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
 
-                new PixelObject(x + 4, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 5, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 6, y + 3, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                new PixelObject(x + 4, y + 3, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 5, y + 3, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 6, y + 3, random.nextInt(30) - 15, random.nextInt(20)-5, shadowColor),
 
-                new PixelObject(x + 4, y + 4, random.nextInt(15) - 7, random.nextInt(10), mainColor),
-                new PixelObject(x + 5, y + 4, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                new PixelObject(x + 4, y + 4, random.nextInt(30) - 15, random.nextInt(20)-5, mainColor),
+                new PixelObject(x + 5, y + 4, random.nextInt(30) - 15, random.nextInt(20)-5, shadowColor),
                 //7
 
-                new PixelObject(x + 4, y + 5, random.nextInt(15) - 7, random.nextInt(10), shadowColor)
+                new PixelObject(x + 4, y + 5, random.nextInt(30) - 15, random.nextInt(20)-5, shadowColor)
                 //6
                 //7
         );

@@ -1,7 +1,6 @@
 package dev.efekos.fancyhealthbar.client.object;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.efekos.fancyhealthbar.FancyHealthBar;
 import dev.efekos.fancyhealthbar.client.FancyHealthBarClient;
 import dev.efekos.fancyhealthbar.client.utils.Color;
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
