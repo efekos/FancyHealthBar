@@ -58,6 +58,10 @@ public class FancyHealthHud implements HudRenderCallback {
             summonHeart(lastHeartStartX+((int)(newHeart/2)*8)+(i*8),lastHeartStartY);
         }
 
+        if(difference%2!=0) { // so there is a half health loss that should be rendered
+            summonHalfHeart(lastHeartStartX+((int)(newHeart/2)*8),lastHeartStartY);
+        }
+
     }
 
 
@@ -124,6 +128,44 @@ public class FancyHealthHud implements HudRenderCallback {
                 //3
                 new PixelObject(x + 3, y + 6, random.nextInt(15) - 7, random.nextInt(10), shadowColor)
                 //5
+                //6
+                //7
+        );
+
+        OBJECTS.addAll(list);
+    }
+
+    public void summonHalfHeart(int x, int y) {
+
+        Color mainColor = new Color(255, 19, 19);
+        Color shadowColor = new Color(187, 19, 19);
+
+        Random random = new Random();
+
+
+        List<PixelObject> list = Arrays.asList(
+                new PixelObject(x + 4, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 5, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                //6
+                //7
+
+                new PixelObject(x + 4, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 5, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 6, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+
+                new PixelObject(x + 4, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 5, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 6, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+
+                new PixelObject(x + 4, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 5, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 6, y + 3, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+
+                new PixelObject(x + 4, y + 4, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 5, y + 4, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                //7
+
+                new PixelObject(x + 4, y + 5, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
                 //6
                 //7
         );
