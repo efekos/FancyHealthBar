@@ -47,11 +47,14 @@ public class FancyHealthHud implements HudRenderCallback {
 
     public void onDamage(double oldHeart, double newHeart) {
 
+        if(gameTicks<40) return;
+
         double difference = oldHeart - newHeart;
+
+        if (difference <= 0) return;
 
         System.out.println(oldHeart + ", " + newHeart + ", " + difference);
 
-        if (difference <= 0) return;
 
         for (int i = 0; i < (int) (difference / 2); i++) {
             summonHeart(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY);
