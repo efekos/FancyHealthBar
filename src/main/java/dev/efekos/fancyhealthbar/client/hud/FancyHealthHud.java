@@ -26,7 +26,7 @@ public class FancyHealthHud implements HudRenderCallback {
 
         for (HudObject object : new ArrayList<>(OBJECTS)) {
 
-            if (gameTicks % 4 == 0 && notPaused) object.tick();
+            if (gameTicks % 20 == 0 && notPaused) object.tick();
 
             if (object.getLocation().getX() > drawContext.getScaledWindowWidth() + 5 || object.getLocation().getY() > drawContext.getScaledWindowHeight() + 5) {
                 OBJECTS.remove(object);
@@ -36,16 +36,23 @@ public class FancyHealthHud implements HudRenderCallback {
             object.draw(drawContext);
         }
 
-        if (gameTicks % 20 == 0 && notPaused) {
-
-            summonHeart(drawContext.getScaledWindowWidth()/2,drawContext.getScaledWindowHeight()/2);
-        }
-
         gameTicks++;
     }
 
+    public void onDamage(double oldHeart,double newHeart){
 
-    void summonHeart(int x, int y) {
+        double difference = oldHeart-newHeart;
+
+        System.out.println(oldHeart+", "+newHeart+", "+difference);
+
+        for (int i = 0; i < difference; i++) {
+            summonHeart(120+(i*9),120);
+        }
+
+    }
+
+
+    public void summonHeart(int x, int y) {
 
         Color mainColor = new Color(255, 19, 19);
         Color shadowColor = new Color(187, 19, 19);
