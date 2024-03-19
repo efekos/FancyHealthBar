@@ -8,7 +8,10 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class FancyHealthHud implements HudRenderCallback {
 
@@ -19,11 +22,13 @@ public class FancyHealthHud implements HudRenderCallback {
     @Override
     public void onHudRender(DrawContext drawContext, float tickDelta) {
 
+        boolean notPaused = !MinecraftClient.getInstance().isPaused();
+
         for (HudObject object : new ArrayList<>(OBJECTS)) {
 
-            if(gameTicks%4==0&& !MinecraftClient.getInstance().isPaused()) object.tick();
+            if (gameTicks % 4 == 0 && notPaused) object.tick();
 
-            if(object.getLocation().getX()>drawContext.getScaledWindowWidth()+5||object.getLocation().getY()>drawContext.getScaledWindowHeight()+5){
+            if (object.getLocation().getX() > drawContext.getScaledWindowWidth() + 5 || object.getLocation().getY() > drawContext.getScaledWindowHeight() + 5) {
                 OBJECTS.remove(object);
                 continue;
             }
@@ -31,19 +36,82 @@ public class FancyHealthHud implements HudRenderCallback {
             object.draw(drawContext);
         }
 
-        if(gameTicks%5==0) {
+        if (gameTicks % 20 == 0 && notPaused) {
 
-            Random random = new Random();
-
-            PixelObject object = new PixelObject(
-                    new HudLocation(drawContext.getScaledWindowWidth()/2, drawContext.getScaledWindowHeight()/2),
-                    new HudLocation(random.nextInt(15)-7,random.nextInt(10)),
-                    new Color(255,255,255)
-            );
-
-            OBJECTS.add(object);
+            summonHeart(drawContext.getScaledWindowWidth()/2,drawContext.getScaledWindowHeight()/2);
         }
 
         gameTicks++;
+    }
+
+
+    void summonHeart(int x, int y) {
+
+        Color mainColor = new Color(255, 19, 19);
+        Color shadowColor = new Color(187, 19, 19);
+        Color lightColor = new Color(255, 200, 200);
+
+        Random random = new Random();
+
+
+        List<PixelObject> list = Arrays.asList(
+                new PixelObject(x + 1, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 2, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                //3
+                new PixelObject(x + 4, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 5, y, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                //6
+                //7
+
+                new PixelObject(x, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 1, y + 1, random.nextInt(15) - 7, random.nextInt(10), lightColor),
+                new PixelObject(x + 2, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 3, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 4, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 5, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 6, y + 1, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+
+                new PixelObject(x, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 1, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 2, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 3, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 4, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 5, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 6, y + 2, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+
+                new PixelObject(x, y + 3, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                new PixelObject(x + 1, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 2, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 3, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 4, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 5, y + 3, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 6, y + 3, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+
+                //1
+                new PixelObject(x + 1, y + 4, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                new PixelObject(x + 2, y + 4, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 3, y + 4, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 4, y + 4, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 5, y + 4, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                //7
+
+                //1
+                //2
+                new PixelObject(x + 2, y + 5, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                new PixelObject(x + 3, y + 5, random.nextInt(15) - 7, random.nextInt(10), mainColor),
+                new PixelObject(x + 4, y + 5, random.nextInt(15) - 7, random.nextInt(10), shadowColor),
+                //6
+                //7
+
+                //1
+                //2
+                //3
+                new PixelObject(x + 3, y + 6, random.nextInt(15) - 7, random.nextInt(10), shadowColor)
+                //5
+                //6
+                //7
+        );
+
+        OBJECTS.addAll(list);
     }
 }
