@@ -19,6 +19,9 @@ public class FancyHealthHud implements HudRenderCallback {
 
     private static int gameTicks = 0;
 
+    private int lastHeartStartX;
+    private int lastHeartStartY;
+
     @Override
     public void onHudRender(DrawContext drawContext, float tickDelta) {
 
@@ -26,7 +29,7 @@ public class FancyHealthHud implements HudRenderCallback {
 
         for (HudObject object : new ArrayList<>(OBJECTS)) {
 
-            if (gameTicks % 20 == 0 && notPaused) object.tick();
+            if (gameTicks % 40 == 0 && notPaused) object.tick();
 
             if (object.getLocation().getX() > drawContext.getScaledWindowWidth() + 5 || object.getLocation().getY() > drawContext.getScaledWindowHeight() + 5) {
                 OBJECTS.remove(object);
@@ -35,6 +38,9 @@ public class FancyHealthHud implements HudRenderCallback {
 
             object.draw(drawContext);
         }
+
+        lastHeartStartY = drawContext.getScaledWindowHeight()-38;
+        lastHeartStartX = (drawContext.getScaledWindowWidth()/2)-90;
 
         gameTicks++;
     }
@@ -45,8 +51,11 @@ public class FancyHealthHud implements HudRenderCallback {
 
         System.out.println(oldHeart+", "+newHeart+", "+difference);
 
-        for (int i = 0; i < difference; i++) {
-            summonHeart(120+(i*9),120);
+        if(difference==0)return;
+
+
+        for (int i = 0; i < (int)(difference/2); i++) {
+            summonHeart(lastHeartStartX+((int)(newHeart/2)*8)+(i*8),lastHeartStartY);
         }
 
     }
