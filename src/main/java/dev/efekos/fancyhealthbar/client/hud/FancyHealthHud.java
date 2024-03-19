@@ -1,5 +1,6 @@
 package dev.efekos.fancyhealthbar.client.hud;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import dev.efekos.fancyhealthbar.client.FancyHealthBarClient;
 import dev.efekos.fancyhealthbar.client.object.HudObject;
 import dev.efekos.fancyhealthbar.client.object.PixelObject;
@@ -22,10 +23,10 @@ public class FancyHealthHud implements HudRenderCallback {
 
     private int lastHeartStartX;
     private int lastHeartStartY;
-    private int lastHealthLost;
+    private int lastHealthLost = 30;
 
     public static final Identifier HEART_BASE_TEXTURE = new Identifier(FancyHealthBarClient.MOD_ID, "base_hearts");
-
+    public static final Identifier HEART_LINE_TEXTURE = new Identifier(FancyHealthBarClient.MOD_ID, "lines");
     public static final Identifier HEART_TEXTURE = new Identifier("hud/heart/full");
     public static final Identifier HALF_HEART_TEXTURE = new Identifier("hud/heart/half");
 
@@ -48,6 +49,12 @@ public class FancyHealthHud implements HudRenderCallback {
 
         }
 
+        float lineWhiteness = 1f-Math.min(lastHealthLost/30f,1);
+
+        RenderSystem.setShaderColor(lineWhiteness,lineWhiteness,lineWhiteness,1f);
+        drawContext.drawGuiTexture(HEART_LINE_TEXTURE,lastHeartStartX-1,lastHeartStartY-1,81,9);
+        RenderSystem.setShaderColor(1f,1f,1f,1f);
+
 
         for (HudObject object : new ArrayList<>(OBJECTS)) {
 
@@ -62,6 +69,7 @@ public class FancyHealthHud implements HudRenderCallback {
         }
 
         gameTicks++;
+        lastHealthLost++;
     }
 
     public void onDamage(double oldHeart, double newHeart) {
@@ -71,6 +79,7 @@ public class FancyHealthHud implements HudRenderCallback {
         System.out.println(oldHeart + ", " + newHeart + ", " + difference);
 
         if (difference <= 0) return;
+        lastHealthLost = 0;
 
         for (int i = 0; i < (int) (difference / 2); i++) {
             summonHeart(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY);
