@@ -2,6 +2,7 @@ package dev.efekos.fancyhealthbar.client.object;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.efekos.fancyhealthbar.FancyHealthBar;
+import dev.efekos.fancyhealthbar.client.FancyHealthBarClient;
 import dev.efekos.fancyhealthbar.client.utils.Color;
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 import net.minecraft.client.gui.DrawContext;
@@ -29,7 +30,7 @@ public class PixelObject extends PhysicalHudObject{
         this.color = color;
     }
 
-    public static final Identifier TEXTURE_ID = new Identifier(FancyHealthBar.MOD_ID,"pixel");
+    public static final Identifier TEXTURE_ID = new Identifier(FancyHealthBarClient.MOD_ID,"pixel");
 
     @Override
     public void draw(DrawContext context) {

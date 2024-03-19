@@ -8,6 +8,8 @@ public class FancyHealthBarClient implements ClientModInitializer {
 
     public static final FancyHealthHud FANCY_HEALTH_HUD = new FancyHealthHud();
 
+    public static final String MOD_ID = "fancyhealthbar";
+
     @Override
     public void onInitializeClient() {
         HudRenderCallback.EVENT.register(FANCY_HEALTH_HUD);

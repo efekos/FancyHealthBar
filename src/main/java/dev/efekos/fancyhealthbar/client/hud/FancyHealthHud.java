@@ -1,5 +1,6 @@
 package dev.efekos.fancyhealthbar.client.hud;
 
+import dev.efekos.fancyhealthbar.client.FancyHealthBarClient;
 import dev.efekos.fancyhealthbar.client.object.HudObject;
 import dev.efekos.fancyhealthbar.client.object.PixelObject;
 import dev.efekos.fancyhealthbar.client.utils.Color;
@@ -7,6 +8,7 @@ import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,10 +24,19 @@ public class FancyHealthHud implements HudRenderCallback {
     private int lastHeartStartX;
     private int lastHeartStartY;
 
+    public static final Identifier HEART_BASE_TEXTURE = new Identifier(FancyHealthBarClient.MOD_ID,"base_hearts");
+
     @Override
     public void onHudRender(DrawContext drawContext, float tickDelta) {
 
         boolean notPaused = !MinecraftClient.getInstance().isPaused();
+
+
+        lastHeartStartY = drawContext.getScaledWindowHeight()-38;
+        lastHeartStartX = (drawContext.getScaledWindowWidth()/2)-90;
+
+        drawContext.drawGuiTexture(HEART_BASE_TEXTURE,lastHeartStartX-1,lastHeartStartY-1,81,9);
+
 
         for (HudObject object : new ArrayList<>(OBJECTS)) {
 
@@ -38,9 +49,6 @@ public class FancyHealthHud implements HudRenderCallback {
 
             object.draw(drawContext);
         }
-
-        lastHeartStartY = drawContext.getScaledWindowHeight()-38;
-        lastHeartStartX = (drawContext.getScaledWindowWidth()/2)-90;
 
         gameTicks++;
     }
