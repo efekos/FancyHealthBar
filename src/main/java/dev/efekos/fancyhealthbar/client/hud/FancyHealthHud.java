@@ -7,6 +7,8 @@ import dev.efekos.fancyhealthbar.client.utils.VelocityProvider;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.MathHelper;
 
@@ -55,9 +57,12 @@ public class FancyHealthHud implements HudRenderCallback {
         System.out.println(oldHeart + ", " + newHeart + ", " + difference);
 
         MinecraftClient client = MinecraftClient.getInstance();
-        boolean hardcore = client.world.getLevelProperties().isHardcore();
+        ClientPlayerEntity player = client.player;
 
-        HeartSpawner spawner = HeartTypes.get(hardcore);
+        boolean hardcore = client.world.getLevelProperties().isHardcore();
+        boolean poison = player.getStatusEffect(StatusEffects.POISON)!=null;
+
+        HeartSpawner spawner = HeartTypes.get(hardcore,poison);
 
         for (int i = 0; i < (int) (difference / 2); i++) {
             OBJECTS.addAll(spawner.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY,HEART_VELOCITY_PROVIDER));
