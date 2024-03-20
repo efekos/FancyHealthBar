@@ -11,6 +11,10 @@ public class Color {
         this.b = b;
     }
 
+    public static Color of(int r,int g,int b){
+        return new Color(r,g,b);
+    }
+
     public int getR() {
         return r;
     }
