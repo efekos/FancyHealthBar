@@ -1,19 +1,14 @@
 package dev.efekos.fancyhealthbar.client.hud;
 
 import dev.efekos.fancyhealthbar.client.object.HudObject;
-import dev.efekos.fancyhealthbar.client.object.PixelObject;
-import dev.efekos.fancyhealthbar.client.utils.Color;
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
-import dev.efekos.fancyhealthbar.client.utils.VelocityProvider;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
 
 public class FancyHealthHud implements HudRenderCallback {
 
@@ -52,21 +47,19 @@ public class FancyHealthHud implements HudRenderCallback {
 
         if(gameTicks<40) return;
 
-        double difference = oldHeart - newHeart;
-
-        if (difference <= 0) return;
+        double difference = MathHelper.clamp(oldHeart - newHeart,0,20);
 
         System.out.println(oldHeart + ", " + newHeart + ", " + difference);
 
 
         for (int i = 0; i < (int) (difference / 2); i++) {
-            HeartTypes.NORMAL.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY
-                    ,random -> new HudLocation(random.nextInt(20) - 10, random.nextInt(15)));
+            OBJECTS.addAll(HeartTypes.NORMAL.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY
+                    , random -> new HudLocation(random.nextInt(20) - 10, random.nextInt(15))));
         }
 
         if (difference % 2 != 0) { // so there is a half health loss that should be rendered
-            HeartTypes.NORMAL.spawnHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY
-                    ,random -> new HudLocation(random.nextInt(20) - 10, random.nextInt(15)));
+            OBJECTS.addAll(HeartTypes.NORMAL.spawnHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY
+                    ,random -> new HudLocation(random.nextInt(20) - 10, random.nextInt(15))));
         }
 
     }
