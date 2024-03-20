@@ -1,5 +1,6 @@
 package dev.efekos.fancyhealthbar.client.hud;
 
+import dev.efekos.fancyhealthbar.client.config.FancyHealthBarConfig;
 import dev.efekos.fancyhealthbar.client.object.HudObject;
 import dev.efekos.fancyhealthbar.client.utils.HeartSpawner;
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
@@ -9,7 +10,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
@@ -78,7 +78,6 @@ public class FancyHealthHud implements HudRenderCallback {
                 OBJECTS.addAll(spawner.spawnEndHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
 
         }
-
     }
 
     public static final VelocityProvider HEART_VELOCITY_PROVIDER = (random -> new HudLocation(random.nextInt(21) - 10, Math.max(random.nextInt(16)-5,0)));
