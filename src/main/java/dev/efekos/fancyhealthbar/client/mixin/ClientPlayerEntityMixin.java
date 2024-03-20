@@ -13,15 +13,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
-public abstract class ClientPlayerEntityMixin extends LivingEntity{
+public abstract class ClientPlayerEntityMixin extends LivingEntity {
 
     public ClientPlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    @Inject(method = "applyDamage",at = @At("HEAD"))
-    public void onDamage(DamageSource damageSource, float damage, CallbackInfo ci){
-        FancyHealthBarClient.FANCY_HEALTH_HUD.onDamage(MathHelper.clamp(getHealth(),0,20),MathHelper.clamp(getHealth()-damage,0,20));
+    @Inject(method = "applyDamage", at = @At("HEAD"))
+    public void onDamage(DamageSource damageSource, float damage, CallbackInfo ci) {
+        FancyHealthBarClient.FANCY_HEALTH_HUD.onDamage(MathHelper.clamp(getHealth(), 0, 20), MathHelper.clamp(getHealth() - damage, 0, 20));
     }
 
 }

@@ -9,32 +9,32 @@ public class HudLocation {
         this.y = y;
     }
 
-    public HudLocation getAbove(int step){
-        return new HudLocation(x,y+step);
+    public HudLocation getAbove(int step) {
+        return new HudLocation(x, y + step);
     }
 
-    public HudLocation getBelow(int step){
-        return new HudLocation(x,y-step);
+    public HudLocation getBelow(int step) {
+        return new HudLocation(x, y - step);
     }
 
-    public HudLocation getLeft(int step){
-        return new HudLocation(x-step,y);
+    public HudLocation getLeft(int step) {
+        return new HudLocation(x - step, y);
     }
 
-    public HudLocation getRight(int step){
-        return new HudLocation(x+step,y);
+    public HudLocation getRight(int step) {
+        return new HudLocation(x + step, y);
     }
 
-    public HudLocation clone(){
-        return new HudLocation(x,y);
+    public HudLocation clone() {
+        return new HudLocation(x, y);
     }
 
-    public void add(HudLocation location){
+    public void add(HudLocation location) {
         this.x += location.x;
         this.y += location.y;
     }
 
-    public void add(int x,int y){
+    public void add(int x, int y) {
         this.x += x;
         this.y += y;
     }

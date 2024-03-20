@@ -46,9 +46,9 @@ public class FancyHealthHud implements HudRenderCallback {
 
     public void onDamage(float oldHeart, float newHeart) {
 
-        if(gameTicks<40) return;
+        if (gameTicks < 40) return;
 
-        double difference = MathHelper.clamp(oldHeart - newHeart,0,20);
+        double difference = MathHelper.clamp(oldHeart - newHeart, 0, 20);
 
         System.out.println(oldHeart + ", " + newHeart + ", " + difference);
 
@@ -60,9 +60,10 @@ public class FancyHealthHud implements HudRenderCallback {
 
         if (difference % 2 != 0) { // so there is a half health loss that should be rendered
 
-            if(Math.round(newHeart)%2==0) // If there is a half heart lost, but the new health doesn't contain a half heart, then there should be a startHalf heart.
-                OBJECTS.addAll(HeartTypes.NORMAL.spawnStartHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY,HEART_VELOCITY_PROVIDER));
-            else OBJECTS.addAll(HeartTypes.NORMAL.spawnEndHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY,HEART_VELOCITY_PROVIDER));
+            if (Math.round(newHeart) % 2 == 0) // If there is a half heart lost, but the new health doesn't contain a half heart, then there should be a startHalf heart.
+                OBJECTS.addAll(HeartTypes.NORMAL.spawnStartHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
+            else
+                OBJECTS.addAll(HeartTypes.NORMAL.spawnEndHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
 
         }
 

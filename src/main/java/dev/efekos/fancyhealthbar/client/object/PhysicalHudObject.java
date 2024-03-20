@@ -2,11 +2,12 @@ package dev.efekos.fancyhealthbar.client.object;
 
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 
-public abstract class PhysicalHudObject implements HudObject{
+public abstract class PhysicalHudObject implements HudObject {
     private HudLocation location;
     private HudLocation velocity;
 
     public abstract int getGravity();
+
     public abstract double getSlipperiness();
 
 
@@ -17,15 +18,15 @@ public abstract class PhysicalHudObject implements HudObject{
 
     @Override
     public void tick() {
-        location.add(velocity.getX(),-velocity.getY());
+        location.add(velocity.getX(), -velocity.getY());
 
         int velocityX = velocity.getX();
         int velocityY = velocity.getY();
 
-        velocityX = (int) (velocityX*getSlipperiness());
+        velocityX = (int) (velocityX * getSlipperiness());
         velocityY -= getGravity();
 
-        setVelocity(new HudLocation(velocityX,velocityY));
+        setVelocity(new HudLocation(velocityX, velocityY));
 
     }
 
@@ -34,11 +35,11 @@ public abstract class PhysicalHudObject implements HudObject{
         return location;
     }
 
-    public void setLocation(HudLocation location){
+    public void setLocation(HudLocation location) {
         this.location = location;
     }
 
-    public HudLocation getVelocity(){
+    public HudLocation getVelocity() {
         return velocity;
     }
 
@@ -46,11 +47,11 @@ public abstract class PhysicalHudObject implements HudObject{
         this.velocity = velocity;
     }
 
-    public void addVelocity(HudLocation velocity){
+    public void addVelocity(HudLocation velocity) {
         this.velocity.add(velocity);
     }
 
-    public void addVelocity(int x,int y){
-        this.velocity.add(x,y);
+    public void addVelocity(int x, int y) {
+        this.velocity.add(x, y);
     }
 }

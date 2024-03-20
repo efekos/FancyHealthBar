@@ -7,7 +7,7 @@ import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 
-public class PixelObject extends PhysicalHudObject{
+public class PixelObject extends PhysicalHudObject {
 
     private Color color;
 
@@ -24,21 +24,21 @@ public class PixelObject extends PhysicalHudObject{
         this.color = color;
     }
 
-    public PixelObject(int locX,int locY,HudLocation velocity,Color color){
-        this(locX,locY,velocity.getX(),velocity.getY(),color);
+    public PixelObject(int locX, int locY, HudLocation velocity, Color color) {
+        this(locX, locY, velocity.getX(), velocity.getY(), color);
     }
 
-    public PixelObject(int locX,int locY, int vecX,int vecY, Color color) {
-        this(new HudLocation(locX,locY),new HudLocation(vecX,vecY),color);
+    public PixelObject(int locX, int locY, int vecX, int vecY, Color color) {
+        this(new HudLocation(locX, locY), new HudLocation(vecX, vecY), color);
     }
 
-    public static final Identifier TEXTURE_ID = new Identifier(FancyHealthBarClient.MOD_ID,"pixel");
+    public static final Identifier TEXTURE_ID = new Identifier(FancyHealthBarClient.MOD_ID, "pixel");
 
     @Override
     public void draw(DrawContext context) {
-        RenderSystem.setShaderColor(color.getR()/255f,color.getG()/255f,color.getB()/255f,1f);
-        context.drawGuiTexture(TEXTURE_ID,getLocation().getX(),getLocation().getY(),1,1);
-        RenderSystem.setShaderColor(1f,1f,1f,1f);
+        RenderSystem.setShaderColor(color.getR() / 255f, color.getG() / 255f, color.getB() / 255f, 1f);
+        context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY(), 1, 1);
+        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
     }
 
     @Override

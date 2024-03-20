@@ -6,6 +6,8 @@ import net.minecraft.client.gui.DrawContext;
 public interface HudObject {
 
     void draw(DrawContext context);
+
     HudLocation getLocation();
+
     void tick();
 }
