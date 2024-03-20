@@ -61,9 +61,10 @@ public class FancyHealthHud implements HudRenderCallback {
 
         boolean hardcore = client.world.getLevelProperties().isHardcore();
         boolean poison = player.getStatusEffect(StatusEffects.POISON)!=null;
+        boolean wither = player.getStatusEffect(StatusEffects.WITHER)!=null;
         boolean frozen = player.getFrozenTicks() >= 140;
 
-        HeartSpawner spawner = HeartTypes.get(hardcore,poison,frozen);
+        HeartSpawner spawner = HeartTypes.get(hardcore,poison,frozen,wither);
 
         for (int i = 0; i < (int) (difference / 2); i++) {
             OBJECTS.addAll(spawner.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY,HEART_VELOCITY_PROVIDER));
