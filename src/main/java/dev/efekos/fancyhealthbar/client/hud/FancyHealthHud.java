@@ -2,6 +2,7 @@ package dev.efekos.fancyhealthbar.client.hud;
 
 import dev.efekos.fancyhealthbar.client.object.HudObject;
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
+import dev.efekos.fancyhealthbar.client.utils.VelocityProvider;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -43,7 +44,7 @@ public class FancyHealthHud implements HudRenderCallback {
         gameTicks++;
     }
 
-    public void onDamage(double oldHeart, double newHeart) {
+    public void onDamage(float oldHeart, float newHeart) {
 
         if(gameTicks<40) return;
 
@@ -58,10 +59,15 @@ public class FancyHealthHud implements HudRenderCallback {
         }
 
         if (difference % 2 != 0) { // so there is a half health loss that should be rendered
-            OBJECTS.addAll(HeartTypes.NORMAL.spawnHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY
-                    ,random -> new HudLocation(random.nextInt(20) - 10, random.nextInt(15))));
+
+            if(Math.round(newHeart)%2==0) // If there is a half heart lost, but the new health doesn't contain a half heart, then there should be a startHalf heart.
+                OBJECTS.addAll(HeartTypes.NORMAL.spawnStartHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY,HEART_VELOCITY_PROVIDER));
+            else OBJECTS.addAll(HeartTypes.NORMAL.spawnEndHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY,HEART_VELOCITY_PROVIDER));
+
         }
 
     }
+
+    public static final VelocityProvider HEART_VELOCITY_PROVIDER = (random -> new HudLocation(random.nextInt(20) - 10, random.nextInt(15)));
 
 }

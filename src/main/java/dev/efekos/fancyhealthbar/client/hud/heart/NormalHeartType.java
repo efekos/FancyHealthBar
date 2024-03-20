@@ -80,7 +80,46 @@ public class NormalHeartType implements HeartSpawner {
         );
     }
 
-    public List<HudObject> spawnHalf(int x, int y, VelocityProvider velocityProvider) {
+    public List<HudObject> spawnStartHalf(int x, int y, VelocityProvider velocityProvider) {
+
+        Color mainColor = new Color(255, 19, 19);
+        Color shadowColor = new Color(187, 19, 19);
+        Color lightColor = new Color(255, 200, 200);
+
+        Random random = new Random();
+
+
+        return Arrays.asList(
+                new PixelObject(x + 1, y, velocityProvider.velocity(random), mainColor),
+                new PixelObject(x + 2, y, velocityProvider.velocity(random), mainColor),
+
+                new PixelObject(x, y + 1, velocityProvider.velocity(random), mainColor),
+                new PixelObject(x + 1, y + 1, velocityProvider.velocity(random), lightColor),
+                new PixelObject(x + 2, y + 1, velocityProvider.velocity(random), mainColor),
+                new PixelObject(x + 3, y + 1, velocityProvider.velocity(random), mainColor),
+
+                new PixelObject(x, y + 2, velocityProvider.velocity(random), mainColor),
+                new PixelObject(x + 1, y + 2, velocityProvider.velocity(random), mainColor),
+                new PixelObject(x + 2, y + 2, velocityProvider.velocity(random), mainColor),
+                new PixelObject(x + 3, y + 2, velocityProvider.velocity(random), mainColor),
+
+                new PixelObject(x, y + 3, velocityProvider.velocity(random), shadowColor),
+                new PixelObject(x + 1, y + 3, velocityProvider.velocity(random), mainColor),
+                new PixelObject(x + 2, y + 3, velocityProvider.velocity(random), mainColor),
+                new PixelObject(x + 3, y + 3, velocityProvider.velocity(random), mainColor),
+
+                new PixelObject(x + 1, y + 4, velocityProvider.velocity(random), shadowColor),
+                new PixelObject(x + 2, y + 4, velocityProvider.velocity(random), mainColor),
+                new PixelObject(x + 3, y + 4, velocityProvider.velocity(random), mainColor),
+
+                new PixelObject(x + 2, y + 5, velocityProvider.velocity(random), shadowColor),
+                new PixelObject(x + 3, y + 5, velocityProvider.velocity(random), mainColor),
+
+                new PixelObject(x + 3, y + 6, velocityProvider.velocity(random), shadowColor)
+        );
+    }
+
+    public List<HudObject> spawnEndHalf(int x, int y, VelocityProvider velocityProvider) {
 
         Color mainColor = new Color(255, 19, 19);
         Color shadowColor = new Color(187, 19, 19);
