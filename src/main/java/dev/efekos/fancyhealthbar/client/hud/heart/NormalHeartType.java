@@ -21,7 +21,7 @@ public class NormalHeartType implements HeartSpawner {
         Random random = new Random();
 
 
-        List<HudObject> list = Arrays.asList(
+        return Arrays.asList(
                 new PixelObject(x + 1, y, velocityProvider.velocity(random), mainColor),
                 new PixelObject(x + 2, y, velocityProvider.velocity(random), mainColor),
                 //3
@@ -78,8 +78,6 @@ public class NormalHeartType implements HeartSpawner {
                 //6
                 //7
         );
-
-        return list;
     }
 
     public List<HudObject> spawnHalf(int x, int y, VelocityProvider velocityProvider) {
@@ -90,7 +88,7 @@ public class NormalHeartType implements HeartSpawner {
         Random random = new Random();
 
 
-        List<HudObject> list = Arrays.asList(
+        return Arrays.asList(
                 new PixelObject(x + 4, y, velocityProvider.velocity(random), mainColor),
                 new PixelObject(x + 5, y, velocityProvider.velocity(random), mainColor),
                 //6
@@ -116,8 +114,6 @@ public class NormalHeartType implements HeartSpawner {
                 //6
                 //7
         );
-
-        return list;
     }
 
 }
