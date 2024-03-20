@@ -3,12 +3,14 @@
   "id": "fancyhealthbar",
   "version": "${version}",
   "name": "FancyHealthBar",
-  "description": "Rework of the original health bar.",
+  "description": "Fancy ways of losing health..",
   "authors": [
     "efekos"
   ],
   "contact": {
-    "repo": "https://github.com/efekos/FancyHealthBar"
+    "repo": "https://github.com/efekos/FancyHealthBar",
+    "sources": "https://github.com/efekos/FancyHealthBar",
+    "issues": "https://github.com/efekos/FancyHealthBar/issues"
   },
   "license": "MIT",
   "icon": "assets/fancyhealthbar/icon.png",
@@ -28,5 +30,16 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://efekos.dev/discord",
+        "modmenu.modrinth": "https://modrinth.com/mod/fancy-health-bar",
+        "modmenu.buymeacoffee": "https://efekos.dev/bmac",
+        "modmenu.patreon": "https://efekos.dev/patreon",
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/fancy-health-bar"
+      }
+    }
   }
 }
