@@ -1,11 +1,13 @@
 package dev.efekos.fancyhealthbar.client.hud;
 
 import dev.efekos.fancyhealthbar.client.object.HudObject;
+import dev.efekos.fancyhealthbar.client.utils.HeartSpawner;
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 import dev.efekos.fancyhealthbar.client.utils.VelocityProvider;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
@@ -52,23 +54,26 @@ public class FancyHealthHud implements HudRenderCallback {
 
         System.out.println(oldHeart + ", " + newHeart + ", " + difference);
 
+        MinecraftClient client = MinecraftClient.getInstance();
+        boolean hardcore = client.world.getLevelProperties().isHardcore();
+
+        HeartSpawner spawner = HeartTypes.get(hardcore);
 
         for (int i = 0; i < (int) (difference / 2); i++) {
-            OBJECTS.addAll(HeartTypes.NORMAL.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY
-                    , random -> new HudLocation(random.nextInt(20) - 10, random.nextInt(15))));
+            OBJECTS.addAll(spawner.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY,HEART_VELOCITY_PROVIDER));
         }
 
         if (difference % 2 != 0) { // so there is a half health loss that should be rendered
 
             if (Math.round(newHeart) % 2 == 0) // If there is a half heart lost, but the new health doesn't contain a half heart, then there should be a startHalf heart.
-                OBJECTS.addAll(HeartTypes.NORMAL.spawnStartHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
+                OBJECTS.addAll(spawner.spawnStartHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
             else
-                OBJECTS.addAll(HeartTypes.NORMAL.spawnEndHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
+                OBJECTS.addAll(spawner.spawnEndHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
 
         }
 
     }
 
-    public static final VelocityProvider HEART_VELOCITY_PROVIDER = (random -> new HudLocation(random.nextInt(20) - 10, random.nextInt(15)));
+    public static final VelocityProvider HEART_VELOCITY_PROVIDER = (random -> new HudLocation(random.nextInt(21) - 10, Math.max(random.nextInt(16)-5,0)));
 
 }
