@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,7 +21,7 @@ public abstract class ClientPlayerEntityMixin extends LivingEntity{
 
     @Inject(method = "applyDamage",at = @At("HEAD"))
     public void onDamage(DamageSource damageSource, float damage, CallbackInfo ci){
-        FancyHealthBarClient.FANCY_HEALTH_HUD.onDamage(getHealth(),getHealth()-damage);
+        FancyHealthBarClient.FANCY_HEALTH_HUD.onDamage(MathHelper.clamp(getHealth(),0,20),MathHelper.clamp(getHealth()-damage,0,20));
     }
 
 }
