@@ -10,11 +10,12 @@ public class HeartTypes {
     public static final PoisonHeartType POISON = new PoisonHeartType();
     public static final PoisonHardcoreHeartType HARDCORE_POISON = new PoisonHardcoreHeartType();
     public static final FrozenHeartType FROZEN = new FrozenHeartType();
+    public static final FrozenHardcoreHeartType HARDCORE_FROZEN = new FrozenHardcoreHeartType();
 
 
     public static HeartSpawner get(boolean hardcore,boolean poison,boolean frozen) {
         if(hardcore){
-            return poison ? HARDCORE_POISON : HARDCORE_NORMAL;
+            return poison ? HARDCORE_POISON : (frozen?HARDCORE_FROZEN:HARDCORE_NORMAL);
         } else {
             return poison ? POISON : (frozen?FROZEN:NORMAL);
         }
