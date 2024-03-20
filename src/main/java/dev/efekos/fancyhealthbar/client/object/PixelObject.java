@@ -24,9 +24,12 @@ public class PixelObject extends PhysicalHudObject{
         this.color = color;
     }
 
+    public PixelObject(int locX,int locY,HudLocation velocity,Color color){
+        this(locX,locY,velocity.getX(),velocity.getY(),color);
+    }
+
     public PixelObject(int locX,int locY, int vecX,int vecY, Color color) {
-        super(new HudLocation(locX,locY),new HudLocation(vecX,vecY));
-        this.color = color;
+        this(new HudLocation(locX,locY),new HudLocation(vecX,vecY),color);
     }
 
     public static final Identifier TEXTURE_ID = new Identifier(FancyHealthBarClient.MOD_ID,"pixel");
