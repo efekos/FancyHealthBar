@@ -6,6 +6,7 @@ import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
+import dev.isxander.yacl3.impl.controller.DoubleSliderControllerBuilderImpl;
 import dev.isxander.yacl3.impl.controller.IntegerSliderControllerBuilderImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
@@ -13,10 +14,19 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.text.NumberFormat;
+
 public class FancyHealthBarConfig {
 
     @SerialEntry
     private static int pixelSize = 1;
+
+    @SerialEntry
+    private static double velocityMultiplier = 1;
+
+    public static double getVelocityMultiplier() {
+        return velocityMultiplier;
+    }
 
     public static int getPixelSize() {
         return pixelSize;
@@ -34,7 +44,15 @@ public class FancyHealthBarConfig {
                                 .binding(1, () -> pixelSize, newVal -> pixelSize = newVal)
                                 .controller(integerOption -> new IntegerSliderControllerBuilderImpl(integerOption).range(1, 8).step(1).formatValue(value -> Text.literal(value + " Pixels")))
                                 .build())
-                        .build())
+                        .option(Option.<Double>createBuilder()
+                                .name(Text.literal("Velocity Multiplier"))
+                                .description(OptionDescription.of(Text.literal("Velocity multiplier.")))
+                                .binding(1d,() -> velocityMultiplier,v -> velocityMultiplier = v)
+                                .controller(doubleOption -> new DoubleSliderControllerBuilderImpl(doubleOption).range(0d,3d).step(0.1d).formatValue(value -> Text.literal(NumberFormat.getNumberInstance().format(value) +"x")))
+                                .build()
+                        )
+                        .build()
+                )
                 .save(HANDLER::save)
                 .build()
                 .generateScreen(null);

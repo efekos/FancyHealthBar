@@ -80,6 +80,11 @@ public class FancyHealthHud implements HudRenderCallback {
         }
     }
 
-    public static final VelocityProvider HEART_VELOCITY_PROVIDER = (random -> new HudLocation(random.nextInt(21) - 10, Math.max(random.nextInt(16)-5,0)));
+    public static final VelocityProvider HEART_VELOCITY_PROVIDER = (random -> {
+
+        double multiplier = FancyHealthBarConfig.getVelocityMultiplier();
+
+        return new HudLocation((int)((random.nextInt(21) - 10)*multiplier), (int) (Math.max(random.nextInt(16)-5,0)*multiplier));
+    });
 
 }
