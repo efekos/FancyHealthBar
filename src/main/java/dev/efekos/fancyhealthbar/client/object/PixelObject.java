@@ -35,7 +35,7 @@ import net.minecraft.util.Identifier;
 public class PixelObject extends PhysicalHudObject {
 
     private Color color;
-    private int size;
+    private final int size;
 
     public Color getColor() {
         return color;

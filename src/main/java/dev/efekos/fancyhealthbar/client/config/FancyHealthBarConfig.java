@@ -34,6 +34,7 @@ import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import dev.isxander.yacl3.impl.controller.DoubleSliderControllerBuilderImpl;
+import dev.isxander.yacl3.impl.controller.FloatSliderControllerBuilderImpl;
 import dev.isxander.yacl3.impl.controller.IntegerSliderControllerBuilderImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
@@ -50,6 +51,14 @@ public class FancyHealthBarConfig {
 
     @SerialEntry
     private static double velocityMultiplier = 1;
+
+    @SerialEntry
+    private static float slipperiness = 1;
+
+
+    @SerialEntry
+    private static int gravity = 1;
+
 
     public static double getVelocityMultiplier() {
         return velocityMultiplier;
@@ -76,6 +85,20 @@ public class FancyHealthBarConfig {
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.velocity_multiplier.description")))
                                 .binding(1d, () -> velocityMultiplier, v -> velocityMultiplier = v)
                                 .controller(doubleOption -> new DoubleSliderControllerBuilderImpl(doubleOption).range(0d, 3d).step(0.05d).formatValue(value -> Text.translatable("config.fancyhealthbar.velocity_multiplier.format", NumberFormat.getNumberInstance().format(value))))
+                                .build()
+                        )
+                        .option(Option.<Float>createBuilder()
+                                .name(Text.translatable("config.fancyhealthbar.slipperiness"))
+                                .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.slipperiness.description")))
+                                .binding(1f,() -> slipperiness,aFloat -> slipperiness = aFloat)
+                                .controller(floatOption -> new FloatSliderControllerBuilderImpl(floatOption).range(0f,5f).step(0.1f).formatValue(value -> Text.translatable("config.fancyhealthbar.slipperiness.format",NumberFormat.getNumberInstance().format(value))))
+                                .build()
+                        )
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("config.fancyhealthbar.gravity"))
+                                .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.gravity.description")))
+                                .binding(1,() -> gravity,i -> gravity = i)
+                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(-12,12).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.gravity.format",value)))
                                 .build()
                         )
                         .build()
