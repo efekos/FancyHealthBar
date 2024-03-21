@@ -83,11 +83,11 @@ public class PixelObject extends PhysicalHudObject {
 
     @Override
     public int getGravity() {
-        return 1;
+        return FancyHealthBarConfig.getGravity();
     }
 
     @Override
     public double getSlipperiness() {
-        return 0.99;
+        return 0.99*FancyHealthBarConfig.getSlipperiness();
     }
 }

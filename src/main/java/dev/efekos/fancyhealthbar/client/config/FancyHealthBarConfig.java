@@ -59,6 +59,13 @@ public class FancyHealthBarConfig {
     @SerialEntry
     private static int gravity = 1;
 
+    public static float getSlipperiness() {
+        return slipperiness;
+    }
+
+    public static int getGravity() {
+        return gravity;
+    }
 
     public static double getVelocityMultiplier() {
         return velocityMultiplier;
