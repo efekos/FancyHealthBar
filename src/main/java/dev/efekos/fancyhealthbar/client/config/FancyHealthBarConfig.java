@@ -10,6 +10,10 @@ public class FancyHealthBarConfig {
 
     private static int pixelSize = 1;
 
+    public static int getPixelSize() {
+        return pixelSize;
+    }
+
     public static Screen createScreen(){
         return YetAnotherConfigLib.createBuilder()
                 .title(Text.literal("Fancy health bar configuration screen."))
