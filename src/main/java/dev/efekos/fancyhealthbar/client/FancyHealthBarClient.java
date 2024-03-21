@@ -24,5 +24,7 @@ public class FancyHealthBarClient implements ClientModInitializer {
                 client.setScreen(FancyHealthBarConfig.createScreen());
             }
         });
+
+        FancyHealthBarConfig.HANDLER.load();
     }
 }
