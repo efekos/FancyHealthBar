@@ -50,4 +50,8 @@ public class FancyHealthBarConfig {
                     .setJson5(true)
                     .build())
             .build();
+
+    public static Screen createScreen(Screen screen) {
+        return createScreen();
+    }
 }

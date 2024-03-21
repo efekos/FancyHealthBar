@@ -21,6 +21,9 @@
     ],
     "main": [
       "dev.efekos.fancyhealthbar.FancyHealthBar"
+    ],
+    "modmenu": [
+      "dev.efekos.fancyhealthbar.modmenu.FancyHealthBarModMenu"
     ]
   },
   "mixins": [
