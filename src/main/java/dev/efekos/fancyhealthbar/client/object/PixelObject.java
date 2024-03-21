@@ -88,6 +88,6 @@ public class PixelObject extends PhysicalHudObject {
 
     @Override
     public double getSlipperiness() {
-        return 0.99*FancyHealthBarConfig.getSlipperiness();
+        return 0.99 * FancyHealthBarConfig.getSlipperiness();
     }
 }

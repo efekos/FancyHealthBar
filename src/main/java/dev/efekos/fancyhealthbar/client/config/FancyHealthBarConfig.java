@@ -55,7 +55,6 @@ public class FancyHealthBarConfig {
     @SerialEntry
     private static float slipperiness = 1;
 
-
     @SerialEntry
     private static int gravity = 1;
 
@@ -97,15 +96,15 @@ public class FancyHealthBarConfig {
                         .option(Option.<Float>createBuilder()
                                 .name(Text.translatable("config.fancyhealthbar.slipperiness"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.slipperiness.description")))
-                                .binding(1f,() -> slipperiness,aFloat -> slipperiness = aFloat)
-                                .controller(floatOption -> new FloatSliderControllerBuilderImpl(floatOption).range(0f,5f).step(0.1f).formatValue(value -> Text.translatable("config.fancyhealthbar.slipperiness.format",NumberFormat.getNumberInstance().format(value))))
+                                .binding(1f, () -> slipperiness, aFloat -> slipperiness = aFloat)
+                                .controller(floatOption -> new FloatSliderControllerBuilderImpl(floatOption).range(0f, 5f).step(0.1f).formatValue(value -> Text.translatable("config.fancyhealthbar.slipperiness.format", NumberFormat.getNumberInstance().format(value))))
                                 .build()
                         )
                         .option(Option.<Integer>createBuilder()
                                 .name(Text.translatable("config.fancyhealthbar.gravity"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.gravity.description")))
-                                .binding(1,() -> gravity,i -> gravity = i)
-                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(-12,12).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.gravity.format",value)))
+                                .binding(1, () -> gravity, i -> gravity = i)
+                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(-12, 12).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.gravity.format", value)))
                                 .build()
                         )
                         .build()
