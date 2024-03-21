@@ -1,19 +1,19 @@
 {
   "config.fancyhealthbar.category.title": "Fancy Health Bar",
   "config.fancyhealthbar.category.title.tooltip": "Main configuration",
+  "config.fancyhealthbar.gravity": "Gravity",
+  "config.fancyhealthbar.gravity.description": "Controls how fast particles will fall. Negative values will make the particles fly to top of the screen.",
+  "config.fancyhealthbar.gravity.format": "%s",
   "config.fancyhealthbar.pixel_size": "Pixel Size",
   "config.fancyhealthbar.pixel_size.description": "Particles will fill SxS pixels, S being this value.",
   "config.fancyhealthbar.pixel_size.format": "%s Pixels",
-  "config.fancyhealthbar.title": "Fancy health bar configuration screen",
-  "config.fancyhealthbar.velocity_multiplier": "Velocity Multiplier",
-  "config.fancyhealthbar.velocity_multiplier.format": "%sx",
-  "config.fancyhealthbar.velocity_multiplier.description": "Controls how fast particles can come out. Higher values will make the particles split into the entire screen while lower values won't make them move at all.",
-  "key.category.fancyhealthbar": "Fancy Health Bar",
-  "key.fancyhealthbar.config": "Open Configuration",
   "config.fancyhealthbar.slipperiness": "Slipperiness Multiplier",
   "config.fancyhealthbar.slipperiness.description": "Controls how fast particles will go in horizontal direction.",
   "config.fancyhealthbar.slipperiness.format": "%sx",
-  "config.fancyhealthbar.gravity": "Gravity",
-  "config.fancyhealthbar.gravity.description": "Controls how fast particles will fall. Negative values will make the particles fly to top of the screen.",
-  "config.fancyhealthbar.gravity.format": "%s"
+  "config.fancyhealthbar.title": "Fancy health bar configuration screen",
+  "config.fancyhealthbar.velocity_multiplier": "Velocity Multiplier",
+  "config.fancyhealthbar.velocity_multiplier.description": "Controls how fast particles can come out. Higher values will make the particles split into the entire screen while lower values won't make them move at all.",
+  "config.fancyhealthbar.velocity_multiplier.format": "%sx",
+  "key.category.fancyhealthbar": "Fancy Health Bar",
+  "key.fancyhealthbar.config": "Open Configuration"
 }
