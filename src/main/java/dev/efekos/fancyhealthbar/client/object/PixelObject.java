@@ -41,13 +41,18 @@ public class PixelObject extends PhysicalHudObject {
     public void draw(DrawContext context) {
         RenderSystem.setShaderColor(color.getR() / 255f, color.getG() / 255f, color.getB() / 255f, 1f);
 
-        context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY(), size,size);
+        context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY(), size, size);
 
-        if(getVelocity().getY()<-10&&size>1) context.drawGuiTexture(TEXTURE_ID,getLocation().getX(),getLocation().getY()-2,size,1);
-        if(getVelocity().getY()<-12&&size>2) context.drawGuiTexture(TEXTURE_ID,getLocation().getX(),getLocation().getY()-4,size,1);
-        if(getVelocity().getY()<-14&&size>3) context.drawGuiTexture(TEXTURE_ID,getLocation().getX(),getLocation().getY()-8,size,1);
-        if(getVelocity().getY()<-16&&size>4) context.drawGuiTexture(TEXTURE_ID,getLocation().getX(),getLocation().getY()-12,size,1);
-        if(getVelocity().getY()<-18&&size>5) context.drawGuiTexture(TEXTURE_ID,getLocation().getX(),getLocation().getY()-16,size,1);
+        if (getVelocity().getY() < -10 && size > 1)
+            context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY() - 2, size, 1);
+        if (getVelocity().getY() < -12 && size > 2)
+            context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY() - 4, size, 1);
+        if (getVelocity().getY() < -14 && size > 3)
+            context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY() - 8, size, 1);
+        if (getVelocity().getY() < -16 && size > 4)
+            context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY() - 12, size, 1);
+        if (getVelocity().getY() < -18 && size > 5)
+            context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY() - 16, size, 1);
 
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
     }

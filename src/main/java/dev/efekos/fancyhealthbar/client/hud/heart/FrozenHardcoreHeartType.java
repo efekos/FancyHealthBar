@@ -13,15 +13,15 @@ import java.util.Random;
 public class FrozenHardcoreHeartType implements HeartSpawner {
 
     public static final Color[] COLOR_PALETTE = {
-            Color.of(76,86,216),  // color at the top - 0
-            Color.of(167,246,254), // two pixels at 2nd row -1
-            Color.of(128,229,239), // center wrap -2
-            Color.of(168,247,255), // dark of center & sides of 4th row -3
-            Color.of(255,252,255), // light of center -4
-            Color.of(76,186,216), // center -5
-            Color.of(1,190,242), // shadow -6
-            Color.of(107,148,157), // hc top -7
-            Color.of(103,132,140), // hc bottom -8
+            Color.of(76, 86, 216),  // color at the top - 0
+            Color.of(167, 246, 254), // two pixels at 2nd row -1
+            Color.of(128, 229, 239), // center wrap -2
+            Color.of(168, 247, 255), // dark of center & sides of 4th row -3
+            Color.of(255, 252, 255), // light of center -4
+            Color.of(76, 186, 216), // center -5
+            Color.of(1, 190, 242), // shadow -6
+            Color.of(107, 148, 157), // hc top -7
+            Color.of(103, 132, 140), // hc bottom -8
     };
 
 
@@ -76,11 +76,11 @@ public class FrozenHardcoreHeartType implements HeartSpawner {
 
     @Override
     public List<HudObject> spawnEndHalf(int x, int y, VelocityProvider provider) {
-        return spawnFull(x,y,provider).stream().filter(hudObject -> hudObject.getLocation().getX()>=x+4).toList();
+        return spawnFull(x, y, provider).stream().filter(hudObject -> hudObject.getLocation().getX() >= x + 4).toList();
     }
 
     @Override
     public List<HudObject> spawnStartHalf(int x, int y, VelocityProvider provider) {
-        return spawnFull(x,y,provider).stream().filter(hudObject -> hudObject.getLocation().getX()<=x+3).toList();
+        return spawnFull(x, y, provider).stream().filter(hudObject -> hudObject.getLocation().getX() <= x + 3).toList();
     }
 }

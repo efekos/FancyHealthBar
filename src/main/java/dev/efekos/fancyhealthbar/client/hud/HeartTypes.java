@@ -15,11 +15,11 @@ public class HeartTypes {
     public static final WitherHardcoreHeartType HARDCORE_WITHER = new WitherHardcoreHeartType();
 
 
-    public static HeartSpawner get(boolean hardcore,boolean poison,boolean frozen,boolean wither) {
-        if(hardcore){
-            return poison ? HARDCORE_POISON : (frozen?HARDCORE_FROZEN:(wither?HARDCORE_WITHER:NORMAL));
+    public static HeartSpawner get(boolean hardcore, boolean poison, boolean frozen, boolean wither) {
+        if (hardcore) {
+            return poison ? HARDCORE_POISON : (frozen ? HARDCORE_FROZEN : (wither ? HARDCORE_WITHER : HARDCORE_NORMAL));
         } else {
-            return poison ? POISON : (frozen?FROZEN:(wither?WITHER:NORMAL));
+            return poison ? POISON : (frozen ? FROZEN : (wither ? WITHER : NORMAL));
         }
     }
 

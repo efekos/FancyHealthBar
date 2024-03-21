@@ -60,14 +60,14 @@ public class FancyHealthHud implements HudRenderCallback {
         ClientPlayerEntity player = client.player;
 
         boolean hardcore = client.world.getLevelProperties().isHardcore();
-        boolean poison = player.getStatusEffect(StatusEffects.POISON)!=null;
-        boolean wither = player.getStatusEffect(StatusEffects.WITHER)!=null;
+        boolean poison = player.getStatusEffect(StatusEffects.POISON) != null;
+        boolean wither = player.getStatusEffect(StatusEffects.WITHER) != null;
         boolean frozen = player.getFrozenTicks() >= 140;
 
-        HeartSpawner spawner = HeartTypes.get(hardcore,poison,frozen,wither);
+        HeartSpawner spawner = HeartTypes.get(hardcore, poison, frozen, wither);
 
         for (int i = 0; i < (int) (difference / 2); i++) {
-            OBJECTS.addAll(spawner.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY,HEART_VELOCITY_PROVIDER));
+            OBJECTS.addAll(spawner.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
         }
 
         if (difference % 2 != 0) { // so there is a half health loss that should be rendered
@@ -84,7 +84,7 @@ public class FancyHealthHud implements HudRenderCallback {
 
         double multiplier = FancyHealthBarConfig.getVelocityMultiplier();
 
-        return new HudLocation((int)((random.nextInt(21) - 10)*multiplier), (int) (Math.max(random.nextInt(16)-5,0)*multiplier));
+        return new HudLocation((int) ((random.nextInt(21) - 10) * multiplier), (int) (Math.max(random.nextInt(16) - 5, 0) * multiplier));
     });
 
 }

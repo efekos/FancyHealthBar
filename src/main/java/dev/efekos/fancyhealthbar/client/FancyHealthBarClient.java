@@ -20,7 +20,7 @@ public class FancyHealthBarClient implements ClientModInitializer {
         FancyHealthBarConfig.CONFIG_KEY = KeyBindingHelper.registerKeyBinding(FancyHealthBarConfig.CONFIG_KEY);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if(FancyHealthBarConfig.CONFIG_KEY.wasPressed()){
+            if (FancyHealthBarConfig.CONFIG_KEY.wasPressed()) {
                 client.setScreen(FancyHealthBarConfig.createScreen());
             }
         });

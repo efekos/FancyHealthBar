@@ -14,10 +14,10 @@ public class PoisonHardcoreHeartType implements HeartSpawner {
 
     public List<HudObject> spawnFull(int x, int y, VelocityProvider velocityProvider) {
 
-        Color mainColor = new Color(148,120,24);
-        Color shadowColor = new Color(104,83,8);
+        Color mainColor = new Color(148, 120, 24);
+        Color shadowColor = new Color(104, 83, 8);
         Color lightColor = new Color(139, 135, 18);
-        Color darkColor = new Color(96,87,83);
+        Color darkColor = new Color(96, 87, 83);
 
         Random random = new Random();
 
@@ -82,10 +82,10 @@ public class PoisonHardcoreHeartType implements HeartSpawner {
 
     public List<HudObject> spawnStartHalf(int x, int y, VelocityProvider velocityProvider) {
 
-        Color mainColor = new Color(148,120,24);
-        Color shadowColor = new Color(104,83,8);
+        Color mainColor = new Color(148, 120, 24);
+        Color shadowColor = new Color(104, 83, 8);
         Color lightColor = new Color(139, 135, 18);
-        Color darkColor = new Color(96,87,83);
+        Color darkColor = new Color(96, 87, 83);
 
         Random random = new Random();
 
@@ -128,10 +128,10 @@ public class PoisonHardcoreHeartType implements HeartSpawner {
 
     public List<HudObject> spawnEndHalf(int x, int y, VelocityProvider velocityProvider) {
 
-        Color mainColor = new Color(148,120,24);
-        Color shadowColor = new Color(104,83,8);
+        Color mainColor = new Color(148, 120, 24);
+        Color shadowColor = new Color(104, 83, 8);
         Color lightColor = new Color(139, 135, 18);
-        Color darkColor = new Color(96,87,83);
+        Color darkColor = new Color(96, 87, 83);
 
 
         Random random = new Random();
@@ -139,8 +139,6 @@ public class PoisonHardcoreHeartType implements HeartSpawner {
         return Arrays.asList(
                 new PixelObject(x + 4, y, velocityProvider.velocity(random), lightColor),
                 new PixelObject(x + 5, y, velocityProvider.velocity(random), lightColor),
-                //6
-                //7
 
                 new PixelObject(x + 4, y + 1, velocityProvider.velocity(random), mainColor),
                 new PixelObject(x + 5, y + 1, velocityProvider.velocity(random), darkColor),
@@ -156,7 +154,6 @@ public class PoisonHardcoreHeartType implements HeartSpawner {
 
                 new PixelObject(x + 4, y + 4, velocityProvider.velocity(random), mainColor),
                 new PixelObject(x + 5, y + 4, velocityProvider.velocity(random), shadowColor),
-                //7
 
                 new PixelObject(x + 4, y + 5, velocityProvider.velocity(random), shadowColor)
         );

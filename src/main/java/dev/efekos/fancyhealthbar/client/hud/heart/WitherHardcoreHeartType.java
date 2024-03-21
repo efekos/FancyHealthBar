@@ -83,12 +83,12 @@ public class WitherHardcoreHeartType implements HeartSpawner {
 
     @Override
     public List<HudObject> spawnEndHalf(int x, int y, VelocityProvider provider) {
-        return spawnFull(x,y,provider).stream().filter(hudObject -> hudObject.getLocation().getX()>=x+4).toList();
+        return spawnFull(x, y, provider).stream().filter(hudObject -> hudObject.getLocation().getX() >= x + 4).toList();
     }
 
     @Override
     public List<HudObject> spawnStartHalf(int x, int y, VelocityProvider provider) {
-        return spawnFull(x,y,provider).stream().filter(hudObject -> hudObject.getLocation().getX()<=x+3).toList();
+        return spawnFull(x, y, provider).stream().filter(hudObject -> hudObject.getLocation().getX() <= x + 3).toList();
     }
 
 }
