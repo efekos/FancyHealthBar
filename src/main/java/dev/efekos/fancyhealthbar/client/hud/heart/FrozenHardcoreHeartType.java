@@ -46,7 +46,7 @@ public class FrozenHardcoreHeartType implements HeartSpawner {
 
                 new PixelObject(x, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[0]),
                 new PixelObject(x + 1, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[0]),
-                new PixelObject(x + 2, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[9]),
+                new PixelObject(x + 2, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[8]),
                 new PixelObject(x + 3, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[3]),
                 new PixelObject(x + 4, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[7]),
                 new PixelObject(x + 5, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[8]),
