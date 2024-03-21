@@ -1,4 +1,13 @@
 {
-  "key.fancyhealthbar.config": "Open Config",
-  "key.category.fancyhealthbar": "Fancy Health Bar"
+  "config.fancyhealthbar.category.title": "Fancy Health Bar",
+  "config.fancyhealthbar.category.title.tooltip": "Main configuration",
+  "config.fancyhealthbar.pixel_size": "Pixel Size",
+  "config.fancyhealthbar.pixel_size.description": "Size of the particles generated when an heart is lost.",
+  "config.fancyhealthbar.pixel_size.format": "%s Pixels",
+  "config.fancyhealthbar.title": "Fancy health bar configuration screen",
+  "config.fancyhealthbar.velocity_multiplier": "Velocity Multiplier",
+  "config.fancyhealthbar.velocity_multiplier.format": "%sx",
+  "config.fancyhealthbar.velocity_multiplier.description": "A multiplier value that is applied to particles.",
+  "key.category.fancyhealthbar": "Fancy Health Bar",
+  "key.fancyhealthbar.config": "Open Configuration"
 }
