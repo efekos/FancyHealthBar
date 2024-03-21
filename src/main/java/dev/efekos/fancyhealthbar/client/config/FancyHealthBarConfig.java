@@ -75,7 +75,7 @@ public class FancyHealthBarConfig {
                                 .name(Text.translatable("config.fancyhealthbar.velocity_multiplier"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.velocity_multiplier.description")))
                                 .binding(1d, () -> velocityMultiplier, v -> velocityMultiplier = v)
-                                .controller(doubleOption -> new DoubleSliderControllerBuilderImpl(doubleOption).range(0d, 3d).step(0.1d).formatValue(value -> Text.translatable("config.fancyhealthbar.velocity_multiplier.format", NumberFormat.getNumberInstance().format(value))))
+                                .controller(doubleOption -> new DoubleSliderControllerBuilderImpl(doubleOption).range(0d, 3d).step(0.05d).formatValue(value -> Text.translatable("config.fancyhealthbar.velocity_multiplier.format", NumberFormat.getNumberInstance().format(value))))
                                 .build()
                         )
                         .build()
