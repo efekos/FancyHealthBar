@@ -61,7 +61,8 @@ public class FancyHealthHud implements HudRenderCallback {
 
             if (gameTicks % 5 == 0 && notPaused) object.tick();
 
-            if (object.getLocation().getX() > drawContext.getScaledWindowWidth() + 5 || object.getLocation().getY() > drawContext.getScaledWindowHeight() + 5) {
+            if (object.getLocation().getX() > drawContext.getScaledWindowWidth() + 5 || object.getLocation().getY() > drawContext.getScaledWindowHeight() + 5 ||
+                object.getLocation().getX() < -5 || object.getLocation().getY() < -5) {
                 OBJECTS.remove(object);
                 continue;
             }
@@ -91,16 +92,23 @@ public class FancyHealthHud implements HudRenderCallback {
         HeartSpawner spawner = HeartTypes.get(hardcore, poison, frozen, wither);
 
         for (int i = 0; i < (int) (difference / 2); i++) {
-            OBJECTS.addAll(spawner.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
+
+            for (int j = 0; j < FancyHealthBarConfig.getCountMultiplier(); j++) {
+                OBJECTS.addAll(spawner.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
+            }
+
         }
 
         if (difference % 2 != 0) { // so there is a half health loss that should be rendered
 
             if (Math.round(newHeart) % 2 == 0) // If there is a half heart lost, but the new health doesn't contain a half heart, then there should be a startHalf heart.
-                OBJECTS.addAll(spawner.spawnStartHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
+                for (int i = 0; i < FancyHealthBarConfig.getCountMultiplier(); i++) {
+                    OBJECTS.addAll(spawner.spawnStartHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
+                }
             else
-                OBJECTS.addAll(spawner.spawnEndHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
-
+                for (int i = 0; i < FancyHealthBarConfig.getCountMultiplier(); i++) {
+                    OBJECTS.addAll(spawner.spawnEndHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
+                }
         }
     }
 

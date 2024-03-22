@@ -77,6 +77,10 @@ public class FancyHealthBarConfig {
         return pixelSize;
     }
 
+    public static int getCountMultiplier() {
+        return countMultiplier;
+    }
+
     public static Screen createScreen() {
         return YetAnotherConfigLib.createBuilder()
                 .title(Text.translatable("config.fancyhealthbar.title"))

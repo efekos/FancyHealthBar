@@ -17,6 +17,6 @@
   "key.category.fancyhealthbar": "Fancy Health Bar",
   "key.fancyhealthbar.config": "Open Configuration",
   "config.fancyhealthbar.count_multiplier": "Particle Count Multiplier",
-  "config.fancyhealthbar.count_multiplier.description": "Controls how many particles will pop out. default and minimum value (1x) means 32 particles.",
+  "config.fancyhealthbar.count_multiplier.description": "Controls how many particles will pop out. default and minimum value (1x) means 32 particles per full health.",
   "config.fancyhealthbar.count_multiplier.format": "%sx"
 }
