@@ -84,6 +84,10 @@ public class FancyHealthBarConfig {
         return countMultiplier;
     }
 
+    public static int getMaximumObjects() {
+        return maximumObjects;
+    }
+
     public static Screen createScreen() {
         return YetAnotherConfigLib.createBuilder()
                 .title(Text.translatable("config.fancyhealthbar.title"))

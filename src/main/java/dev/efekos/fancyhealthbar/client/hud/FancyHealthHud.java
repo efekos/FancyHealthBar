@@ -26,6 +26,7 @@ package dev.efekos.fancyhealthbar.client.hud;
 
 import dev.efekos.fancyhealthbar.client.config.FancyHealthBarConfig;
 import dev.efekos.fancyhealthbar.client.object.HudObject;
+import dev.efekos.fancyhealthbar.client.object.ObjectList;
 import dev.efekos.fancyhealthbar.client.utils.HeartSpawner;
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 import dev.efekos.fancyhealthbar.client.utils.VelocityProvider;
@@ -41,7 +42,7 @@ import java.util.List;
 
 public class FancyHealthHud implements HudRenderCallback {
 
-    public static List<HudObject> OBJECTS = new ArrayList<>();
+    public static ObjectList OBJECTS = new ObjectList();
 
     private static int gameTicks = 0;
 
@@ -116,7 +117,7 @@ public class FancyHealthHud implements HudRenderCallback {
 
         double multiplier = FancyHealthBarConfig.getVelocityMultiplier();
 
-        return new HudLocation((int) ((random.nextInt(21) - 10) * multiplier), (int) (Math.max(random.nextInt(16) - 5, 0) * multiplier));
+        return new HudLocation((int) ((random.nextInt(31) - 15) * multiplier), (int) (Math.max(random.nextInt(31) - 15, 0) * multiplier));
     });
 
 }
