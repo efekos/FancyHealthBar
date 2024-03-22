@@ -117,7 +117,7 @@ public class FancyHealthHud implements HudRenderCallback {
 
         double multiplier = FancyHealthBarConfig.getVelocityMultiplier();
 
-        return new HudLocation((int) ((random.nextInt(31) - 15) * multiplier), (int) (Math.max(random.nextInt(31) - 15, 0) * multiplier));
+        return new HudLocation((int) ((random.nextInt(21) - 10) * multiplier), (int) (Math.max(random.nextInt(16)-5, 0) * multiplier));
     });
 
 }
