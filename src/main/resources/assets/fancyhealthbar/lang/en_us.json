@@ -21,5 +21,8 @@
   "config.fancyhealthbar.count_multiplier.format": "%sx",
   "config.fancyhealthbar.maximum_objects": "Maximum Objects",
   "config.fancyhealthbar.maximum_objects.description": "Maximum amount of objects that can exist at the same time. New objects won't be added when this limit is reached.",
-  "config.fancyhealthbar.maximum_objects.format": "%s Objects"
+  "config.fancyhealthbar.maximum_objects.format": "%s Objects",
+  "config.fancyhealthbar.maximum_ticks": "Timeout",
+  "config.fancyhealthbar.maximum_ticks.description": "Controls maximum time that a particle can stay in the screen.",
+  "config.fancyhealthbar.maximum_ticks.format": "%s seconds"
 }

@@ -64,6 +64,9 @@ public class FancyHealthBarConfig {
     @SerialEntry
     private static int maximumObjects = 1024;
 
+    @SerialEntry
+    private static int maximumTicks = 100;
+
     public static float getSlipperiness() {
         return slipperiness;
     }
@@ -133,6 +136,13 @@ public class FancyHealthBarConfig {
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.maximum_objects.description")))
                                 .binding(1024,()->maximumObjects,integer -> maximumObjects = integer)
                                 .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(64,4096).step(64).formatValue(value -> Text.translatable("config.fancyhealthbar.maximum_objects.format",value)))
+                                .build()
+                        )
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("config.fancyhealthbar.maximum_ticks"))
+                                .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.maximum_ticks.description")))
+                                .binding(100,() -> maximumTicks,i -> maximumTicks = i)
+                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(20,500).step(2).formatValue(value -> Text.translatable("config.fancyhealthbar.maximum_ticks.format",NumberFormat.getNumberInstance().format(value/20))))
                                 .build()
                         )
                         .build()
