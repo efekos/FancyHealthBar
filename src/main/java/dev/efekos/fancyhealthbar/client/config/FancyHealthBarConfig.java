@@ -128,7 +128,7 @@ public class FancyHealthBarConfig {
                                 .name(Text.translatable("config.fancyhealthbar.maximum_objects"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.maximum_objects.description")))
                                 .binding(1024,()->maximumObjects,integer -> maximumObjects = integer)
-                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(64,4096).step(32).formatValue(value -> Text.translatable("config.fancyhealthbar.maximum_objects.format",value)))
+                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(64,4096).step(64).formatValue(value -> Text.translatable("config.fancyhealthbar.maximum_objects.format",value)))
                                 .build()
                         )
                         .build()
