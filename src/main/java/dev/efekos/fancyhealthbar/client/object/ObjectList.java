@@ -33,15 +33,15 @@ public class ObjectList extends ArrayList<HudObject> {
 
     @Override
     public boolean add(HudObject hudObject) {
-        if(size()< FancyHealthBarConfig.getMaximumObjects()) return super.add(hudObject);
-        return false;
+        if(size()>= FancyHealthBarConfig.getMaximumObjects()) return false;
+        return super.add(hudObject);
     }
 
     @Override
     public boolean addAll(Collection<? extends HudObject> c) {
         boolean b = true;
         for (HudObject object : c) {
-            b = b&&super.add(object);
+            b = b&&this.add(object);
         }
         return b;
     }
