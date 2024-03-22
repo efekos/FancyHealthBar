@@ -58,6 +58,9 @@ public class FancyHealthBarConfig {
     @SerialEntry
     private static int gravity = 1;
 
+    @SerialEntry
+    private static int countMultiplier = 1;
+
     public static float getSlipperiness() {
         return slipperiness;
     }
@@ -105,6 +108,13 @@ public class FancyHealthBarConfig {
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.gravity.description")))
                                 .binding(1, () -> gravity, i -> gravity = i)
                                 .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(-12, 12).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.gravity.format", value)))
+                                .build()
+                        )
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("config.fancyhealthbar.count_multiplier"))
+                                .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.count_multiplier.description")))
+                                .binding(1,() -> countMultiplier,i->countMultiplier = i)
+                                .controller(i-> new IntegerSliderControllerBuilderImpl(i).range(1,8).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.count_multiplier.format",value)))
                                 .build()
                         )
                         .build()
