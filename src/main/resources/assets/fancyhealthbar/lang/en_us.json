@@ -18,5 +18,8 @@
   "key.fancyhealthbar.config": "Open Configuration",
   "config.fancyhealthbar.count_multiplier": "Particle Count Multiplier",
   "config.fancyhealthbar.count_multiplier.description": "Controls how many particles will pop out. default and minimum value (1x) means 32 particles per full health.",
-  "config.fancyhealthbar.count_multiplier.format": "%sx"
+  "config.fancyhealthbar.count_multiplier.format": "%sx",
+  "config.fancyhealthbar.maximum_objects": "Maximum Objects",
+  "config.fancyhealthbar.maximum_objects.description": "Maximum amount of objects that can exist at the same time. New objects won't be added when this limit is reached.",
+  "config.fancyhealthbar.maximum_objects.format": "%s Objects"
 }

@@ -61,6 +61,9 @@ public class FancyHealthBarConfig {
     @SerialEntry
     private static int countMultiplier = 1;
 
+    @SerialEntry
+    private static int maximumObjects = 1024;
+
     public static float getSlipperiness() {
         return slipperiness;
     }
@@ -119,6 +122,13 @@ public class FancyHealthBarConfig {
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.count_multiplier.description")))
                                 .binding(1,() -> countMultiplier,i->countMultiplier = i)
                                 .controller(i-> new IntegerSliderControllerBuilderImpl(i).range(1,8).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.count_multiplier.format",value)))
+                                .build()
+                        )
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("config.fancyhealthbar.maximum_objects"))
+                                .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.maximum_objects.description")))
+                                .binding(1024,()->maximumObjects,integer -> maximumObjects = integer)
+                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(64,4096).step(32).formatValue(value -> Text.translatable("config.fancyhealthbar.maximum_objects.format",value)))
                                 .build()
                         )
                         .build()
