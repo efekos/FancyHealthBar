@@ -47,7 +47,7 @@ public abstract class PhysicalHudObject implements HudObject {
         int velocityX = velocity.getX();
         int velocityY = velocity.getY();
 
-        velocityX = (int) (velocityX * getSlipperiness());
+        velocityX = (int) (velocityX * getSlipperiness() * Math.min(0.9d,Math.random()+0.25d));
         velocityY -= getGravity();
 
         setVelocity(new HudLocation(velocityX, velocityY));

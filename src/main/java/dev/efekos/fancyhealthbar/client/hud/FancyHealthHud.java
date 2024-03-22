@@ -62,8 +62,8 @@ public class FancyHealthHud implements HudRenderCallback {
 
             if (gameTicks % 5 == 0 && notPaused) object.tick();
 
-            if (object.getLocation().getX() > drawContext.getScaledWindowWidth() + 5 || object.getLocation().getY() > drawContext.getScaledWindowHeight() + 5 ||
-                object.getLocation().getX() < -5 || object.getLocation().getY() < -5) {
+            if (object.getLocation().getX() > drawContext.getScaledWindowWidth() + 16 || object.getLocation().getY() > drawContext.getScaledWindowHeight() + 16 ||
+                object.getLocation().getX() < -16 || object.getLocation().getY() < -128) {
                 OBJECTS.remove(object);
                 continue;
             }
