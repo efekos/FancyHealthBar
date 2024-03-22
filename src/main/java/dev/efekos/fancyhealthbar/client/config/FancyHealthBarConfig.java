@@ -91,6 +91,10 @@ public class FancyHealthBarConfig {
         return maximumObjects;
     }
 
+    public static int getMaximumTicks() {
+        return maximumTicks;
+    }
+
     public static Screen createScreen() {
         return YetAnotherConfigLib.createBuilder()
                 .title(Text.translatable("config.fancyhealthbar.title"))
@@ -142,7 +146,7 @@ public class FancyHealthBarConfig {
                                 .name(Text.translatable("config.fancyhealthbar.maximum_ticks"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.maximum_ticks.description")))
                                 .binding(100,() -> maximumTicks,i -> maximumTicks = i)
-                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(20,500).step(2).formatValue(value -> Text.translatable("config.fancyhealthbar.maximum_ticks.format",NumberFormat.getNumberInstance().format(value/20))))
+                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(20,240).step(4).formatValue(value -> Text.translatable("config.fancyhealthbar.maximum_ticks.format",NumberFormat.getNumberInstance().format(value/20d))))
                                 .build()
                         )
                         .build()

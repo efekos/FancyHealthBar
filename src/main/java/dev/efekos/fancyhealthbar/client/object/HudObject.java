@@ -34,4 +34,6 @@ public interface HudObject {
     HudLocation getLocation();
 
     void tick();
+
+    int getLifetime();
 }

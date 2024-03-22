@@ -33,6 +33,7 @@ public abstract class PhysicalHudObject implements HudObject {
     public abstract int getGravity();
 
     public abstract double getSlipperiness();
+    private int lifetime;
 
 
     public PhysicalHudObject(HudLocation location, HudLocation velocity) {
@@ -51,7 +52,12 @@ public abstract class PhysicalHudObject implements HudObject {
         velocityY -= getGravity();
 
         setVelocity(new HudLocation(velocityX, velocityY));
+        lifetime++;
+    }
 
+    @Override
+    public int getLifetime() {
+        return lifetime;
     }
 
     @Override
