@@ -67,6 +67,9 @@ public class FancyHealthBarConfig {
     @SerialEntry
     private static int maximumTicks = 100;
 
+    @SerialEntry
+    private static int updateInterval = 5;
+
     public static float getSlipperiness() {
         return slipperiness;
     }
@@ -95,6 +98,10 @@ public class FancyHealthBarConfig {
         return maximumTicks;
     }
 
+    public static int getUpdateInterval() {
+        return updateInterval;
+    }
+
     public static Screen createScreen() {
         return YetAnotherConfigLib.createBuilder()
                 .title(Text.translatable("config.fancyhealthbar.title"))
@@ -104,49 +111,56 @@ public class FancyHealthBarConfig {
                         .option(Option.<Integer>createBuilder()
                                 .name(Text.translatable("config.fancyhealthbar.pixel_size"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.pixel_size.description")))
-                                .binding(1, () -> pixelSize, newVal -> pixelSize = newVal)
+                                .binding(1, FancyHealthBarConfig::getPixelSize, newVal -> pixelSize = newVal)
                                 .controller(integerOption -> new IntegerSliderControllerBuilderImpl(integerOption).range(1, 8).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.pixel_size.format", value)))
                                 .build())
                         .option(Option.<Double>createBuilder()
                                 .name(Text.translatable("config.fancyhealthbar.velocity_multiplier"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.velocity_multiplier.description")))
-                                .binding(1d, () -> velocityMultiplier, v -> velocityMultiplier = v)
+                                .binding(1d, FancyHealthBarConfig::getVelocityMultiplier, v -> velocityMultiplier = v)
                                 .controller(doubleOption -> new DoubleSliderControllerBuilderImpl(doubleOption).range(0d, 3d).step(0.05d).formatValue(value -> Text.translatable("config.fancyhealthbar.velocity_multiplier.format", NumberFormat.getNumberInstance().format(value))))
                                 .build()
                         )
                         .option(Option.<Float>createBuilder()
                                 .name(Text.translatable("config.fancyhealthbar.slipperiness"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.slipperiness.description")))
-                                .binding(1f, () -> slipperiness, aFloat -> slipperiness = aFloat)
+                                .binding(1f, FancyHealthBarConfig::getSlipperiness, aFloat -> slipperiness = aFloat)
                                 .controller(floatOption -> new FloatSliderControllerBuilderImpl(floatOption).range(0f, 5f).step(0.1f).formatValue(value -> Text.translatable("config.fancyhealthbar.slipperiness.format", NumberFormat.getNumberInstance().format(value))))
                                 .build()
                         )
                         .option(Option.<Integer>createBuilder()
                                 .name(Text.translatable("config.fancyhealthbar.gravity"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.gravity.description")))
-                                .binding(1, () -> gravity, i -> gravity = i)
+                                .binding(1, FancyHealthBarConfig::getGravity, i -> gravity = i)
                                 .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(-12, 12).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.gravity.format", value)))
                                 .build()
                         )
                         .option(Option.<Integer>createBuilder()
                                 .name(Text.translatable("config.fancyhealthbar.count_multiplier"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.count_multiplier.description")))
-                                .binding(1,() -> countMultiplier,i->countMultiplier = i)
+                                .binding(1,FancyHealthBarConfig::getCountMultiplier,i->countMultiplier = i)
                                 .controller(i-> new IntegerSliderControllerBuilderImpl(i).range(1,8).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.count_multiplier.format",value)))
                                 .build()
                         )
                         .option(Option.<Integer>createBuilder()
                                 .name(Text.translatable("config.fancyhealthbar.maximum_objects"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.maximum_objects.description")))
-                                .binding(1024,()->maximumObjects,integer -> maximumObjects = integer)
+                                .binding(1024,FancyHealthBarConfig::getMaximumObjects,integer -> maximumObjects = integer)
                                 .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(64,4096).step(64).formatValue(value -> Text.translatable("config.fancyhealthbar.maximum_objects.format",value)))
                                 .build()
                         )
                         .option(Option.<Integer>createBuilder()
                                 .name(Text.translatable("config.fancyhealthbar.maximum_ticks"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.maximum_ticks.description")))
-                                .binding(100,() -> maximumTicks,i -> maximumTicks = i)
+                                .binding(100,FancyHealthBarConfig::getMaximumTicks,i -> maximumTicks = i)
                                 .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(20,240).step(4).formatValue(value -> Text.translatable("config.fancyhealthbar.maximum_ticks.format",NumberFormat.getNumberInstance().format(value/20d))))
+                                .build()
+                        )
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("config.fancyhealthbar.update_interval"))
+                                .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.update_interval.description")))
+                                .binding(5,FancyHealthBarConfig::getUpdateInterval,integer -> updateInterval = integer)
+                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(2,30).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.update_interval.format",NumberFormat.getNumberInstance().format(value/20d))))
                                 .build()
                         )
                         .build()
