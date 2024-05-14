@@ -29,12 +29,10 @@ import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 public abstract class PhysicalHudObject implements HudObject {
     private HudLocation location;
     private HudLocation velocity;
-
-    public abstract int getGravity();
-
-    public abstract double getSlipperiness();
     private int lifetime;
 
+    public abstract int getGravity();
+    public abstract double getSlipperiness();
 
     public PhysicalHudObject(HudLocation location, HudLocation velocity) {
         this.location = location;
@@ -48,7 +46,7 @@ public abstract class PhysicalHudObject implements HudObject {
         int velocityX = velocity.getX();
         int velocityY = velocity.getY();
 
-        velocityX = (int) (velocityX * getSlipperiness() * Math.min(0.9d,Math.random()+0.25d));
+        velocityX = (int) (velocityX * getSlipperiness() * Math.max(0.8d,Math.random()*1.5d));
         velocityY -= getGravity();
 
         setVelocity(new HudLocation(velocityX, velocityY));
