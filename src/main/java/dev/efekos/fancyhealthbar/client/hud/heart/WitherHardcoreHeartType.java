@@ -38,10 +38,10 @@ public class WitherHardcoreHeartType implements HeartSpawner {
 
     public List<HudObject> spawnFull(int x, int y, VelocityProvider velocityProvider) {
 
-        Color mainColor = new Color(43,43,43);
-        Color shadowColor = new Color(32,32,32);
-        Color borderColor = new Color(59,19,19);
-        Color hcColor = new Color(203,203,203);
+        Color mainColor = new Color(43, 43, 43);
+        Color shadowColor = new Color(32, 32, 32);
+        Color borderColor = new Color(59, 19, 19);
+        Color hcColor = new Color(203, 203, 203);
 
         Random random = new Random();
 

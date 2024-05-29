@@ -40,7 +40,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends LivingEntity {
 
-    @Shadow public abstract boolean isMainPlayer();
+    @Shadow
+    public abstract boolean isMainPlayer();
 
     public ClientPlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -48,7 +49,7 @@ public abstract class ClientPlayerEntityMixin extends LivingEntity {
 
     @Inject(method = "damage", at = @At("HEAD"))
     public void onDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if(!this.isMainPlayer()) return;
+        if (!this.isMainPlayer()) return;
         if (isInvulnerableTo(source)) return;
         if (getAbsorptionAmount() != 0) {
             if (getAbsorptionAmount() - amount <= 0)

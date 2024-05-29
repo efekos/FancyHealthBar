@@ -38,7 +38,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FancyHealthHud implements HudRenderCallback {
 
@@ -63,7 +62,7 @@ public class FancyHealthHud implements HudRenderCallback {
             if (gameTicks % FancyHealthBarConfig.getUpdateInterval() == 0 && notPaused) object.tick();
 
             if (object.getLocation().getX() > drawContext.getScaledWindowWidth() + 16 || object.getLocation().getY() > drawContext.getScaledWindowHeight() + 16 ||
-                object.getLocation().getX() < -16 || object.getLocation().getY() < -128 || object.getLifetime()>=FancyHealthBarConfig.getMaximumTicks()) {
+                    object.getLocation().getX() < -16 || object.getLocation().getY() < -128 || object.getLifetime() >= FancyHealthBarConfig.getMaximumTicks()) {
                 OBJECTS.remove(object);
                 continue;
             }
@@ -117,7 +116,7 @@ public class FancyHealthHud implements HudRenderCallback {
 
         double multiplier = FancyHealthBarConfig.getVelocityMultiplier();
 
-        return new HudLocation((int) ((random.nextInt(21) - 10) * multiplier), (int) (Math.max(random.nextInt(16)-5, 0) * multiplier));
+        return new HudLocation((int) ((random.nextInt(21) - 10) * multiplier), (int) (Math.max(random.nextInt(16) - 5, 0) * multiplier));
     });
 
 }
