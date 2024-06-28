@@ -33,7 +33,7 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation("maven.modrinth:yacl:3.5.0+1.21-fabric")
+    modImplementation("dev.isxander:yet-another-config-lib:3.5.0+1.21-fabric")
     modImplementation "maven.modrinth:modmenu:11.0.0"
 
 }
