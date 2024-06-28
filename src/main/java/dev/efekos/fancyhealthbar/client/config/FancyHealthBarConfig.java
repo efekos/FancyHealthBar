@@ -173,7 +173,7 @@ public class FancyHealthBarConfig {
     public static KeyBinding CONFIG_KEY = new KeyBinding("key.fancyhealthbar.config", 76, "key.category.fancyhealthbar");
 
     public static ConfigClassHandler<FancyHealthBarConfig> HANDLER = ConfigClassHandler.createBuilder(FancyHealthBarConfig.class)
-            .id(new Identifier(FancyHealthBarClient.MOD_ID, "config"))
+            .id(Identifier.of(FancyHealthBarClient.MOD_ID, "config"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
                     .setPath(FabricLoader.getInstance().getConfigDir().resolve("fancyhealthbar.json5"))
                     .appendGsonBuilder(GsonBuilder::setPrettyPrinting)

@@ -59,7 +59,7 @@ public class PixelObject extends PhysicalHudObject {
         this(new HudLocation(locX, locY), new HudLocation(vecX, vecY), color);
     }
 
-    public static final Identifier TEXTURE_ID = new Identifier(FancyHealthBarClient.MOD_ID, "pixel");
+    public static final Identifier TEXTURE_ID = Identifier.of(FancyHealthBarClient.MOD_ID, "pixel");
 
     @Override
     public void draw(DrawContext context) {

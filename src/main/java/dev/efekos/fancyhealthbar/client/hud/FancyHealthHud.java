@@ -34,6 +34,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
 
@@ -47,31 +48,6 @@ public class FancyHealthHud implements HudRenderCallback {
 
     private int lastHeartStartX;
     private int lastHeartStartY;
-
-    @Override
-    public void onHudRender(DrawContext drawContext, float tickDelta) {
-
-        MinecraftClient client = MinecraftClient.getInstance();
-        boolean notPaused = !client.isPaused();
-
-        lastHeartStartY = drawContext.getScaledWindowHeight() - 38;
-        lastHeartStartX = (drawContext.getScaledWindowWidth() / 2) - 90;
-
-        for (HudObject object : new ArrayList<>(OBJECTS)) {
-
-            if (gameTicks % FancyHealthBarConfig.getUpdateInterval() == 0 && notPaused) object.tick();
-
-            if (object.getLocation().getX() > drawContext.getScaledWindowWidth() + 16 || object.getLocation().getY() > drawContext.getScaledWindowHeight() + 16 ||
-                    object.getLocation().getX() < -16 || object.getLocation().getY() < -128 || object.getLifetime() >= FancyHealthBarConfig.getMaximumTicks()) {
-                OBJECTS.remove(object);
-                continue;
-            }
-
-            object.draw(drawContext);
-        }
-
-        gameTicks++;
-    }
 
     public void onDamage(float oldHeart, float newHeart) {
 
@@ -119,4 +95,28 @@ public class FancyHealthHud implements HudRenderCallback {
         return new HudLocation((int) ((random.nextInt(21) - 10) * multiplier), (int) (Math.max(random.nextInt(16) - 5, 0) * multiplier));
     });
 
+    @Override
+    public void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter) {
+
+        MinecraftClient client = MinecraftClient.getInstance();
+        boolean notPaused = !client.isPaused();
+
+        lastHeartStartY = drawContext.getScaledWindowHeight() - 38;
+        lastHeartStartX = (drawContext.getScaledWindowWidth() / 2) - 90;
+
+        for (HudObject object : new ArrayList<>(OBJECTS)) {
+
+            if (gameTicks % FancyHealthBarConfig.getUpdateInterval() == 0 && notPaused) object.tick();
+
+            if (object.getLocation().getX() > drawContext.getScaledWindowWidth() + 16 || object.getLocation().getY() > drawContext.getScaledWindowHeight() + 16 ||
+                    object.getLocation().getX() < -16 || object.getLocation().getY() < -128 || object.getLifetime() >= FancyHealthBarConfig.getMaximumTicks()) {
+                OBJECTS.remove(object);
+                continue;
+            }
+
+            object.draw(drawContext);
+        }
+
+        gameTicks++;
+    }
 }
