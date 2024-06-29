@@ -51,12 +51,16 @@ public abstract class ClientPlayerEntityMixin extends LivingEntity {
     public void onDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (!this.isMainPlayer()) return;
         if (isInvulnerableTo(source)) return;
+
+        boolean f = getFrozenTicks()>=140;
+        float a = f?amount+1:amount;
+
         if (getAbsorptionAmount() != 0) {
-            if (getAbsorptionAmount() - amount <= 0)
-                FancyHealthBarClient.FANCY_HEALTH_HUD.onDamage(MathHelper.clamp(getHealth(), 0, 20), MathHelper.clamp(getHealth() - (-(getAbsorptionAmount() - amount)), 0, 20));
+            if (getAbsorptionAmount() - a <= 0)
+                FancyHealthBarClient.FANCY_HEALTH_HUD.onDamage(MathHelper.clamp(getHealth(), 0, 20), MathHelper.clamp(getHealth() - (-(getAbsorptionAmount() - a)), 0, 20));
 
         } else
-            FancyHealthBarClient.FANCY_HEALTH_HUD.onDamage(MathHelper.clamp(getHealth(), 0, 20), MathHelper.clamp(getHealth() - amount, 0, 20));
+            FancyHealthBarClient.FANCY_HEALTH_HUD.onDamage(MathHelper.clamp(getHealth(), 0, 20), MathHelper.clamp(getHealth() - a, 0, 20));
 
     }
 
