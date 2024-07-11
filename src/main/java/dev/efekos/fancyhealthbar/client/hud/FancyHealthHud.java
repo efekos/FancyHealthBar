@@ -42,10 +42,14 @@ import java.util.ArrayList;
 
 public class FancyHealthHud implements HudRenderCallback {
 
+    public static final VelocityProvider HEART_VELOCITY_PROVIDER = (random -> {
+
+        double multiplier = FancyHealthBarConfig.getVelocityMultiplier();
+
+        return new HudLocation((int) ((random.nextInt(21) - 10) * multiplier), (int) (Math.max(random.nextInt(16) - 5, 0) * multiplier));
+    });
     public static ObjectList OBJECTS = new ObjectList();
-
     private static int gameTicks = 0;
-
     private int lastHeartStartX;
     private float lastHealth;
     private int lastHeartStartY;
@@ -89,13 +93,6 @@ public class FancyHealthHud implements HudRenderCallback {
         }
     }
 
-    public static final VelocityProvider HEART_VELOCITY_PROVIDER = (random -> {
-
-        double multiplier = FancyHealthBarConfig.getVelocityMultiplier();
-
-        return new HudLocation((int) ((random.nextInt(21) - 10) * multiplier), (int) (Math.max(random.nextInt(16) - 5, 0) * multiplier));
-    });
-
     @Override
     public void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter) {
 
@@ -105,7 +102,7 @@ public class FancyHealthHud implements HudRenderCallback {
         lastHeartStartY = drawContext.getScaledWindowHeight() - 38;
         lastHeartStartX = (drawContext.getScaledWindowWidth() / 2) - 90;
         float health = client.player.getHealth();
-        if(health<lastHealth) onDamage(lastHealth,health);
+        if (health < lastHealth) onDamage(lastHealth, health);
         lastHealth = health;
 
         for (HudObject object : new ArrayList<>(OBJECTS)) {

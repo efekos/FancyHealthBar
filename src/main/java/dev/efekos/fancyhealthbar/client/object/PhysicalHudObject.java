@@ -31,14 +31,14 @@ public abstract class PhysicalHudObject implements HudObject {
     private HudLocation velocity;
     private int lifetime;
 
-    public abstract int getGravity();
-
-    public abstract double getSlipperiness();
-
     public PhysicalHudObject(HudLocation location, HudLocation velocity) {
         this.location = location;
         this.velocity = velocity;
     }
+
+    public abstract int getGravity();
+
+    public abstract double getSlipperiness();
 
     @Override
     public void tick() {

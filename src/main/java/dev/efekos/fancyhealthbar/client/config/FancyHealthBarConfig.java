@@ -46,27 +46,29 @@ import java.text.NumberFormat;
 
 public class FancyHealthBarConfig {
 
+    public static KeyBinding CONFIG_KEY = new KeyBinding("key.fancyhealthbar.config", 76, "key.category.fancyhealthbar");
+    public static ConfigClassHandler<FancyHealthBarConfig> HANDLER = ConfigClassHandler.createBuilder(FancyHealthBarConfig.class)
+            .id(Identifier.of(FancyHealthBarClient.MOD_ID, "config"))
+            .serializer(config -> GsonConfigSerializerBuilder.create(config)
+                    .setPath(FabricLoader.getInstance().getConfigDir().resolve("fancyhealthbar.json5"))
+                    .appendGsonBuilder(GsonBuilder::setPrettyPrinting)
+                    .setJson5(true)
+                    .build())
+            .build();
     @SerialEntry
     private static int pixelSize = 1;
-
     @SerialEntry
     private static double velocityMultiplier = 1;
-
     @SerialEntry
     private static float slipperiness = 1;
-
     @SerialEntry
     private static int gravity = 1;
-
     @SerialEntry
     private static int countMultiplier = 1;
-
     @SerialEntry
     private static int maximumObjects = 1024;
-
     @SerialEntry
     private static int maximumTicks = 100;
-
     @SerialEntry
     private static int updateInterval = 5;
 
@@ -169,17 +171,6 @@ public class FancyHealthBarConfig {
                 .build()
                 .generateScreen(null);
     }
-
-    public static KeyBinding CONFIG_KEY = new KeyBinding("key.fancyhealthbar.config", 76, "key.category.fancyhealthbar");
-
-    public static ConfigClassHandler<FancyHealthBarConfig> HANDLER = ConfigClassHandler.createBuilder(FancyHealthBarConfig.class)
-            .id(Identifier.of(FancyHealthBarClient.MOD_ID, "config"))
-            .serializer(config -> GsonConfigSerializerBuilder.create(config)
-                    .setPath(FabricLoader.getInstance().getConfigDir().resolve("fancyhealthbar.json5"))
-                    .appendGsonBuilder(GsonBuilder::setPrettyPrinting)
-                    .setJson5(true)
-                    .build())
-            .build();
 
     public static Screen createScreen(Screen ignoredScreen) {
         return createScreen();

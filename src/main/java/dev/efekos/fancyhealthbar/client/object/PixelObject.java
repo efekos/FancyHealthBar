@@ -36,7 +36,7 @@ public class PixelObject extends PhysicalHudObject {
     private final int v;
     private final int size;
 
-    public PixelObject(HudLocation location, HudLocation velocity, Identifier texture,int u, int v) {
+    public PixelObject(HudLocation location, HudLocation velocity, Identifier texture, int u, int v) {
         super(location, velocity);
         this.u = u;
         this.v = v;
@@ -44,12 +44,12 @@ public class PixelObject extends PhysicalHudObject {
         this.texture = texture;
     }
 
-    public PixelObject(int x,int y,HudLocation velocity, Identifier texture,int u, int v) {
-        this(new HudLocation(x,y), velocity, texture, u, v);
+    public PixelObject(int x, int y, HudLocation velocity, Identifier texture, int u, int v) {
+        this(new HudLocation(x, y), velocity, texture, u, v);
     }
 
-    public PixelObject(int locX, int locY, int vecX, int vecY, Identifier texture,int u, int v) {
-        this(new HudLocation(locX, locY), new HudLocation(vecX, vecY), texture,u,v);
+    public PixelObject(int locX, int locY, int vecX, int vecY, Identifier texture, int u, int v) {
+        this(new HudLocation(locX, locY), new HudLocation(vecX, vecY), texture, u, v);
     }
 
     @Override
