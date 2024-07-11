@@ -27,5 +27,6 @@
   "key.fancyhealthbar.config": "Open Configuration",
   "config.fancyhealthbar.update_interval": "Update Speed",
   "config.fancyhealthbar.update_interval.description": "Controls the time between two particle updates. Change this if you think particles are acting faster than normal.",
-  "config.fancyhealthbar.update_interval.format": "Every %s seconds"
+  "config.fancyhealthbar.update_interval.format": "Every %s seconds",
+  "key.fancyhealthbar.editor": "Open Heart Editor"
 }
