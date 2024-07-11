@@ -36,21 +36,25 @@ public class PixelObject extends PhysicalHudObject {
     private final int v;
     private final int size;
 
-    public PixelObject(HudLocation location, HudLocation velocity, Identifier texture,int u, int v, int size) {
+    public PixelObject(HudLocation location, HudLocation velocity, Identifier texture,int u, int v) {
         super(location, velocity);
         this.u = u;
         this.v = v;
-        this.size = size;
+        this.size = FancyHealthBarConfig.getPixelSize();
         this.texture = texture;
     }
 
-    public PixelObject(int locX, int locY, int vecX, int vecY, Identifier texture,int u, int v, int size) {
-        this(new HudLocation(locX, locY), new HudLocation(vecX, vecY), texture,u,v,size);
+    public PixelObject(int x,int y,HudLocation velocity, Identifier texture,int u, int v) {
+        this(new HudLocation(x,y), velocity, texture, u, v);
+    }
+
+    public PixelObject(int locX, int locY, int vecX, int vecY, Identifier texture,int u, int v) {
+        this(new HudLocation(locX, locY), new HudLocation(vecX, vecY), texture,u,v);
     }
 
     @Override
     public void draw(DrawContext context) {
-        context.drawTexture(texture, getLocation().getX(), getLocation().getY(), u, v, size, size, 1, 1);
+        context.drawTexture(texture, getLocation().getX(), getLocation().getY(), u, v, size, size);
     }
 
     @Override

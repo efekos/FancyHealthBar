@@ -29,6 +29,7 @@ import dev.efekos.fancyhealthbar.client.object.PixelObject;
 import dev.efekos.fancyhealthbar.client.utils.Color;
 import dev.efekos.fancyhealthbar.client.utils.HeartSpawner;
 import dev.efekos.fancyhealthbar.client.utils.VelocityProvider;
+import net.minecraft.util.Identifier;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,16 +37,7 @@ import java.util.Random;
 
 public class FrozenHeartType implements HeartSpawner {
 
-    public static final Color[] COLOR_PALETTE = {
-            Color.of(76, 86, 216),  // color at the top - 0
-            Color.of(167, 246, 254), // two pixels at 2nd row -1
-            Color.of(128, 229, 239), // center wrap -2
-            Color.of(168, 247, 255), // dark of center & sides of 4th row -3
-            Color.of(255, 252, 255), // light of center -4
-            Color.of(76, 186, 216), // center -5
-            Color.of(1, 190, 242) // shadow -6
-    };
-
+    public static final Identifier TEXTURE = Identifier.ofVanilla("textures/gui/sprites/hud/heart/frozen_full.png");
 
     public List<HudObject> spawnFull(int x, int y, VelocityProvider velocityProvider) {
 
@@ -53,46 +45,61 @@ public class FrozenHeartType implements HeartSpawner {
 
 
         return Arrays.asList(
-                new PixelObject(x + 1, y, velocityProvider.velocity(random), COLOR_PALETTE[0]),
-                new PixelObject(x + 2, y, velocityProvider.velocity(random), COLOR_PALETTE[0]),
-                new PixelObject(x + 4, y, velocityProvider.velocity(random), COLOR_PALETTE[0]),
-                new PixelObject(x + 5, y, velocityProvider.velocity(random), COLOR_PALETTE[0]),
+                //1
+                new PixelObject(x + 1, y, velocityProvider.velocity(random),TEXTURE,1,0),
+                new PixelObject(x + 2, y, velocityProvider.velocity(random),TEXTURE,2,0),
+                //4
+                new PixelObject(x + 4, y, velocityProvider.velocity(random), TEXTURE,4,0),
+                new PixelObject(x + 5, y, velocityProvider.velocity(random), TEXTURE,5,0),
+                //7
 
-                new PixelObject(x, y + 1, velocityProvider.velocity(random), COLOR_PALETTE[0]),
-                new PixelObject(x + 1, y + 1, velocityProvider.velocity(random), COLOR_PALETTE[1]),
-                new PixelObject(x + 2, y + 1, velocityProvider.velocity(random), COLOR_PALETTE[0]),
-                new PixelObject(x + 3, y + 1, velocityProvider.velocity(random), COLOR_PALETTE[2]),
-                new PixelObject(x + 4, y + 1, velocityProvider.velocity(random), COLOR_PALETTE[0]),
-                new PixelObject(x + 5, y + 1, velocityProvider.velocity(random), COLOR_PALETTE[1]),
-                new PixelObject(x + 6, y + 1, velocityProvider.velocity(random), COLOR_PALETTE[0]),
+                new PixelObject(x, y + 1, velocityProvider.velocity(random), TEXTURE,0,1),
+                new PixelObject(x + 1, y + 1, velocityProvider.velocity(random), TEXTURE,1,1),
+                new PixelObject(x + 2, y + 1, velocityProvider.velocity(random), TEXTURE,2,1),
+                new PixelObject(x + 3, y + 1, velocityProvider.velocity(random), TEXTURE,3,1),
+                new PixelObject(x + 4, y + 1, velocityProvider.velocity(random), TEXTURE,4,1),
+                new PixelObject(x + 5, y + 1, velocityProvider.velocity(random), TEXTURE,5,1),
+                new PixelObject(x + 6, y + 1, velocityProvider.velocity(random), TEXTURE,6,1),
 
-                new PixelObject(x, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[0]),
-                new PixelObject(x + 1, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[0]),
-                new PixelObject(x + 2, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[2]),
-                new PixelObject(x + 3, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[3]),
-                new PixelObject(x + 4, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[2]),
-                new PixelObject(x + 5, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[0]),
-                new PixelObject(x + 6, y + 2, velocityProvider.velocity(random), COLOR_PALETTE[0]),
+                new PixelObject(x, y + 2, velocityProvider.velocity(random), TEXTURE,0,2),
+                new PixelObject(x + 1, y + 2, velocityProvider.velocity(random), TEXTURE,1,2),
+                new PixelObject(x + 2, y + 2, velocityProvider.velocity(random), TEXTURE,2,2),
+                new PixelObject(x + 3, y + 2, velocityProvider.velocity(random), TEXTURE,3,2),
+                new PixelObject(x + 4, y + 2, velocityProvider.velocity(random), TEXTURE,4,2),
+                new PixelObject(x + 5, y + 2, velocityProvider.velocity(random), TEXTURE,5,2),
+                new PixelObject(x + 6, y + 2, velocityProvider.velocity(random), TEXTURE,6,2),
 
-                new PixelObject(x, y + 3, velocityProvider.velocity(random), COLOR_PALETTE[3]),
-                new PixelObject(x + 1, y + 3, velocityProvider.velocity(random), COLOR_PALETTE[2]),
-                new PixelObject(x + 2, y + 3, velocityProvider.velocity(random), COLOR_PALETTE[4]),
-                new PixelObject(x + 3, y + 3, velocityProvider.velocity(random), COLOR_PALETTE[5]),
-                new PixelObject(x + 4, y + 3, velocityProvider.velocity(random), COLOR_PALETTE[3]),
-                new PixelObject(x + 5, y + 3, velocityProvider.velocity(random), COLOR_PALETTE[2]),
-                new PixelObject(x + 6, y + 3, velocityProvider.velocity(random), COLOR_PALETTE[3]),
+                new PixelObject(x, y + 3, velocityProvider.velocity(random), TEXTURE,0,3),
+                new PixelObject(x + 1, y + 3, velocityProvider.velocity(random), TEXTURE,1,3),
+                new PixelObject(x + 2, y + 3, velocityProvider.velocity(random), TEXTURE,2,3),
+                new PixelObject(x + 3, y + 3, velocityProvider.velocity(random), TEXTURE,3,3),
+                new PixelObject(x + 4, y + 3, velocityProvider.velocity(random), TEXTURE,4,3),
+                new PixelObject(x + 5, y + 3, velocityProvider.velocity(random), TEXTURE,5,3),
+                new PixelObject(x + 6, y + 3, velocityProvider.velocity(random), TEXTURE,6,3),
 
-                new PixelObject(x + 1, y + 4, velocityProvider.velocity(random), COLOR_PALETTE[6]),
-                new PixelObject(x + 2, y + 4, velocityProvider.velocity(random), COLOR_PALETTE[2]),
-                new PixelObject(x + 3, y + 4, velocityProvider.velocity(random), COLOR_PALETTE[4]),
-                new PixelObject(x + 4, y + 4, velocityProvider.velocity(random), COLOR_PALETTE[2]),
-                new PixelObject(x + 5, y + 4, velocityProvider.velocity(random), COLOR_PALETTE[6]),
+                //1
+                new PixelObject(x + 1, y + 4, velocityProvider.velocity(random), TEXTURE,1,4),
+                new PixelObject(x + 2, y + 4, velocityProvider.velocity(random), TEXTURE,2,4),
+                new PixelObject(x + 3, y + 4, velocityProvider.velocity(random), TEXTURE,3,4),
+                new PixelObject(x + 4, y + 4, velocityProvider.velocity(random), TEXTURE,4,4),
+                new PixelObject(x + 5, y + 4, velocityProvider.velocity(random), TEXTURE,5,4),
+                //7
 
-                new PixelObject(x + 2, y + 5, velocityProvider.velocity(random), COLOR_PALETTE[6]),
-                new PixelObject(x + 3, y + 5, velocityProvider.velocity(random), COLOR_PALETTE[2]),
-                new PixelObject(x + 4, y + 5, velocityProvider.velocity(random), COLOR_PALETTE[6]),
+                //1
+                //2
+                new PixelObject(x + 2, y + 5, velocityProvider.velocity(random), TEXTURE,2,5),
+                new PixelObject(x + 3, y + 5, velocityProvider.velocity(random), TEXTURE,3,5),
+                new PixelObject(x + 4, y + 5, velocityProvider.velocity(random), TEXTURE,4,5),
+                //6
+                //7
 
-                new PixelObject(x + 3, y + 6, velocityProvider.velocity(random), COLOR_PALETTE[6])
+                //1
+                //2
+                //3
+                new PixelObject(x + 3, y + 6, velocityProvider.velocity(random), TEXTURE,3,6)
+                //5
+                //6
+                //7
         );
     }
 
