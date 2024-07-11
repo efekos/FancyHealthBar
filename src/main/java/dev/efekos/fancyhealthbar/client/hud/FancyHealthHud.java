@@ -47,6 +47,7 @@ public class FancyHealthHud implements HudRenderCallback {
     private static int gameTicks = 0;
 
     private int lastHeartStartX;
+    private float lastHealth;
     private int lastHeartStartY;
 
     public void onDamage(float oldHeart, float newHeart) {
@@ -103,6 +104,9 @@ public class FancyHealthHud implements HudRenderCallback {
 
         lastHeartStartY = drawContext.getScaledWindowHeight() - 38;
         lastHeartStartX = (drawContext.getScaledWindowWidth() / 2) - 90;
+        float health = client.player.getHealth();
+        if(health<lastHealth) onDamage(lastHealth,health);
+        lastHealth = health;
 
         for (HudObject object : new ArrayList<>(OBJECTS)) {
 
