@@ -27,6 +27,7 @@ package dev.efekos.fancyhealthbar.client.screen.widget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.efekos.fancyhealthbar.client.FancyHealthBarClient;
 import dev.efekos.fancyhealthbar.client.object.PixelObject;
+import dev.efekos.fancyhealthbar.client.screen.HeartEditorScreen;
 import dev.efekos.fancyhealthbar.client.utils.Color;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -40,14 +41,24 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class PixelWidget extends ClickableWidget {
 
-    private final Screen parent;
+    private final HeartEditorScreen parent;
     private Color color;
     public static final Identifier FOCUS = Identifier.of(FancyHealthBarClient.MOD_ID,"widgets/pixel_hover");
+    private final int id;
 
-    public PixelWidget(int x, int y, int width, int height, Screen parent, Color color) {
+    public PixelWidget(int x, int y, int width, int height, HeartEditorScreen parent, Color color, int id) {
         super(x, y, width, height, Text.empty());
         this.parent = parent;
         this.color = color;
+        this.id = id;
+    }
+
+    public Screen getParent() {
+        return parent;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
@@ -58,12 +69,12 @@ public class PixelWidget extends ClickableWidget {
     @Override
     public void onClick(double mouseX, double mouseY) {
         super.onClick(mouseX, mouseY);
-        parent.setFocused(this);
+        parent.setSelectedPixel(this);
     }
 
     @Override
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
-        RenderSystem.setShaderColor(color.getR(),color.getG(),color.getB(),1f);
+        RenderSystem.setShaderColor(color.getR()/255f,color.getG()/255f,color.getB()/255f,1f);
         context.drawGuiTexture(PixelObject.TEXTURE_ID,getX(),getY(),getWidth(),getHeight());
         RenderSystem.setShaderColor(1.0f,1.0f,1.0f,1.0f);
     }
@@ -72,7 +83,23 @@ public class PixelWidget extends ClickableWidget {
         return color;
     }
 
+    private ColorChangeAction colorChangeAction = color1 -> {};
+
+    public ColorChangeAction getColorChangeAction() {
+        return colorChangeAction;
+    }
+
+    public void setColorChangeAction(ColorChangeAction colorChangeAction) {
+        this.colorChangeAction = colorChangeAction;
+    }
+
     public void setColor(Color color) {
+        if(!color.equals(this.color)) colorChangeAction.onColorChange(color);
         this.color = color;
+    }
+
+    @FunctionalInterface
+    public interface ColorChangeAction {
+        void onColorChange(Color color);
     }
 }
