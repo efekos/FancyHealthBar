@@ -24,61 +24,33 @@
 
 package dev.efekos.fancyhealthbar.client.object;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import dev.efekos.fancyhealthbar.client.FancyHealthBarClient;
 import dev.efekos.fancyhealthbar.client.config.FancyHealthBarConfig;
-import dev.efekos.fancyhealthbar.client.utils.Color;
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 
 public class PixelObject extends PhysicalHudObject {
 
-    private Color color;
+    private final Identifier texture;
+    private final int u;
+    private final int v;
     private final int size;
 
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public PixelObject(HudLocation location, HudLocation velocity, Color color) {
+    public PixelObject(HudLocation location, HudLocation velocity, Identifier texture,int u, int v, int size) {
         super(location, velocity);
-        this.color = color;
-        this.size = FancyHealthBarConfig.getPixelSize();
+        this.u = u;
+        this.v = v;
+        this.size = size;
+        this.texture = texture;
     }
 
-    public PixelObject(int locX, int locY, HudLocation velocity, Color color) {
-        this(locX, locY, velocity.getX(), velocity.getY(), color);
+    public PixelObject(int locX, int locY, int vecX, int vecY, Identifier texture,int u, int v, int size) {
+        this(new HudLocation(locX, locY), new HudLocation(vecX, vecY), texture,u,v,size);
     }
-
-    public PixelObject(int locX, int locY, int vecX, int vecY, Color color) {
-        this(new HudLocation(locX, locY), new HudLocation(vecX, vecY), color);
-    }
-
-    public static final Identifier TEXTURE_ID = Identifier.of(FancyHealthBarClient.MOD_ID, "pixel");
 
     @Override
     public void draw(DrawContext context) {
-        RenderSystem.setShaderColor(color.getR() / 255f, color.getG() / 255f, color.getB() / 255f, 1f);
-
-        context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY(), size, size);
-
-        if (getVelocity().getY() < -10 && size > 1)
-            context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY() - 2, size, 1);
-        if (getVelocity().getY() < -12 && size > 2)
-            context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY() - 4, size, 1);
-        if (getVelocity().getY() < -14 && size > 3)
-            context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY() - 8, size, 1);
-        if (getVelocity().getY() < -16 && size > 4)
-            context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY() - 12, size, 1);
-        if (getVelocity().getY() < -18 && size > 5)
-            context.drawGuiTexture(TEXTURE_ID, getLocation().getX(), getLocation().getY() - 16, size, 1);
-
-        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+        context.drawTexture(texture, getLocation().getX(), getLocation().getY(), u, v, size, size, 1, 1);
     }
 
     @Override
