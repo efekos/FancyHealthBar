@@ -36,7 +36,7 @@ import java.util.Random;
 
 public class NormalHeartType implements HeartSpawner {
 
-    public static final Identifier TEXTURE = Identifier.ofVanilla("textures/gui/sprites/hud/heart/full.png");
+    public static final Identifier TEXTURE = Identifier.ofVanilla("hud/heart/full");
 
     public List<HudObject> spawnFull(int x, int y, VelocityProvider velocityProvider) {
 
