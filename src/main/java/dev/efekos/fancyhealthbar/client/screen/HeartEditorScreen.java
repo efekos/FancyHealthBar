@@ -131,6 +131,7 @@ public class HeartEditorScreen extends Screen {
     private PixelWidget pixel33;
     private PixelWidget pixel34;
     private TextFieldWidget colorInput;
+    private TextFieldWidget output;
     private PixelWidget selectedPixel;
 
     public PixelWidget getSelectedPixel() {
@@ -199,13 +200,29 @@ public class HeartEditorScreen extends Screen {
         colorInput = new TextFieldWidget(client.textRenderer,x-100,y+90,200,20,Text.literal("#ffffff"));
         colorInput.setChangedListener(s -> {
             if(HEX_PATTERN.matcher(s).matches()&&getSelectedPixel() !=null) getSelectedPixel().setColor(HexToColor(s));
+            writeOutput();
         });
         colorInput.setMaxLength(7);
+
+        output = new TextFieldWidget(client.textRenderer,3,height-23,width-3,20,Text.literal(""));
+        output.setMaxLength(Integer.MAX_VALUE);
 
         for (PixelWidget widget : Arrays.asList(pixel1, pixel2, pixel3, pixel4, pixel5, pixel6, pixel7, pixel8, pixel9, pixel10, pixel11, pixel12, pixel13, pixel14, pixel15, pixel16, pixel17, pixel18, pixel19, pixel20, pixel21, pixel22
                 , pixel23, pixel24, pixel25, pixel26, pixel27, pixel28, pixel29, pixel30, pixel31, pixel32, pixel33, pixel34)) addDrawableChild(widget);
 
         addDrawableChild(colorInput);
+        addDrawable(output);
+    }
+
+    private void writeOutput(){
+        StringBuilder builder = new StringBuilder();
+
+        for (PixelWidget w : Arrays.asList(
+                pixel1, pixel2, pixel3, pixel4, pixel5, pixel6, pixel7, pixel8, pixel9, pixel10, pixel11, pixel12, pixel13, pixel14, pixel15, pixel16, pixel17, pixel18,
+                pixel19, pixel20, pixel21, pixel22, pixel23, pixel24, pixel25, pixel26, pixel27, pixel28, pixel29, pixel30, pixel31, pixel32, pixel33, pixel34))
+            builder.append(String.format("#%02X%02X%02X", w.getColor().getR(), w.getColor().getG(), w.getColor().getB())+";");
+
+        output.setText(builder.toString());
     }
 
     public static Color HexToColor(String hex)
