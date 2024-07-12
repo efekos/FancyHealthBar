@@ -55,7 +55,9 @@ public class PixelObject extends PhysicalHudObject {
     @Override
     public void draw(DrawContext context) {
         //TODO fix texture not stretching
-        context.drawGuiTexture(texture, 9,9,u,v,getLocation().getX(),getLocation().getY(),size,size);
+        int x = getLocation().getX();
+        int y = getLocation().getY();
+        context.drawGuiTexture(texture, 9,9,u,v, x, y,size,size);
     }
 
     @Override
