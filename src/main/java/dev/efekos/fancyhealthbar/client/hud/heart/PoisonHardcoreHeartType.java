@@ -36,7 +36,7 @@ import java.util.Random;
 
 public class PoisonHardcoreHeartType implements HeartSpawner {
 
-    public static final Identifier TEXTURE = Identifier.ofVanilla("hud/heart/hardcore_poison_full");
+    public static final Identifier TEXTURE = Identifier.ofVanilla("hud/heart/hardcore_poisoned_full");
 
     public List<HudObject> spawnFull(int x, int y, VelocityProvider velocityProvider) {
 

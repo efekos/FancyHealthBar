@@ -36,7 +36,7 @@ import java.util.Random;
 
 public class WitherHeartType implements HeartSpawner {
 
-    public static final Identifier TEXTURE = Identifier.ofVanilla("hud/heart/wither_full");
+    public static final Identifier TEXTURE = Identifier.ofVanilla("hud/heart/withered_full");
 
     public List<HudObject> spawnFull(int x, int y, VelocityProvider velocityProvider) {
 
