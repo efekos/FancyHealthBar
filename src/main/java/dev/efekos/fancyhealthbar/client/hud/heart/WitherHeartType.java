@@ -36,7 +36,7 @@ import java.util.Random;
 
 public class WitherHeartType implements HeartSpawner {
 
-    public static final Identifier TEXTURE = Identifier.ofVanilla("hud/heart/withered_full");
+    public static final Identifier TEXTURE = Identifier.ofVanilla("textures/gui/sprites/hud/heart/withered_full.png");
 
     public List<HudObject> spawnFull(int x, int y, VelocityProvider velocityProvider) {
 
@@ -99,16 +99,6 @@ public class WitherHeartType implements HeartSpawner {
                 //6
                 //7
         );
-    }
-
-    @Override
-    public List<HudObject> spawnEndHalf(int x, int y, VelocityProvider provider) {
-        return spawnFull(x, y, provider).stream().filter(hudObject -> hudObject.getLocation().getX() >= x + 4).toList();
-    }
-
-    @Override
-    public List<HudObject> spawnStartHalf(int x, int y, VelocityProvider provider) {
-        return spawnFull(x, y, provider).stream().filter(hudObject -> hudObject.getLocation().getX() <= x + 3).toList();
     }
 
 }

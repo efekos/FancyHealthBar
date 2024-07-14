@@ -36,7 +36,7 @@ import java.util.Random;
 
 public class FrozenHardcoreHeartType implements HeartSpawner {
 
-    public static final Identifier TEXTURE = Identifier.ofVanilla("hud/heart/frozen_hardcore_full");
+    public static final Identifier TEXTURE = Identifier.ofVanilla("textures/gui/sprites/hud/heart/frozen_hardcore_full.png");
 
     public List<HudObject> spawnFull(int x, int y, VelocityProvider velocityProvider) {
 
@@ -102,13 +102,4 @@ public class FrozenHardcoreHeartType implements HeartSpawner {
         );
     }
 
-    @Override
-    public List<HudObject> spawnEndHalf(int x, int y, VelocityProvider provider) {
-        return spawnFull(x, y, provider).stream().filter(hudObject -> hudObject.getLocation().getX() >= x + 4).toList();
-    }
-
-    @Override
-    public List<HudObject> spawnStartHalf(int x, int y, VelocityProvider provider) {
-        return spawnFull(x, y, provider).stream().filter(hudObject -> hudObject.getLocation().getX() <= x + 3).toList();
-    }
 }

@@ -59,9 +59,9 @@ public class PixelObject extends PhysicalHudObject {
 
     @Override
     public void draw(DrawContext context) {
-        int x1 = getLocation().getX();
+        int x1 = getLocation().getX()-1;
         int x2 = x1+size;
-        int y1 = getLocation().getY();
+        int y1 = getLocation().getY()-1;
         int y2 = y1+size;
 
         drawTexture(context,texture,x1,x2,y1,y2,0,1,1,u,v,9,9);
