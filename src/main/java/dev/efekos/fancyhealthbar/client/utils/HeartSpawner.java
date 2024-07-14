@@ -32,7 +32,11 @@ public interface HeartSpawner {
 
     List<HudObject> spawnFull(int x, int y, VelocityProvider provider);
 
-    List<HudObject> spawnEndHalf(int x, int y, VelocityProvider provider);
+    default List<HudObject> spawnEndHalf(int x, int y, VelocityProvider provider) {
+        return spawnFull(x, y, provider).stream().filter(hudObject -> hudObject.getLocation().getX() > x + 4).toList();
+    }
 
-    List<HudObject> spawnStartHalf(int x, int y, VelocityProvider provider);
+    default List<HudObject> spawnStartHalf(int x, int y, VelocityProvider provider) {
+        return spawnFull(x, y, provider).stream().filter(hudObject -> hudObject.getLocation().getX() <= x + 4).toList();
+    }
 }
