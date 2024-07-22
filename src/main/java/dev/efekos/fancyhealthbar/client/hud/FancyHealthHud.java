@@ -26,8 +26,6 @@ package dev.efekos.fancyhealthbar.client.hud;
 
 import dev.efekos.fancyhealthbar.client.config.FancyHealthBarConfig;
 import dev.efekos.fancyhealthbar.client.object.HudObject;
-import dev.efekos.fancyhealthbar.client.object.ObjectList;
-import dev.efekos.fancyhealthbar.client.utils.HeartSpawner;
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 import dev.efekos.fancyhealthbar.client.utils.VelocityProvider;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -39,6 +37,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FancyHealthHud implements HudRenderCallback {
 
@@ -48,11 +47,16 @@ public class FancyHealthHud implements HudRenderCallback {
 
         return new HudLocation((int) ((random.nextInt(21) - 10) * multiplier), (int) (Math.max(random.nextInt(16) - 5, 0) * multiplier));
     });
-    public static ObjectList OBJECTS = new ObjectList();
+    public static List<HudObject> OBJECTS = new ArrayList<>();
     private static int gameTicks = 0;
     private int lastHeartStartX;
     private float lastHealth;
     private int lastHeartStartY;
+
+    private void add(List<HudObject> objects){
+        for (HudObject o : objects)
+            if(OBJECTS.size()<FancyHealthBarConfig.getMaximumObjects()) OBJECTS.add(o);
+    }
 
     public void onDamage(float oldHeart, float newHeart) {
 
@@ -70,26 +74,24 @@ public class FancyHealthHud implements HudRenderCallback {
         boolean wither = player.getStatusEffect(StatusEffects.WITHER) != null;
         boolean frozen = player.getFrozenTicks() >= 140;
 
-        HeartSpawner spawner = HeartTypes.get(hardcore, poison, frozen, wither);
+        HeartGenerator spawner = HeartTypes.get(hardcore, poison, frozen, wither);
 
         for (int i = 0; i < (int) (difference / 2); i++) {
 
-            for (int j = 0; j < FancyHealthBarConfig.getCountMultiplier(); j++) {
-                OBJECTS.addAll(spawner.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8) + (i * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
-            }
+            for (int j = 0; j < FancyHealthBarConfig.getCountMultiplier(); j++)
+                add(spawner.spawnFull(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
 
         }
 
         if (difference % 2 != 0) { // so there is a half health loss that should be rendered
 
             if (Math.round(newHeart) % 2 == 0) // If there is a half heart lost, but the new health doesn't contain a half heart, then there should be a startHalf heart.
-                for (int i = 0; i < FancyHealthBarConfig.getCountMultiplier(); i++) {
-                    OBJECTS.addAll(spawner.spawnStartHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
-                }
+                for (int i = 0; i < FancyHealthBarConfig.getCountMultiplier(); i++)
+                    add(spawner.spawnStartHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY));
+
             else
-                for (int i = 0; i < FancyHealthBarConfig.getCountMultiplier(); i++) {
-                    OBJECTS.addAll(spawner.spawnEndHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY, HEART_VELOCITY_PROVIDER));
-                }
+                for (int i = 0; i < FancyHealthBarConfig.getCountMultiplier(); i++)
+                    add(spawner.spawnEndHalf(lastHeartStartX + ((int) (newHeart / 2) * 8), lastHeartStartY));
         }
     }
 
