@@ -41,6 +41,14 @@ public class PixelObject extends PhysicalHudObject {
     private final int v;
     private final int size;
 
+    public int getU() {
+        return u;
+    }
+
+    public int getV() {
+        return v;
+    }
+
     public PixelObject(HudLocation location, HudLocation velocity, Identifier texture, int u, int v) {
         super(location, velocity);
         this.u = u;
