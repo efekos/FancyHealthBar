@@ -26,7 +26,7 @@ package dev.efekos.fancyhealthbar.modmenu;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import dev.efekos.fancyhealthbar.client.config.FancyHealthBarConfig;
+import dev.efekos.fancyhealthbar.client.FancyHealthBarConfig;
 
 public class FancyHealthBarModMenu implements ModMenuApi {
 

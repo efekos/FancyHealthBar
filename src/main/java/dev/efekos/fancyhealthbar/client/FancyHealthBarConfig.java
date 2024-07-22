@@ -22,10 +22,9 @@
  * SOFTWARE.
  */
 
-package dev.efekos.fancyhealthbar.client.config;
+package dev.efekos.fancyhealthbar.client;
 
 import com.google.gson.GsonBuilder;
-import dev.efekos.fancyhealthbar.client.FancyHealthBarClient;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
@@ -56,7 +55,9 @@ public class FancyHealthBarConfig {
                     .build())
             .build();
     @SerialEntry
-    private static int pixelSize = 1;
+    private static int minimumPixelSize = 1;
+    @SerialEntry
+    private static int maximumPixelSize = 2;
     @SerialEntry
     private static double velocityMultiplier = 1;
     @SerialEntry
@@ -84,8 +85,12 @@ public class FancyHealthBarConfig {
         return velocityMultiplier;
     }
 
-    public static int getPixelSize() {
-        return pixelSize;
+    public static int getMinimumPixelSize() {
+        return minimumPixelSize;
+    }
+
+    public static int getMaximumPixelSize(){
+        return maximumPixelSize;
     }
 
     public static int getCountMultiplier() {
@@ -111,9 +116,15 @@ public class FancyHealthBarConfig {
                         .name(Text.translatable("config.fancyhealthbar.category.title"))
                         .tooltip(Text.translatable("config.fancyhealthbar.category.title.tooltip"))
                         .option(Option.<Integer>createBuilder()
-                                .name(Text.translatable("config.fancyhealthbar.pixel_size"))
-                                .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.pixel_size.description")))
-                                .binding(1, FancyHealthBarConfig::getPixelSize, newVal -> pixelSize = newVal)
+                                .name(Text.translatable("config.fancyhealthbar.minimum_pixel_size"))
+                                .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.minimum_pixel_size.description")))
+                                .binding(1, FancyHealthBarConfig::getMinimumPixelSize, newVal -> minimumPixelSize = newVal)
+                                .controller(integerOption -> new IntegerSliderControllerBuilderImpl(integerOption).range(1, 8).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.pixel_size.format", value)))
+                                .build())
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("config.fancyhealthbar.maximum_pixel_size"))
+                                .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.maximum_pixel_size.description")))
+                                .binding(2, FancyHealthBarConfig::getMaximumPixelSize, newVal -> maximumPixelSize = newVal)
                                 .controller(integerOption -> new IntegerSliderControllerBuilderImpl(integerOption).range(1, 8).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.pixel_size.format", value)))
                                 .build())
                         .option(Option.<Double>createBuilder()

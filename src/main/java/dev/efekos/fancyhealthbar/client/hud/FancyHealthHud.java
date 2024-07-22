@@ -24,7 +24,7 @@
 
 package dev.efekos.fancyhealthbar.client.hud;
 
-import dev.efekos.fancyhealthbar.client.config.FancyHealthBarConfig;
+import dev.efekos.fancyhealthbar.client.FancyHealthBarConfig;
 import dev.efekos.fancyhealthbar.client.object.HudObject;
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 import dev.efekos.fancyhealthbar.client.utils.VelocityProvider;

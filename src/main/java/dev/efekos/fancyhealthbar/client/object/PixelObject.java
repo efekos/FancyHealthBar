@@ -25,14 +25,12 @@
 package dev.efekos.fancyhealthbar.client.object;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.efekos.fancyhealthbar.client.config.FancyHealthBarConfig;
+import dev.efekos.fancyhealthbar.client.FancyHealthBarConfig;
 import dev.efekos.fancyhealthbar.client.utils.HudLocation;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
 import net.minecraft.util.Identifier;
 import org.joml.Matrix4f;
-
-import java.lang.reflect.Field;
 
 public class PixelObject extends PhysicalHudObject {
 
@@ -53,8 +51,12 @@ public class PixelObject extends PhysicalHudObject {
         super(location, velocity);
         this.u = u;
         this.v = v;
-        this.size = FancyHealthBarConfig.getPixelSize();
+        this.size = randomSize();
         this.texture = texture;
+    }
+
+    private static int randomSize() {
+        return FancyHealthBarConfig.getMinimumPixelSize() + (int) (Math.random() * (FancyHealthBarConfig.getMaximumPixelSize() - FancyHealthBarConfig.getMinimumPixelSize()));
     }
 
     public PixelObject(int x, int y, HudLocation velocity, Identifier texture, int u, int v) {
