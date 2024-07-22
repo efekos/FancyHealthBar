@@ -64,7 +64,7 @@ public class FancyHealthBarConfig {
     @SerialEntry
     private static int gravity = 1;
     @SerialEntry
-    private static int countMultiplier = 1;
+    private static int countMultiplier = 2;
     @SerialEntry
     private static int maximumObjects = 1024;
     @SerialEntry
@@ -140,8 +140,8 @@ public class FancyHealthBarConfig {
                         .option(Option.<Integer>createBuilder()
                                 .name(Text.translatable("config.fancyhealthbar.count_multiplier"))
                                 .description(OptionDescription.of(Text.translatable("config.fancyhealthbar.count_multiplier.description")))
-                                .binding(1, FancyHealthBarConfig::getCountMultiplier, i -> countMultiplier = i)
-                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(1, 8).step(1).formatValue(value -> Text.translatable("config.fancyhealthbar.count_multiplier.format", value)))
+                                .binding(2, FancyHealthBarConfig::getCountMultiplier, i -> countMultiplier = i)
+                                .controller(i -> new IntegerSliderControllerBuilderImpl(i).range(2, 16).step(2).formatValue(value -> Text.translatable("config.fancyhealthbar.count_multiplier.format", (value/2))))
                                 .build()
                         )
                         .option(Option.<Integer>createBuilder()
