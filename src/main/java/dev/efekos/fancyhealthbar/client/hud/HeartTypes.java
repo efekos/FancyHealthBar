@@ -24,22 +24,19 @@
 
 package dev.efekos.fancyhealthbar.client.hud;
 
-import dev.efekos.fancyhealthbar.client.hud.heart.*;
-import dev.efekos.fancyhealthbar.client.utils.HeartSpawner;
-
 public class HeartTypes {
 
-    public static final NormalHeartType NORMAL = new NormalHeartType();
-    public static final NormalHardcoreHeartType HARDCORE_NORMAL = new NormalHardcoreHeartType();
-    public static final PoisonHeartType POISON = new PoisonHeartType();
-    public static final PoisonHardcoreHeartType HARDCORE_POISON = new PoisonHardcoreHeartType();
-    public static final FrozenHeartType FROZEN = new FrozenHeartType();
-    public static final FrozenHardcoreHeartType HARDCORE_FROZEN = new FrozenHardcoreHeartType();
-    public static final WitherHeartType WITHER = new WitherHeartType();
-    public static final WitherHardcoreHeartType HARDCORE_WITHER = new WitherHardcoreHeartType();
+    public static final HeartGenerator NORMAL = new HeartGenerator("full");
+    public static final HeartGenerator HARDCORE_NORMAL = new HeartGenerator("hardcore_full");
+    public static final HeartGenerator POISON = new HeartGenerator("poisoned_full");
+    public static final HeartGenerator HARDCORE_POISON = new HeartGenerator("hardcore_poisoned_full");
+    public static final HeartGenerator FROZEN = new HeartGenerator("frozen_full");
+    public static final HeartGenerator HARDCORE_FROZEN = new HeartGenerator("hardcore_frozen_full");
+    public static final HeartGenerator WITHER = new HeartGenerator("withered_full");
+    public static final HeartGenerator HARDCORE_WITHER = new HeartGenerator("hardcore_withered_full");
 
 
-    public static HeartSpawner get(boolean hardcore, boolean poison, boolean frozen, boolean wither) {
+    public static HeartGenerator get(boolean hardcore, boolean poison, boolean frozen, boolean wither) {
         if (hardcore) {
             return poison ? HARDCORE_POISON : (frozen ? HARDCORE_FROZEN : (wither ? HARDCORE_WITHER : HARDCORE_NORMAL));
         } else {
