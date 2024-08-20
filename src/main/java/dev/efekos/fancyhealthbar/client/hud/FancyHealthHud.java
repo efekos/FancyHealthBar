@@ -117,7 +117,7 @@ public class FancyHealthHud implements HudRenderCallback {
                 continue;
             }
 
-            object.draw(drawContext);
+            if(!client.options.hudHidden) object.draw(drawContext);
         }
 
         gameTicks++;
