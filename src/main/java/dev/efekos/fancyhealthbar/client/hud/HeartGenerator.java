@@ -37,9 +37,13 @@ import java.util.Random;
 public class HeartGenerator {
 
     private final Identifier texture;
+    private final int u;
+    private final int v;
 
-    public HeartGenerator(String texture) {
-        this.texture = Identifier.ofVanilla("textures/gui/sprites/hud/heart/"+texture+".png");
+    public HeartGenerator(int u, int v) {
+        this.u = u;
+        this.v = v;
+        this.texture = new Identifier("textures/gui/icons.png");
     }
 
     public List<HudObject> spawnFull(int x, int y, VelocityProvider velocityProvider) {
@@ -49,57 +53,57 @@ public class HeartGenerator {
 
         return Arrays.asList(
                 //1
-                new PixelObject(x + 1, y, velocityProvider.velocity(random), texture, 1, 0),
-                new PixelObject(x + 2, y, velocityProvider.velocity(random), texture, 2, 0),
+                new PixelObject(x + 1, y, velocityProvider.velocity(random), texture, u + 1, v),
+                new PixelObject(x + 2, y, velocityProvider.velocity(random), texture, u + 2, v),
                 //4
-                new PixelObject(x + 4, y, velocityProvider.velocity(random), texture, 4, 0),
-                new PixelObject(x + 5, y, velocityProvider.velocity(random), texture, 5, 0),
+                new PixelObject(x + 4, y, velocityProvider.velocity(random), texture, u + 4, v),
+                new PixelObject(x + 5, y, velocityProvider.velocity(random), texture, u + 5, v),
                 //7
 
-                new PixelObject(x, y + 1, velocityProvider.velocity(random), texture, 0, 1),
-                new PixelObject(x + 1, y + 1, velocityProvider.velocity(random), texture, 1, 1),
-                new PixelObject(x + 2, y + 1, velocityProvider.velocity(random), texture, 2, 1),
-                new PixelObject(x + 3, y + 1, velocityProvider.velocity(random), texture, 3, 1),
-                new PixelObject(x + 4, y + 1, velocityProvider.velocity(random), texture, 4, 1),
-                new PixelObject(x + 5, y + 1, velocityProvider.velocity(random), texture, 5, 1),
-                new PixelObject(x + 6, y + 1, velocityProvider.velocity(random), texture, 6, 1),
+                new PixelObject(x, y + 1, velocityProvider.velocity(random), texture, u, v + 1),
+                new PixelObject(x + 1, y + 1, velocityProvider.velocity(random), texture, u + 1, v + 1),
+                new PixelObject(x + 2, y + 1, velocityProvider.velocity(random), texture, u + 2, v + 1),
+                new PixelObject(x + 3, y + 1, velocityProvider.velocity(random), texture, u + 3, v + 1),
+                new PixelObject(x + 4, y + 1, velocityProvider.velocity(random), texture, u + 4, v + 1),
+                new PixelObject(x + 5, y + 1, velocityProvider.velocity(random), texture, u + 5, v + 1),
+                new PixelObject(x + 6, y + 1, velocityProvider.velocity(random), texture, u + 6, v + 1),
 
-                new PixelObject(x, y + 2, velocityProvider.velocity(random), texture, 0, 2),
-                new PixelObject(x + 1, y + 2, velocityProvider.velocity(random), texture, 1, 2),
-                new PixelObject(x + 2, y + 2, velocityProvider.velocity(random), texture, 2, 2),
-                new PixelObject(x + 3, y + 2, velocityProvider.velocity(random), texture, 3, 2),
-                new PixelObject(x + 4, y + 2, velocityProvider.velocity(random), texture, 4, 2),
-                new PixelObject(x + 5, y + 2, velocityProvider.velocity(random), texture, 5, 2),
-                new PixelObject(x + 6, y + 2, velocityProvider.velocity(random), texture, 6, 2),
+                new PixelObject(x, y + 2, velocityProvider.velocity(random), texture, u, v + 2),
+                new PixelObject(x + 1, y + 2, velocityProvider.velocity(random), texture, u + 1, v + 2),
+                new PixelObject(x + 2, y + 2, velocityProvider.velocity(random), texture, u + 2, v + 2),
+                new PixelObject(x + 3, y + 2, velocityProvider.velocity(random), texture, u + 3, v + 2),
+                new PixelObject(x + 4, y + 2, velocityProvider.velocity(random), texture, u + 4, v + 2),
+                new PixelObject(x + 5, y + 2, velocityProvider.velocity(random), texture, u + 5, v + 2),
+                new PixelObject(x + 6, y + 2, velocityProvider.velocity(random), texture, u + 6, v + 2),
 
-                new PixelObject(x, y + 3, velocityProvider.velocity(random), texture, 0, 3),
-                new PixelObject(x + 1, y + 3, velocityProvider.velocity(random), texture, 1, 3),
-                new PixelObject(x + 2, y + 3, velocityProvider.velocity(random), texture, 2, 3),
-                new PixelObject(x + 3, y + 3, velocityProvider.velocity(random), texture, 3, 3),
-                new PixelObject(x + 4, y + 3, velocityProvider.velocity(random), texture, 4, 3),
-                new PixelObject(x + 5, y + 3, velocityProvider.velocity(random), texture, 5, 3),
-                new PixelObject(x + 6, y + 3, velocityProvider.velocity(random), texture, 6, 3),
+                new PixelObject(x, y + 3, velocityProvider.velocity(random), texture, u, v + 3),
+                new PixelObject(x + 1, y + 3, velocityProvider.velocity(random), texture, u + 1, v + 3),
+                new PixelObject(x + 2, y + 3, velocityProvider.velocity(random), texture, u + 2, v + 3),
+                new PixelObject(x + 3, y + 3, velocityProvider.velocity(random), texture, u + 3, v + 3),
+                new PixelObject(x + 4, y + 3, velocityProvider.velocity(random), texture, u + 4, v + 3),
+                new PixelObject(x + 5, y + 3, velocityProvider.velocity(random), texture, u + 5, v + 3),
+                new PixelObject(x + 6, y + 3, velocityProvider.velocity(random), texture, u + 6, v + 3),
 
                 //1
-                new PixelObject(x + 1, y + 4, velocityProvider.velocity(random), texture, 1, 4),
-                new PixelObject(x + 2, y + 4, velocityProvider.velocity(random), texture, 2, 4),
-                new PixelObject(x + 3, y + 4, velocityProvider.velocity(random), texture, 3, 4),
-                new PixelObject(x + 4, y + 4, velocityProvider.velocity(random), texture, 4, 4),
-                new PixelObject(x + 5, y + 4, velocityProvider.velocity(random), texture, 5, 4),
+                new PixelObject(x + 1, y + 4, velocityProvider.velocity(random), texture, u + 1, v + 4),
+                new PixelObject(x + 2, y + 4, velocityProvider.velocity(random), texture, u + 2, v + 4),
+                new PixelObject(x + 3, y + 4, velocityProvider.velocity(random), texture, u + 3, v + 4),
+                new PixelObject(x + 4, y + 4, velocityProvider.velocity(random), texture, u + 4, v + 4),
+                new PixelObject(x + 5, y + 4, velocityProvider.velocity(random), texture, u + 5, v + 4),
                 //7
 
                 //1
                 //2
-                new PixelObject(x + 2, y + 5, velocityProvider.velocity(random), texture, 2, 5),
-                new PixelObject(x + 3, y + 5, velocityProvider.velocity(random), texture, 3, 5),
-                new PixelObject(x + 4, y + 5, velocityProvider.velocity(random), texture, 4, 5),
+                new PixelObject(x + 2, y + 5, velocityProvider.velocity(random), texture, u + 2, v + 5),
+                new PixelObject(x + 3, y + 5, velocityProvider.velocity(random), texture, u + 3, v + 5),
+                new PixelObject(x + 4, y + 5, velocityProvider.velocity(random), texture, u + 4, v + 5),
                 //6
                 //7
 
                 //1
                 //2
                 //3
-                new PixelObject(x + 3, y + 6, velocityProvider.velocity(random), texture, 3, 6)
+                new PixelObject(x + 3, y + 6, velocityProvider.velocity(random), texture, u + 3, v + 6)
                 //5
                 //6
                 //7
@@ -107,11 +111,11 @@ public class HeartGenerator {
     }
 
     List<HudObject> spawnEndHalf(int x, int y) {
-        return new ArrayList<>(spawnFull(x, y, FancyHealthHud.HEART_VELOCITY_PROVIDER).stream().filter(hudObject -> ((PixelObject) hudObject).getU() > 4).toList());
+        return new ArrayList<>(spawnFull(x, y, FancyHealthHud.HEART_VELOCITY_PROVIDER).stream().filter(hudObject -> ((PixelObject) hudObject).getU() > u+3).toList());
     }
 
     List<HudObject> spawnStartHalf(int x, int y) {
-        return new ArrayList<>(spawnFull(x, y, FancyHealthHud.HEART_VELOCITY_PROVIDER).stream().filter(hudObject -> ((PixelObject) hudObject).getU() <= 4).toList());
+        return new ArrayList<>(spawnFull(x, y, FancyHealthHud.HEART_VELOCITY_PROVIDER).stream().filter(hudObject -> ((PixelObject) hudObject).getU() <= u+4).toList());
     }
 
 }

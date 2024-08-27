@@ -26,14 +26,14 @@ package dev.efekos.fancyhealthbar.client.hud;
 
 public class HeartTypes {
 
-    public static final HeartGenerator NORMAL = new HeartGenerator("full");
-    public static final HeartGenerator HARDCORE_NORMAL = new HeartGenerator("hardcore_full");
-    public static final HeartGenerator POISON = new HeartGenerator("poisoned_full");
-    public static final HeartGenerator HARDCORE_POISON = new HeartGenerator("hardcore_poisoned_full");
-    public static final HeartGenerator FROZEN = new HeartGenerator("frozen_full");
-    public static final HeartGenerator HARDCORE_FROZEN = new HeartGenerator("hardcore_frozen_full");
-    public static final HeartGenerator WITHER = new HeartGenerator("withered_full");
-    public static final HeartGenerator HARDCORE_WITHER = new HeartGenerator("hardcore_withered_full");
+    public static final HeartGenerator NORMAL = new HeartGenerator(53,1);
+    public static final HeartGenerator HARDCORE_NORMAL = new HeartGenerator(53,46);
+    public static final HeartGenerator POISON = new HeartGenerator(89,1);
+    public static final HeartGenerator HARDCORE_POISON = new HeartGenerator(89,46);
+    public static final HeartGenerator FROZEN = new HeartGenerator(179,1);
+    public static final HeartGenerator HARDCORE_FROZEN = new HeartGenerator(179,46);
+    public static final HeartGenerator WITHER = new HeartGenerator(125,1);
+    public static final HeartGenerator HARDCORE_WITHER = new HeartGenerator(125,46);
 
 
     public static HeartGenerator get(boolean hardcore, boolean poison, boolean frozen, boolean wither) {

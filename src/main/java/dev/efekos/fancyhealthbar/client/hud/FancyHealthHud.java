@@ -96,7 +96,7 @@ public class FancyHealthHud implements HudRenderCallback {
     }
 
     @Override
-    public void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter) {
+    public void onHudRender(DrawContext drawContext, float t) {
 
         MinecraftClient client = MinecraftClient.getInstance();
         boolean notPaused = !client.isPaused();

@@ -69,12 +69,9 @@ public class PixelObject extends PhysicalHudObject {
 
     @Override
     public void draw(DrawContext context) {
-        int x1 = getLocation().getX()-1;
-        int x2 = x1+size;
-        int y1 = getLocation().getY()-1;
-        int y2 = y1+size;
-
-        drawTexture(context,texture,x1,x2,y1,y2,0,1,1,u,v,9,9);
+        int x = getLocation().getX();
+        int y = getLocation().getY();
+        context.drawRepeatingTexture(texture,x,y,size,size,u,v,1,1);
     }
 
     void drawTexture(DrawContext context,Identifier texture, int x1, int x2, int y1, int y2, int z, int regionWidth, int regionHeight, float u, float v, int textureWidth, int textureHeight) {
@@ -85,7 +82,8 @@ public class PixelObject extends PhysicalHudObject {
         RenderSystem.setShaderTexture(0, texture);
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         Matrix4f matrix4f = context.getMatrices().peek().getPositionMatrix();
-        BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS,VertexFormats.POSITION_TEXTURE);
+        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
         bufferBuilder.vertex(matrix4f, x1, y1, z).texture(u1, v1);
         bufferBuilder.vertex(matrix4f, x1, y2, z).texture(u1, v2);
         bufferBuilder.vertex(matrix4f, x2, y2, z).texture(u2, v2);
