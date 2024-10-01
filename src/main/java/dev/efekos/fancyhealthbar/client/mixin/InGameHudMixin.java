@@ -22,26 +22,33 @@
  * SOFTWARE.
  */
 
-package dev.efekos.fancyhealthbar.client;
+package dev.efekos.fancyhealthbar.client.mixin;
 
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import dev.efekos.fancyhealthbar.client.hud.FancyHealthHud;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.entity.player.PlayerEntity;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Unique;
 
-public class FancyHealthBarClient implements ClientModInitializer {
+@Mixin(InGameHud.class)
+public class InGameHudMixin {
 
-    public static final String MOD_ID = "fancyhealthbar";
+    @Unique
+    private static final FancyHealthHud hud = new FancyHealthHud();
 
-    @Override
-    public void onInitializeClient() {
-        FancyHealthBarConfig.CONFIG_KEY = KeyBindingHelper.registerKeyBinding(FancyHealthBarConfig.CONFIG_KEY);
+    @Unique
+    private int lastHealth;
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (FancyHealthBarConfig.CONFIG_KEY.wasPressed()) {
-                client.setScreen(FancyHealthBarConfig.createScreen());
-            }
-        });
-
-        FancyHealthBarConfig.HANDLER.load();
+    /**
+     * @author efekos
+     * @reason To remove the default health bar as FancyHealthBar mod will rerender it.
+     */
+    @Overwrite
+    private void renderHealthBar(DrawContext context, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int li, int health, int absorption, boolean blinking) {
+        hud.render(context,player,x,y,lines,regeneratingHeartIndex,maxHealth,this.lastHealth,(int)player.getHealth(),absorption,blinking);
+        this.lastHealth = (int)player.getHealth();
     }
+
 }
