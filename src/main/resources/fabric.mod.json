@@ -19,9 +19,6 @@
     "client": [
       "dev.efekos.fancyhealthbar.client.FancyHealthBarClient"
     ],
-    "main": [
-      "dev.efekos.fancyhealthbar.FancyHealthBar"
-    ],
     "modmenu": [
       "dev.efekos.fancyhealthbar.modmenu.FancyHealthBarModMenu"
     ]
