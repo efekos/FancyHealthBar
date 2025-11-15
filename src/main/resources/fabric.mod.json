@@ -3,12 +3,11 @@
   "id": "fancyhealthbar",
   "version": "${version}",
   "name": "FancyHealthBar",
-  "description": "Fancy ways of losing health.",
+  "description": "Overhaul of the health bar.",
   "authors": [
     "efekos"
   ],
   "contact": {
-    "repo": "https://github.com/efekos/FancyHealthBar",
     "sources": "https://github.com/efekos/FancyHealthBar",
     "issues": "https://github.com/efekos/FancyHealthBar/issues"
   },
@@ -20,7 +19,7 @@
       "dev.efekos.fancyhealthbar.client.FancyHealthBarClient"
     ],
     "modmenu": [
-      "dev.efekos.fancyhealthbar.modmenu.FancyHealthBarModMenu"
+      "dev.efekos.fancyhealthbar.client.modmenu.FancyHealthBarModMenu"
     ]
   },
   "mixins": [
@@ -28,19 +27,21 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*",
-    "minecraft": "${minecraft_version}",
-    "yet_another_config_lib_v3": "*"
+    "minecraft": "${minecraft_version}"
   },
+  "accessWidener": "accessWidener/${aw_file}",
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.discord": "https://efekos.dev/discord",
-        "modmenu.modrinth": "https://modrinth.com/mod/fancy-health-bar",
+        "modmenu.discord": "https://discord.gg/8PPgcmYNf4",
         "modmenu.buymeacoffee": "https://efekos.dev/bmac",
         "modmenu.patreon": "https://efekos.dev/patreon",
-        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/fancy-health-bar"
-      }
+        "modmenu.modrinth": "https://modrinth.com/mod/fancy-health-bar",
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/fancy-health-bar",
+        "modmenu.donate": "https://efekos.dev/bmac",
+        "modmenu.github_releases": "https://github.com/efekos/FancyHealthBar/releases"
+      },
+      "badges": [ ]
     }
   }
 }

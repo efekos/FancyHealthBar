@@ -1,0 +1,7 @@
+accessWidener v2 named
+accessible class net/minecraft/client/gui/hud/InGameHud$HeartType
+accessible class net/minecraft/client/gui/widget/GridWidget$Element
+accessible method net/minecraft/client/gui/hud/InGameHud$HeartType fromPlayerState (Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/client/gui/hud/InGameHud$HeartType;
+accessible method net/minecraft/client/gui/DrawContext drawSpriteTiled (Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/client/texture/Sprite;IIIIIIIIIII)V
+accessible method net/minecraft/client/gui/DrawContext drawTexturedQuad (Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lcom/mojang/blaze3d/textures/GpuTextureView;IIIIFFFFI)V
+accessible field net/minecraft/client/gui/DrawContext spriteAtlasTexture Lnet/minecraft/client/texture/SpriteAtlasTexture;
