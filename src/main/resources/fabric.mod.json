@@ -34,11 +34,9 @@
     "modmenu": {
       "links": {
         "modmenu.discord": "https://discord.gg/8PPgcmYNf4",
-        "modmenu.buymeacoffee": "https://efekos.dev/bmac",
         "modmenu.patreon": "https://efekos.dev/patreon",
         "modmenu.modrinth": "https://modrinth.com/mod/fancy-health-bar",
         "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/fancy-health-bar",
-        "modmenu.donate": "https://efekos.dev/bmac",
         "modmenu.github_releases": "https://github.com/efekos/FancyHealthBar/releases"
       },
       "badges": [ ]
