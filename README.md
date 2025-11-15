@@ -8,6 +8,6 @@
 ![](https://img.shields.io/modrinth/dt/fancy-health-bar?logo=modrinth&logoColor=%231bd96a&label=modrinth&color=%231bd96a)
 # FancyHealthBar
 
-This client-side mod adds health lose particles to your health bar hud. When you take damage, you'll see particles like this:
+This client-side mod completely revamps the health bar with many new, configurable additions.
 
 ![](https://raw.githubusercontent.com/efekos/FancyHealthBar/master/img/showcase.gif)
