@@ -2,7 +2,7 @@ plugins {
     id 'fabric-loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
     id "com.modrinth.minotaur" version "2.+"
-    id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id 'net.darkhax.curseforgegradle' version '1.1.15'
 }
 
 def loadProps(path) {
@@ -22,7 +22,7 @@ base {
 def targetJavaVersion = stonecutter.eval(stonecutter.current.version,">=1.20.5")?21:17
 
 modrinth {
-    apiKey = project.modrinth_token
+    token = project.modrinth_token
     projectId = "d5wz0u1I"
     versionNumber = project.version+"+"+stonecutter.current.version
     versionType="release"
@@ -37,19 +37,15 @@ modrinth {
 }
 
 
-curseforge {
-    apiKey = project.curseforge_token
-    project {
-        id = '990963'
-        changelog = file("../../changelog.txt").text
-        releaseType = 'release'
-        addGameVersion "$stonecutter.current.version"
-        mainArtifact(remapJar){
-            relations {
-                optionalDependency 'modmenu'
-            }
-        }
-    }
+task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+    apiToken = project.curseforge_token
+
+    def mainFile =  upload(990963,remapJar)
+    mainFile.changelog = file("../../changelog.txt").text
+    mainFile.addOptional('modmenu')
+    mainFile.releaseType = 'release'
+    mainFile.changelogType = 'markdown'
+    mainFile.addGameVersion(stonecutter.current.version,'Fabric',"Java $targetJavaVersion",'Client')
 }
 
 
