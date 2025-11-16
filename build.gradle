@@ -1,7 +1,17 @@
 plugins {
     id 'fabric-loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
+    id "com.modrinth.minotaur" version "2.+"
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
+
+def loadProps(path) {
+    def p = new Properties()
+    file(path).withInputStream { p.load(it) }
+    p.each { k, v -> project.ext.set(k, v) }
+}
+
+loadProps("../../environment.properties")
 
 version = project.mod_version
 group = project.maven_group
@@ -9,6 +19,39 @@ group = project.maven_group
 base {
     archivesName = project.archives_base_name
 }
+def targetJavaVersion = stonecutter.eval(stonecutter.current.version,">=1.20.5")?21:17
+
+modrinth {
+    apiKey = project.modrinth_token
+    projectId = "d5wz0u1I"
+    versionNumber = project.version+"+"+stonecutter.current.version
+    versionType="release"
+    uploadFile=remapJar
+    gameVersions=[stonecutter.current.version]
+    loaders=["fabric"]
+    changelog=file("../../changelog.txt").text
+    detectLoaders = false
+    dependencies {
+        optional.project "modmenu"
+    }
+}
+
+
+curseforge {
+    apiKey = project.curseforge_token
+    project {
+        id = '990963'
+        changelog = file("../../changelog.txt").text
+        releaseType = 'release'
+        addGameVersion "$stonecutter.current.version"
+        mainArtifact(remapJar){
+            relations {
+                optionalDependency 'modmenu'
+            }
+        }
+    }
+}
+
 
 repositories {
     maven {
@@ -47,7 +90,6 @@ processResources {
     }
 }
 
-def targetJavaVersion = stonecutter.eval(stonecutter.current.version,">=1.20.5")?21:17
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
