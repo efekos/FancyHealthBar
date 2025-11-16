@@ -1,5 +1,0 @@
-accessWidener v2 named
-accessible class net/minecraft/client/gui/hud/InGameHud$HeartType
-accessible method net/minecraft/client/gui/hud/InGameHud$HeartType fromPlayerState (Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/client/gui/hud/InGameHud$HeartType;
-accessible method net/minecraft/client/gui/DrawContext drawSpriteTiled (Ljava/util/function/Function;Lnet/minecraft/client/texture/Sprite;IIIIIIIIIII)V
-accessible field net/minecraft/client/gui/DrawContext guiAtlasManager Lnet/minecraft/client/texture/GuiAtlasManager;
