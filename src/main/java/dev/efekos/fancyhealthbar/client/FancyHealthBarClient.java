@@ -13,9 +13,9 @@ public class FancyHealthBarClient implements ClientModInitializer {
 
     public static Identifier vanillaId(String path){
         //? <1.21
-        return Identifier.of("minecraft",path);
+        /*return Identifier.of("minecraft",path);*/
         //? >=1.21
-         /*return Identifier.ofVanilla(path);*/
+         return Identifier.ofVanilla(path);
     }
 
     @Override

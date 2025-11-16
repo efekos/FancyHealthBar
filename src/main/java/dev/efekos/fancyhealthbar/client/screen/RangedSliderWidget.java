@@ -7,7 +7,7 @@ import dev.efekos.fancyhealthbar.client.compat.TextureNineSlice;
 import net.minecraft.client.MinecraftClient;
 //? >=1.21.6
 /*import net.minecraft.client.gl.RenderPipelines;*/
-//?>=1.21.9
+//? >=1.21.9
 /*import net.minecraft.client.gui.Click;*/
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.navigation.GuiNavigationType;
@@ -16,7 +16,7 @@ import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.widget.ClickableWidget;
 //? <1.21.9
 import net.minecraft.client.input.KeyCodes;
-//?>=1.21.9
+//? >=1.21.9
 /*import net.minecraft.client.input.KeyInput;*/
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.text.MutableText;
@@ -80,7 +80,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
 
     }
 
-    public void /*? <1.20.3 {*/renderButton/*?} else {*//*renderWidget*//*?}*/(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void /*? <1.20.3 {*//*renderButton*//*?} else {*/renderWidget/*?}*/(DrawContext context, int mouseX, int mouseY, float delta) {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
         //? <1.21.5 {
 
@@ -280,7 +280,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
         return button==0||button==1;
     }
 
-    //?>=1.21.9{
+    //? >=1.21.9 {
     /*public boolean mouseClicked(Click click, boolean doubled) {
         return mouseClicked(click.x(),click.y(),click.button());
     }*/

@@ -1,7 +1,7 @@
 package dev.efekos.fancyhealthbar.client.screen;
 
 import net.minecraft.client.gui.widget.ButtonWidget;
-//?>=1.21.9
+//? >=1.21.9
 /*import net.minecraft.client.input.AbstractInput;*/
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
@@ -33,7 +33,7 @@ public class FhbEnumToggleWidget<T extends Enum<T> & Supplier<Text>> extends But
         this.valueConsumer = valueConsumer;
     }
 
-    //?>=1.21.9{
+    //? >=1.21.9 {
     /*@Override
     public void onPress(AbstractInput input) {
         onPress();

@@ -8,7 +8,7 @@ import dev.efekos.fancyhealthbar.client.entity.HudEntityManager;
 import dev.efekos.fancyhealthbar.client.options.FancyHealthBarOptions;
 import dev.efekos.fancyhealthbar.client.options.HealthBarRenderingOptions;
 import net.minecraft.client.MinecraftClient;
-//?>=1.21.9
+//? >=1.21.9
 /*import net.minecraft.client.gui.Click;*/
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Drawable;
@@ -89,9 +89,9 @@ public class FancyHealthBarOptionsScreen extends Screen {
         healthBarName.setWidth(100);
 
         //? >=1.21
-        /*layout.addHeader(TITLE_TEXT,textRenderer);*/
+        layout.addHeader(TITLE_TEXT,textRenderer);
         //? <1.21
-        layout.addHeader(new TextWidget(TITLE_TEXT,textRenderer));
+        /*layout.addHeader(new TextWidget(TITLE_TEXT,textRenderer));*/
 
         DirectionalLayoutWidget bodyLayout = new DirectionalLayoutWidget(0, 0, DirectionalLayoutWidget.DisplayAxis.VERTICAL).spacing(8);
         DirectionalLayoutWidget healthBarsWidget = new DirectionalLayoutWidget(0,0, DirectionalLayoutWidget.DisplayAxis.HORIZONTAL).spacing(8);
@@ -117,10 +117,10 @@ public class FancyHealthBarOptionsScreen extends Screen {
 
 
         //? <1.20.2 {
-        layout.addBody(bodyLayout,Positioner.create().alignHorizontalCenter());
-        //?} else {
-        /*layout.addBody(bodyLayout,Positioner::alignHorizontalCenter);
-        *///?}
+        /*layout.addBody(bodyLayout,Positioner.create().alignHorizontalCenter());
+        *///?} else {
+        layout.addBody(bodyLayout,Positioner::alignHorizontalCenter);
+        //?}
 
         layout.addFooter(ButtonWidget.builder(ScreenTexts.DONE, button -> close()).build());
         healthBars.forEachElement(this::add);
@@ -186,7 +186,7 @@ public class FancyHealthBarOptionsScreen extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         //? <1.20.2
-        this.renderBackground(context);
+        /*this.renderBackground(context);*/
         super.render(context, mouseX, mouseY, delta);
         manager.render(context);
         controller.draw(context);

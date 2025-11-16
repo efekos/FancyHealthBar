@@ -23,7 +23,7 @@ public class FhbArrowButton extends ButtonWidget {
         this(0, 0, width, height, textures, pressAction, text);
     }
 
-    public void /*? <1.20.3 {*/renderButton/*?} else {*//*renderWidget*//*?}*/(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void /*? <1.20.3 {*//*renderButton*//*?} else {*/renderWidget/*?}*/(DrawContext context, int mouseX, int mouseY, float delta) {
         Texture texture = this.textures.get(this.isSelected());
         texture.draw(context,this.getX(),this.getY(),this.width,this.height);
     }

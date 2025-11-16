@@ -74,7 +74,7 @@ public class PixelEntity extends HudEntity {
         //? <1.21.2
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         Matrix4f matrix4f = context.getMatrices().peek().getPositionMatrix();
-        BufferBuilder bufferBuilder = Tessellator.getInstance()./*? >=1.21 {*//*begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);*//*?} else {*/getBuffer();/*?}*/
+        BufferBuilder bufferBuilder = Tessellator.getInstance()./*? >=1.21 {*/begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);/*?} else {*//*getBuffer();*//*?}*/
         bufferBuilder.vertex(matrix4f, x1, y1, z).texture(u1, v1);
         bufferBuilder.vertex(matrix4f, x1, y2, z).texture(u1, v2);
         bufferBuilder.vertex(matrix4f, x2, y2, z).texture(u2, v2);
@@ -88,18 +88,18 @@ public class PixelEntity extends HudEntity {
 
         if(guiMode){
             //? <1.20.2 {
-            context.drawRepeatingTexture(texture.atlasId(),(int)x,(int)y,1,1,texture.atlasPosition().u1()+u,texture.atlasPosition().v1()+v,1,1);
-            //?} else {
-            /*Sprite spr = context./^? <1.21.9 {^/guiAtlasManager/^?} else {^//^spriteAtlasTexture^//^?}^/.getSprite(texture.baseId());
+            /*context.drawRepeatingTexture(texture.atlasId(),(int)x,(int)y,1,1,texture.atlasPosition().u1()+u,texture.atlasPosition().v1()+v,1,1);
+            *///?} else {
+            Sprite spr = context./*? <1.21.9 {*/guiAtlasManager/*?} else {*//*spriteAtlasTexture*//*?}*/.getSprite(texture.baseId());
             context.drawSpriteTiled(
-                    /^? >=1.21.6 {^//^RenderPipelines.GUI_TEXTURED,^//^?} else if >=1.21.2 {^//^RenderLayer::getGuiTextured,^//^?}^/
+                    /*? >=1.21.6 {*//*RenderPipelines.GUI_TEXTURED,*//*?} else if >=1.21.2 {*//*RenderLayer::getGuiTextured,*//*?}*/
                     spr,
-                    (int)x,(int)y,/^? <1.21.3 {^/0,/^?}^/
+                    (int)x,(int)y,/*? <1.21.3 {*/0,/*?}*/
                     size,size,u,v,
                     1,1,spr.getContents().getWidth(),spr.getContents().getHeight()
-                    /^? >=1.21.3 {^//^, Colors.WHITE^//^?}^/
+                    /*? >=1.21.3 {*//*, Colors.WHITE*//*?}*/
                     );
-            *///?}
+            //?}
         } else draw(context);
 
     }
