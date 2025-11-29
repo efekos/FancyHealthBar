@@ -55,13 +55,21 @@ public class PixelEntity extends HudEntity {
         int y2 = y1+size;
 
 
-        drawTexturedQuad(context,texture.atlasId(),x1,x2,y1,y2,0,u,u,v,v);
-
-        //drawTexture(context,texture,x1,x2,y1,y2,0,1,1,u,v,9,9);
-    }
-
-    void drawTexture(DrawContext context,Identifier texture, int x1, int x2, int y1, int y2, int z, int regionWidth, int regionHeight, float u, float v, int textureWidth, int textureHeight) {
-        this.drawTexturedQuad(context,texture, x1, x2, y1, y2, z, (u + 0.0f) / (float)textureWidth, (u + (float)regionWidth) / (float)textureWidth, (v + 0.0f) / (float)textureHeight, (v + (float)regionHeight) / (float)textureHeight);
+        //?>=1.20.2 {
+        Sprite sprite = context.guiAtlasManager.getSprite(texture.baseId());
+        Identifier id = sprite.getAtlasId();
+        float perPixelV = (sprite.getMaxV() - sprite.getMinV()) / (float) sprite.getContents().getHeight();
+        float perPixelU = (sprite.getMaxU() - sprite.getMinU()) / (float) sprite.getContents().getWidth();
+        float u1 = sprite.getMinU() + perPixelU * u;
+        float v1 = sprite.getMinV() + perPixelV * v;
+        drawTexturedQuad(context,id,x1,x2,y1,y2,0, u1,u1+perPixelU,v1,v1+perPixelV);
+        //?} else {
+        /*float perPixelV = 1/256f;
+        float perPixelU = 1/256f;
+        float u1 = perPixelU * u + texture.atlasPosition().u1()*perPixelU;
+        float v1 = perPixelV * v + texture.atlasPosition().v1()*perPixelV;
+        drawTexturedQuad(context,texture.atlasId(),x1,x2,y1,y2,0, u1,u1+perPixelU,v1,v1+perPixelV);*/
+        //?}
     }
 
     void drawTexturedQuad(DrawContext context,Identifier texture, int x1, int x2, int y1, int y2, int z, float u1, float u2, float v1, float v2) {

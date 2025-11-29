@@ -35,5 +35,6 @@
   "options.fancyhealthbar.line.delta_behaviour.follow": "Follow",
   "options.fancyhealthbar.line.delta_behaviour.lerp": "Follow Lerped",
   "options.fancyhealthbar.line.delta_behaviour.blink": "Blink",
-  "options.fancyhealthbar.line.delta_behaviour.jump": "Jump"
+  "options.fancyhealthbar.line.delta_behaviour.jump": "Jump",
+  "options.fancyhealthbar.vanilla.size": "Size"
 }

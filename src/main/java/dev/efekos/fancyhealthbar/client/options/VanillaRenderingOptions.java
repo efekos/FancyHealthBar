@@ -8,12 +8,11 @@ import net.minecraft.client.gui.widget.GridWidget;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 public class VanillaRenderingOptions implements HealthBarRenderingOptions {
 
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
 
     private int jiggle;
     private int lowHealthJiggleStart;
@@ -27,6 +26,7 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
     private Range<Double> accelerationY;
     private Range<Double> drag;
     private Range<Integer> maxLifetime;
+    private Range<Integer> size;
 
     @Override
     public void fillOptions(GridWidget.Adder adder) {
@@ -45,6 +45,8 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
 
         adder.add(new FhbRangedDoubleSliderWidget(0,1,Text.translatable("options.fancyhealthbar.vanilla.drag"),this.getDrag()));
         adder.add(new FhbRangedSliderWidget(1,150,Text.translatable("options.fancyhealthbar.vanilla.lifetime"),this.getMaxLifetime()));
+
+        adder.add(new FhbRangedSliderWidget(1,10,Text.translatable("options.fancyhealthbar.vanilla.size"),this.getSize()));
     }
 
     public VanillaRenderingOptions() {
@@ -58,32 +60,24 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
 
     @Override
     public void read(JsonObject object) {
+
+        int version = object.has("version") ? object.get("version").getAsInt() : 1;
+
         jiggle = object.get("jiggle").getAsInt();
         regenIndexAccount = object.get("regenIndexAccount").getAsBoolean();
         blinking = object.get("blinking").getAsBoolean();
         lowHealthJiggle = object.get("lowHealthJiggle").getAsInt();
         hardcoreHearts = HardcoreHearts.valueOf(object.get("hardcoreHearts").getAsString());
-        lowHealthJiggleStart = object.has("lowHealthJiggleStart")?object.get("lowHealthJiggleStart").getAsInt():4;
+        lowHealthJiggleStart = object.get("lowHealthJiggleStart").getAsInt();
         velocityX = readIntRange(object,"velocityX");
         velocityY = readIntRange(object,"velocityY");
         accelerationX = readDoubleRange(object,"accelerationX");
         accelerationY = readDoubleRange(object,"accelerationY");
         drag = readDoubleRange(object,"drag");
         maxLifetime = readIntRange(object,"maxLifetime");
+        if(version>1)size=readIntRange(object,"size");
     }
 
-    private Range<Integer> readIntRange(JsonObject object, String key){
-        return new IntRange(object.get(key+"Min").getAsInt(),object.get(key+"Max").getAsInt());
-    }
-
-    private Range<Double> readDoubleRange(JsonObject object, String key){
-        return new RangedSliderWidget.Range(object.get(key+"Min").getAsDouble(),object.get(key+"Max").getAsDouble());
-    }
-
-    private void writeRange(JsonObject object, String key, Range<?> range){
-        object.addProperty(key+"Min",range.getMin());
-        object.addProperty(key+"Max",range.getMax());
-    }
 
     @Override
     public void write(JsonObject object) {
@@ -99,6 +93,7 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
         writeRange(object, "accelerationY", accelerationY);
         writeRange(object, "drag", drag);
         writeRange(object, "maxLifetime", maxLifetime);
+        writeRange(object,"size",size);
         object.addProperty("version", VERSION);
     }
 
@@ -116,6 +111,7 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
         accelerationY = new RangedSliderWidget.Range(-1,-1);
         drag = new RangedSliderWidget.Range(0,0);
         maxLifetime = new IntRange(100,100);
+        size = new IntRange(1,1);
     }
 
     public enum HardcoreHearts implements Supplier<Text> {
@@ -138,6 +134,14 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
             return text;
         }
 
+    }
+
+    public Range<Integer> getSize() {
+        return size;
+    }
+
+    public void setSize(Range<Integer> size) {
+        this.size = size;
     }
 
     public void setRegenIndexAccount(boolean regenIndexAccount) {
