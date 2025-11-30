@@ -178,7 +178,7 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
     }
 
     private void a(HudEntityManager manager, Vector2i location, Texture texture, int a, int b) {
-        PixelEntity entity = new PixelEntity(location.x + a, location.y + b, texture, a, b, false);
+        PixelEntity entity = new PixelEntity(location.x + a, location.y + b, texture, a, b);
         entity.setVelocity(new Vector2d(options.getVelocityX().random(), options.getVelocityY().random()));
         entity.setAcceleration(new Vector2d(options.getAccelerationX().random(),options.getAccelerationY().random()));
         entity.setDrag(options.getDrag().random());
