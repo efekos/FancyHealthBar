@@ -37,8 +37,8 @@ public class FhbEnumToggleWidget<T extends Enum<T> & Supplier<Text>> extends But
     /*@Override
     public void onPress(AbstractInput input) {
         onPress();
-    }*/
-    //?}
+    }
+    *///?}
 
     public void onPress() {
         int ordinal = value.ordinal()+1;

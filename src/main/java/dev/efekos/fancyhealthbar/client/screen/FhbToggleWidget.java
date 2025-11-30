@@ -31,13 +31,13 @@ public class FhbToggleWidget extends ButtonWidget {
     }
 
     //? >=1.21.9 {
-    /*
-    public void onPress(AbstractInput input) {
+    
+    /*public void onPress(AbstractInput input) {
         setToggled(!toggled);
         valueConsumer.accept(toggled);
         setMessage(ScreenTexts.composeGenericOptionText(text,ScreenTexts.onOrOff(toggled)));
-    }*/
-    //?} else {
+    }
+    *///?} else {
     public void onPress() {
         setToggled(!toggled);
         valueConsumer.accept(toggled);

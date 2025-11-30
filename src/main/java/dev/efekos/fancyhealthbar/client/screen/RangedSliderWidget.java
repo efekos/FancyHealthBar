@@ -283,8 +283,8 @@ public abstract class RangedSliderWidget extends ClickableWidget {
     //? >=1.21.9 {
     /*public boolean mouseClicked(Click click, boolean doubled) {
         return mouseClicked(click.x(),click.y(),click.button());
-    }*/
-    //?}
+    }
+    *///?}
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (this.active && this.visible) {
