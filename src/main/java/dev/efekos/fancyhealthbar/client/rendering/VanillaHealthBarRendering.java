@@ -71,6 +71,10 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
     public void draw(Random random, DrawContext context, PlayerEntity player, int x, int y,
                      int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption,
                      boolean blinking) {
+
+        context.getMatrices().push();
+        context.getMatrices().translate(options.offset().x,options.offset().y,0);
+
         HeartTextureSet heartType = HeartTextureSet.tryGetFromPlayer(player);
         //? <1.21.9 {
         boolean hardcore = player.getWorld().getLevelProperties().isHardcore();
@@ -107,6 +111,9 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
                 legacyHeart(context, heartType, heartLoc.x, heartLoc.y, hardcore, false, bl4);
             }
         }
+
+        context.getMatrices().pop();
+
     }
 
     private @NotNull Vector2i getHeartLocation(Random random, int x, int y, int lines, int regeneratingHeartIndex, int lastHealth, int absorption, int i, int maxHearts) {

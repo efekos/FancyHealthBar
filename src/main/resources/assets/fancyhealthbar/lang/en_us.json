@@ -38,5 +38,7 @@
   "options.fancyhealthbar.line.delta_behaviour.jump": "Jump",
   "options.fancyhealthbar.vanilla.size": "Size",
   "options.fancyhealthbar.vanilla.fade_out": "Fade Out Ticks",
-  "options.fancyhealthbar.vanilla.fade_in": "Fade In Ticks"
+  "options.fancyhealthbar.vanilla.fade_in": "Fade In Ticks",
+  "options.fancyhealthbar.generic.offset_x": "X Offset",
+  "options.fancyhealthbar.generic.offset_y": "Y Offset"
 }

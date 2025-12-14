@@ -7,6 +7,7 @@ import dev.efekos.fancyhealthbar.client.screen.*;
 import net.minecraft.client.gui.widget.GridWidget;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
+import org.joml.Vector2i;
 
 import java.util.function.Supplier;
 
@@ -29,6 +30,7 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
     private Range<Integer> size;
     private Range<Integer> fadeOutTicks;
     private Range<Integer> fadeInTicks;
+    private Vector2i offset;
 
     @Override
     public void fillOptions(GridWidget.Adder adder) {
@@ -51,6 +53,9 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
         adder.add(new FhbRangedSliderWidget(1,10,Text.translatable("options.fancyhealthbar.vanilla.size"),this.getSize()));
         adder.add(new FhbRangedSliderWidget(0,100,Text.translatable("options.fancyhealthbar.vanilla.fade_in"),this.getFadeInTicks()));
         adder.add(new FhbRangedSliderWidget(0,100,Text.translatable("options.fancyhealthbar.vanilla.fade_out"),this.getFadeOutTicks()));
+
+        adder.add(new FhbSliderWidget(-200,200,Text.translatable("options.fancyhealthbar.generic.offset_x"),offset().x,v->offset.x = v));
+        adder.add(new FhbSliderWidget(-200,200,Text.translatable("options.fancyhealthbar.generic.offset_y"),offset().y,v->offset.y = v));
     }
 
     public VanillaRenderingOptions() {
@@ -83,6 +88,7 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
             size=readIntRange(object,"size");
             fadeOutTicks=readIntRange(object,"fade_out");
             fadeInTicks=readIntRange(object,"fade_in");
+            offset=readVector(object,"offset");
         }
     }
 
@@ -104,6 +110,7 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
         writeRange(object,"size",size);
         writeRange(object,"fade_out", fadeOutTicks);
         writeRange(object,"fade_in", fadeInTicks);
+        writeVector(object,"offset",offset);
         object.addProperty("version", VERSION);
     }
 
@@ -124,6 +131,7 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
         size = new IntRange(1,1);
         fadeOutTicks = new IntRange(0,0);
         fadeInTicks = new IntRange(0,0);
+        offset = new Vector2i(0,0);
     }
 
     public enum HardcoreHearts implements Supplier<Text> {
@@ -226,6 +234,14 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
 
     public void setVelocityY(Range<Integer> velocityY) {
         this.velocityY = velocityY;
+    }
+
+    public void setOffset(Vector2i offset) {
+        this.offset = offset;
+    }
+
+    public Vector2i offset() {
+        return offset;
     }
 
     public Range<Double> getAccelerationX() {

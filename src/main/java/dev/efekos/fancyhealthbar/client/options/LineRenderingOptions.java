@@ -19,6 +19,7 @@ import net.minecraft.client.gui.widget.GridWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import org.joml.Vector2i;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -35,6 +36,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
     private LineStyle normalLineStyle;
     private LineStyle hardcoreLineStyle;
     private DeltaBehaviour deltaBehaviour;
+    private Vector2i offset;
 
     @Override
     public void fillOptions(GridWidget.Adder adder) {
@@ -44,6 +46,16 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
         adder.add(new FhbEnumToggleWidget<>(DeltaBehaviour.class,Text.translatable("options.fancyhealthbar.line.delta_behaviour"),deltaBehaviour,this::setDeltaBehaviour));
         adder.add(new FhbEnumToggleWidget<>(LineStyle.class,Text.translatable("options.fancyhealthbar.line.normal_style"),normalLineStyle,this::setNormalLineStyle));
         adder.add(new FhbEnumToggleWidget<>(LineStyle.class,Text.translatable("options.fancyhealthbar.line.hardcore_style"),hardcoreLineStyle,this::setHardcoreLineStyle));
+        adder.add(new FhbSliderWidget(-200,200,Text.translatable("options.fancyhealthbar.generic.offset_x"),offset().x,v->offset.x = v));
+        adder.add(new FhbSliderWidget(-200,200,Text.translatable("options.fancyhealthbar.generic.offset_y"),offset().y,v->offset.y = v));
+    }
+
+    public void setOffset(Vector2i offset) {
+        this.offset = offset;
+    }
+
+    public Vector2i offset() {
+        return offset;
     }
 
     public DeltaBehaviour deltaBehaviour() {
@@ -115,6 +127,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
         if(object.has("normal_style")) normalLineStyle = Try.orElse(() -> LineStyle.valueOf(object.get("normal_style").getAsString()),LineStyle.DEFAULT);
         if(object.has("hardcore_style")) hardcoreLineStyle = Try.orElse(() -> LineStyle.valueOf(object.get("hardcore_style").getAsString()),LineStyle.HARDCORE);
         if(object.has("delta_behaviour")) deltaBehaviour = Try.orElse(()->DeltaBehaviour.valueOf(object.get("delta_behaviour").getAsString()),DeltaBehaviour.FOLLOW);
+        if(object.has("offset")) offset = readVector(object,"offset");
     }
 
     @Override
@@ -125,6 +138,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
         object.addProperty("normal_style",normalLineStyle.name());
         object.addProperty("hardcore_style",hardcoreLineStyle.name());
         object.addProperty("delta_behaviour",deltaBehaviour.name());
+        writeVector(object,"offset",offset);
     }
 
     @Override
@@ -135,6 +149,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
         normalLineStyle = LineStyle.DEFAULT;
         hardcoreLineStyle = LineStyle.HARDCORE;
         deltaBehaviour = DeltaBehaviour.FOLLOW;
+        offset = new Vector2i(0,0);
     }
 
     public enum DeltaBehaviour implements Supplier<Text> {
