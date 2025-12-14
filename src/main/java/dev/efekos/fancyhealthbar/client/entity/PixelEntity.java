@@ -1,13 +1,21 @@
 package dev.efekos.fancyhealthbar.client.entity;
 
-//? >=1.21.6
-/*import net.minecraft.client.gl.RenderPipelines;*/
+//? >=1.21.6 {
+/*import com.mojang.blaze3d.pipeline.RenderPipeline;
+import net.minecraft.client.gl.RenderPipelines;
+*///?}
 import dev.efekos.fancyhealthbar.client.accessor.DrawWithAlphaAccessor;
 import dev.efekos.fancyhealthbar.client.compat.Texture;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
 import net.minecraft.client.texture.Sprite;
 import org.joml.Vector2i;
+
+//?>=1.21.2 {
+/*
+import net.minecraft.util.Identifier;
+import java.util.function.Function;
+*///?}
 
 public class PixelEntity extends HudEntity {
 
@@ -45,8 +53,13 @@ public class PixelEntity extends HudEntity {
         int textureSize = (int)(1/unit);
         //? <1.21.2
         context.drawTexture(sprite.getAtlasId(),(int)x,(int)y,size,size,u+ sprite.getMinU()* textureSize,v+ sprite.getMinV()* textureSize,1,1, textureSize, textureSize,getAlpha());
-        //? >=1.21.2
-        /*context.drawTexture(*//*? >=1.21.6 {*//*RenderPipelines.GUI_TEXTURED*//*?} else {*//*RenderLayer::getGuiTextured,*//*?}*//* sprite.getAtlasId(),(int)x,(int)y,u+ sprite.getMinU()* textureSize,v+ sprite.getMinV()* textureSize,size,size,1,1, textureSize, textureSize,getAlpha());*/
+        //? >=1.21.2 {
+        /*//? >=1.21.6
+        /^RenderPipeline arg1 = RenderPipelines.GUI_TEXTURED;^/
+        //? <1.21.6
+        Function<Identifier,RenderLayer> arg1 = RenderLayer::getGuiTextured;
+        context.drawTexture(arg1, sprite.getAtlasId(),(int)x,(int)y,u+ sprite.getMinU()* textureSize,v+ sprite.getMinV()* textureSize,size,size,1,1, textureSize, textureSize,getAlpha());
+        *///?}
         //?}
 
     }

@@ -27,15 +27,7 @@ public class LineJumpEntity extends HudEntity {
 
     @Override
     public void render(DrawContext context) {
-        /*? <1.21.5 {*/
-        RenderSystem.setShaderColor(1,1,1,1-(lifetime/(float)getMaxLifetime()));
-        RenderSystem.enableBlend();
-        /*?}*/
-        texture.draw(context,(int)x,(int)y,width,9);
-        /*? <1.21.5 {*/
-        RenderSystem.setShaderColor(1,1,1,1);
-        RenderSystem.disableBlend();
-        /*?}*/
+        texture.draw(context,(int)x,(int)y,width,9,1-(lifetime/(float)getMaxLifetime()));
     }
 
     @Override
