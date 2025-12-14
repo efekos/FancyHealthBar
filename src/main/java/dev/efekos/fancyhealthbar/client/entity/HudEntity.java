@@ -13,6 +13,8 @@ public abstract class HudEntity {
     protected int lifetime;
     protected int maxLifetime = 100;
     private double drag;
+    private int fadeIn;
+    private int fadeOut;
 
     public HudEntity(double x, double y) {
         this.x = x;
@@ -49,6 +51,29 @@ public abstract class HudEntity {
 
     public abstract Vector2i getAreaTaken();
     public abstract boolean hasPhysics();
+
+    public int getFadeIn() {
+        return fadeIn;
+    }
+
+    public int getFadeOut() {
+        return fadeOut;
+    }
+
+    protected float getAlpha(){
+        if(fadeIn==0&&fadeOut==0)return 1;
+        if(lifetime<=fadeIn)return lifetime/(float)fadeIn;
+        else if((maxLifetime-lifetime)<=fadeOut)return (maxLifetime-lifetime)/(float)fadeOut;
+        else return 1;
+    }
+
+    public void setFadeIn(int fadeIn) {
+        this.fadeIn = fadeIn;
+    }
+
+    public void setFadeOut(int fadeOut) {
+        this.fadeOut = fadeOut;
+    }
 
     public void setMaxLifetime(int maxLifetime) {
         this.maxLifetime = maxLifetime;

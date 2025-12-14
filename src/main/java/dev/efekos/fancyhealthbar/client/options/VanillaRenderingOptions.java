@@ -27,6 +27,8 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
     private Range<Double> drag;
     private Range<Integer> maxLifetime;
     private Range<Integer> size;
+    private Range<Integer> fadeOutTicks;
+    private Range<Integer> fadeInTicks;
 
     @Override
     public void fillOptions(GridWidget.Adder adder) {
@@ -47,6 +49,8 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
         adder.add(new FhbRangedSliderWidget(1,150,Text.translatable("options.fancyhealthbar.vanilla.lifetime"),this.getMaxLifetime()));
 
         adder.add(new FhbRangedSliderWidget(1,10,Text.translatable("options.fancyhealthbar.vanilla.size"),this.getSize()));
+        adder.add(new FhbRangedSliderWidget(0,100,Text.translatable("options.fancyhealthbar.vanilla.fade_in"),this.getFadeInTicks()));
+        adder.add(new FhbRangedSliderWidget(0,100,Text.translatable("options.fancyhealthbar.vanilla.fade_out"),this.getFadeOutTicks()));
     }
 
     public VanillaRenderingOptions() {
@@ -75,7 +79,11 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
         accelerationY = readDoubleRange(object,"accelerationY");
         drag = readDoubleRange(object,"drag");
         maxLifetime = readIntRange(object,"maxLifetime");
-        if(version>1)size=readIntRange(object,"size");
+        if(version>1){
+            size=readIntRange(object,"size");
+            fadeOutTicks=readIntRange(object,"fade_out");
+            fadeInTicks=readIntRange(object,"fade_in");
+        }
     }
 
 
@@ -94,6 +102,8 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
         writeRange(object, "drag", drag);
         writeRange(object, "maxLifetime", maxLifetime);
         writeRange(object,"size",size);
+        writeRange(object,"fade_out", fadeOutTicks);
+        writeRange(object,"fade_in", fadeInTicks);
         object.addProperty("version", VERSION);
     }
 
@@ -112,6 +122,8 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
         drag = new RangedSliderWidget.Range(0,0);
         maxLifetime = new IntRange(100,100);
         size = new IntRange(1,1);
+        fadeOutTicks = new IntRange(0,0);
+        fadeInTicks = new IntRange(0,0);
     }
 
     public enum HardcoreHearts implements Supplier<Text> {
@@ -134,6 +146,14 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
             return text;
         }
 
+    }
+
+    public Range<Integer> getFadeInTicks() {
+        return fadeInTicks;
+    }
+
+    public Range<Integer> getFadeOutTicks() {
+        return fadeOutTicks;
     }
 
     public Range<Integer> getSize() {

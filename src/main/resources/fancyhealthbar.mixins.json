@@ -4,6 +4,7 @@
   "package": "dev.efekos.fancyhealthbar.client.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "DrawContextMixin",
     "GridAdderMixin",
     "GridWidgetMixin",
     "InGameHudMixin",

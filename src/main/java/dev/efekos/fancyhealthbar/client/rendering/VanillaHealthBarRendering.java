@@ -184,6 +184,8 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
         entity.setDrag(options.getDrag().random());
         entity.setMaxLifetime(options.getMaxLifetime().random());
         entity.setSize(options.getSize().random());
+        entity.setFadeIn(options.getFadeInTicks().random());
+        entity.setFadeOut(options.getFadeOutTicks().random());
         manager.addEntity(entity);
     }
 

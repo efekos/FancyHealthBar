@@ -36,5 +36,7 @@
   "options.fancyhealthbar.line.delta_behaviour.lerp": "Follow Lerped",
   "options.fancyhealthbar.line.delta_behaviour.blink": "Blink",
   "options.fancyhealthbar.line.delta_behaviour.jump": "Jump",
-  "options.fancyhealthbar.vanilla.size": "Size"
+  "options.fancyhealthbar.vanilla.size": "Size",
+  "options.fancyhealthbar.vanilla.fade_out": "Fade Out Ticks",
+  "options.fancyhealthbar.vanilla.fade_in": "Fade In Ticks"
 }
