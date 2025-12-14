@@ -36,10 +36,12 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
     public void fillOptions(GridWidget.Adder adder) {
         adder.add(new FhbSliderWidget(0,10,Text.translatable("options.fancyhealthbar.vanilla.jiggle"),this.getJiggle(),this::setJiggle));
         adder.add(new FhbSliderWidget(0,10,Text.translatable("options.fancyhealthbar.vanilla.low_health_jiggle"),this.getLowHealthJiggle(),this::setLowHealthJiggle));
+
         adder.add(new FhbToggleWidget(Text.translatable("options.fancyhealthbar.vanilla.blinking"),this.isBlinking(),this::setBlinking));
+        adder.add(new FhbToggleWidget(Text.translatable("options.fancyhealthbar.vanilla.regen"),this.isRegenIndexAccount(),this::setRegenIndexAccount));
+
         adder.add(new FhbSliderWidget(1,100,Text.translatable("options.fancyhealthbar.vanilla.low_health_jiggle_start"),this.getLowHealthJiggleStart(),this::setLowHealthJiggleStart));
         adder.add(new FhbEnumToggleWidget<>(VanillaRenderingOptions.HardcoreHearts.class,Text.translatable("options.fancyhealthbar.vanilla.hardcore_hearts"),this.getHardcoreHearts(),this::setHardcoreHearts));
-        adder.add(new FhbToggleWidget(Text.translatable("options.fancyhealthbar.vanilla.regen"),this.isRegenIndexAccount(),this::setRegenIndexAccount));
 
         adder.add(new FhbRangedSliderWidget(-50,50,Text.translatable("options.fancyhealthbar.vanilla.velocity_x"),this.getVelocityX().getMin(),this.getVelocityX().getMax(),this.getVelocityX()::setMin,this.getVelocityX()::setMax));
         adder.add(new FhbRangedSliderWidget(-50,50,Text.translatable("options.fancyhealthbar.vanilla.velocity_y"),this.getVelocityY().getMin(),this.getVelocityY().getMax(),this.getVelocityY()::setMin,this.getVelocityY()::setMax));
@@ -47,15 +49,17 @@ public class VanillaRenderingOptions implements HealthBarRenderingOptions {
         adder.add(new FhbRangedDoubleSliderWidget(-1,1,Text.translatable("options.fancyhealthbar.vanilla.acceleration_x"),this.getAccelerationX()));
         adder.add(new FhbRangedDoubleSliderWidget(-1,1,Text.translatable("options.fancyhealthbar.vanilla.acceleration_y"),this.getAccelerationY()));
 
+        adder.add(new FhbSliderWidget(-200,200,Text.translatable("options.fancyhealthbar.generic.offset_x"),offset().x,v->offset.x = v));
+        adder.add(new FhbSliderWidget(-200,200,Text.translatable("options.fancyhealthbar.generic.offset_y"),offset().y,v->offset.y = v));
+
         adder.add(new FhbRangedDoubleSliderWidget(0,1,Text.translatable("options.fancyhealthbar.vanilla.drag"),this.getDrag()));
         adder.add(new FhbRangedSliderWidget(1,150,Text.translatable("options.fancyhealthbar.vanilla.lifetime"),this.getMaxLifetime()));
 
-        adder.add(new FhbRangedSliderWidget(1,10,Text.translatable("options.fancyhealthbar.vanilla.size"),this.getSize()));
         adder.add(new FhbRangedSliderWidget(0,100,Text.translatable("options.fancyhealthbar.vanilla.fade_in"),this.getFadeInTicks()));
         adder.add(new FhbRangedSliderWidget(0,100,Text.translatable("options.fancyhealthbar.vanilla.fade_out"),this.getFadeOutTicks()));
 
-        adder.add(new FhbSliderWidget(-200,200,Text.translatable("options.fancyhealthbar.generic.offset_x"),offset().x,v->offset.x = v));
-        adder.add(new FhbSliderWidget(-200,200,Text.translatable("options.fancyhealthbar.generic.offset_y"),offset().y,v->offset.y = v));
+        adder.add(new FhbRangedSliderWidget(1,10,Text.translatable("options.fancyhealthbar.vanilla.size"),this.getSize()));
+
     }
 
     public VanillaRenderingOptions() {
