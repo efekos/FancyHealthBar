@@ -1,13 +1,10 @@
 package dev.efekos.fancyhealthbar.client.screen;
 
-import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.widget.ButtonWidget;
 //? >=1.21.9
 /*import net.minecraft.client.input.AbstractInput;*/
 import net.minecraft.screen.ScreenTexts;
-import net.minecraft.util.Identifier;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
