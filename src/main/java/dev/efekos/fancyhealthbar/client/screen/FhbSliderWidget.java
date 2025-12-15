@@ -60,7 +60,7 @@ public class FhbSliderWidget extends SliderWidget {
     }
 
     private int clamp() {
-        return MathHelper.floor(MathHelper.clampedLerp(min, max, this.value));
+        return MathHelper.floor(MathHelper.clampedLerp(/*? <1.21.11 {*/min, max, this.value/*?} else {*//*this.value, min, max*//*?}*/));
     }
 
 }

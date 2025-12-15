@@ -14,16 +14,16 @@ public class FhbArrowButton extends ButtonWidget {
         this(x, y, width, height, textures, pressAction, ScreenTexts.EMPTY);
     }
 
-    public FhbArrowButton(int x, int y, int width, int height, BlinkingTextures textures, ButtonWidget.PressAction pressAction, Text text) {
+    public FhbArrowButton(int x, int y, int width, int height, BlinkingTextures textures, ButtonWidget.PressAction pressAction, net.minecraft.text.Text text) {
         super(x, y, width, height, text, pressAction, DEFAULT_NARRATION_SUPPLIER);
         this.textures = textures;
     }
 
-    public FhbArrowButton(int width, int height, BlinkingTextures textures, ButtonWidget.PressAction pressAction, Text text) {
+    public FhbArrowButton(int width, int height, BlinkingTextures textures, ButtonWidget.PressAction pressAction, net.minecraft.text.Text text) {
         this(0, 0, width, height, textures, pressAction, text);
     }
 
-    public void /*? <1.20.3 {*//*renderButton*//*?} else {*/renderWidget/*?}*/(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void /*? <1.20.3 {*//*renderButton*//*?} else if <1.21.11 {*/renderWidget/*?} else {*//*drawIcon*//*?}*/(DrawContext context, int mouseX, int mouseY, float delta) {
         Texture texture = this.textures.get(this.isSelected());
         texture.draw(context,this.getX(),this.getY(),this.width,this.height);
     }

@@ -100,7 +100,13 @@ public abstract class RangedSliderWidget extends ClickableWidget {
         //? <1.21.2
         context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int i = this.active ? 16777215 : 10526880;
+
+        //? >=1.21.11 {
+        /*this.drawTextWithMargin(context.getHoverListener(this, DrawContext.HoverType.NONE), this.getMessage(), 2);
+        *///?} else {
+        
         this.drawScrollableText(context, minecraftClient.textRenderer, 2, i | MathHelper.ceil(this.alpha * 255.0F) << 24);
+        //?}
     }
 
     public void setFocused(boolean focused) {
@@ -138,7 +144,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
     }
 
     *///?} else {
-    
+
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (KeyCodes.isToggle(keyCode)) {
             this.sliderFocused = !this.sliderFocused;
@@ -307,7 +313,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
     }
 
     //? <1.21.9 {
-    
+
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         if (this.isValidClickButton(button)) {
             if(button==0) this.onDrag(mouseX, mouseY, deltaX, deltaY);

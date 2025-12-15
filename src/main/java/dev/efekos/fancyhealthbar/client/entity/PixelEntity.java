@@ -11,9 +11,9 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.texture.Sprite;
 import org.joml.Vector2i;
 
-//?>=1.21.2 {
-/*
-import net.minecraft.util.Identifier;
+//? >=1.21.2 {
+
+/*import net.minecraft.util.Identifier;
 import java.util.function.Function;
 *///?}
 

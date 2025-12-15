@@ -72,8 +72,13 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
                      int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption,
                      boolean blinking) {
 
+        //? >=1.21.1 {
+        /*context.getMatrices().pushMatrix();
+        context.getMatrices().translate(options.offset().x,options.offset().y);
+        *///?} else {
         context.getMatrices().push();
         context.getMatrices().translate(options.offset().x,options.offset().y,0);
+        //?}
 
         HeartTextureSet heartType = HeartTextureSet.tryGetFromPlayer(player);
         //? <1.21.9 {
@@ -112,7 +117,7 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
             }
         }
 
-        context.getMatrices().pop();
+        context.getMatrices()./*? >=1.21.11 {*//*popMatrix()*//*?} else {*/pop()/*?}*/;
 
     }
 

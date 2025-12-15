@@ -172,4 +172,9 @@ public class FhbScrollWidget extends ClickableWidget implements Drawable {
 
     }
 
+    public void setScrollY(int y) {
+        scrollY = y;
+        refreshScroll();
+    }
+
 }

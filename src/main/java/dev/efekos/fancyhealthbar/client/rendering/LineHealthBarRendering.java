@@ -94,8 +94,13 @@ public class LineHealthBarRendering implements HealthBarRendering {
     @Override
     public void draw(Random random, DrawContext context, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int a, int health, int absorption, boolean blinking) {
 
+        //? >=1.21.1 {
+        /*context.getMatrices().pushMatrix();
+        context.getMatrices().translate(options.offset().x,options.offset().y);
+        *///?} else {
         context.getMatrices().push();
         context.getMatrices().translate(options.offset().x,options.offset().y,0);
+        //?}
 
         //? <1.21.9 {
         boolean hardcore = Try.orElse(()->player.getWorld().getLevelProperties().isHardcore(),false);
@@ -125,7 +130,7 @@ public class LineHealthBarRendering implements HealthBarRendering {
             RenderSystem.disableBlend();
         }
 
-        context.getMatrices().pop();
+        context.getMatrices()./*? >=1.21.11 {*//*popMatrix()*//*?} else {*/pop()/*?}*/;
 
         updateAnimationState(player.getHealth(),player.getMaxHealth());
         updateDeltaWidth(player.getHealth(),player.getMaxHealth(), healthW);

@@ -255,6 +255,7 @@ public class FancyHealthBarOptionsScreen extends Screen {
         );
         ((InGameHudRenderingAccessor) MinecraftClient.getInstance().inGameHud).fhb$setRendering(options.getRenderingOptions().createRendering());
         healthBarName.setMessage(Text.translatable("options.fancyhealthbar.rendering."+this.options.getSelectedRendering()));
+        scrollWidget.setScrollY(0);
     }
 
 }

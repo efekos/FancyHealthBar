@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'fabric-loom' version '1.13-SNAPSHOT'
     id 'maven-publish'
     id "com.modrinth.minotaur" version "2.+"
     id 'net.darkhax.curseforgegradle' version '1.1.15'
@@ -64,12 +64,6 @@ dependencies {
     modImplementation "com.terraformersmc:modmenu:${project.modmenu}"
 }
 
-loom {
-    mixin {
-        defaultRefmapName = "fancyhealthbar.refmap.json"
-    }
-}
-
 def aw_file = "fancyhealthbar."+stonecutter.current.version+".accesswidener"
 
 processResources {
@@ -116,6 +110,13 @@ loom {
         ideConfigGenerated true
         runDir "../../run"
     }
+
+    //?<1.21.11{
+    /*
+    mixin {
+        defaultRefmapName = "fancyhealthbar.refmap.json"
+    }*/
+    //?}
 
     accessWidenerPath = parent.file("src/main/resources/accessWidener/$aw_file")
 }

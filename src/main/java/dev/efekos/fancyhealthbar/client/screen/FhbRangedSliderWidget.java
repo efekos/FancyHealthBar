@@ -74,7 +74,7 @@ public class FhbRangedSliderWidget extends RangedSliderWidget {
     }
 
     private int clamp(double v) {
-        return MathHelper.floor(MathHelper.clampedLerp(min, max, v));
+        return MathHelper.floor(MathHelper.clampedLerp(/*? <1.21.11 {*/min, max, v/*?} else {*//*v, min, max*//*?}*/));
     }
 
 }

@@ -76,7 +76,7 @@ public class FhbRangedDoubleSliderWidget extends RangedSliderWidget {
     }
 
     private double clamp(double v) {
-        return new BigDecimal(MathHelper.clampedLerp(min, max, v)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        return new BigDecimal(MathHelper.clampedLerp(/*? <1.21.11 {*/min, max, v/*?} else {*//*v, min, max*//*?}*/)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
     }
 
 }
