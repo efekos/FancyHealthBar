@@ -117,7 +117,7 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
             }
         }
 
-        context.getMatrices()./*? >=1.21.11 {*//*popMatrix()*//*?} else {*/pop()/*?}*/;
+        context.getMatrices()./*? >=1.21.10 {*//*popMatrix()*//*?} else {*/pop()/*?}*/;
 
     }
 

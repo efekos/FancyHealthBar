@@ -2,6 +2,7 @@ package dev.efekos.fancyhealthbar.client.entity;
 
 //? >=1.21.6 {
 /*import com.mojang.blaze3d.pipeline.RenderPipeline;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.RenderPipelines;
 *///?}
 import dev.efekos.fancyhealthbar.client.accessor.DrawWithAlphaAccessor;
@@ -9,6 +10,7 @@ import dev.efekos.fancyhealthbar.client.compat.Texture;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.util.math.ColorHelper;
 import org.joml.Vector2i;
 
 //? >=1.21.2 {
@@ -42,7 +44,6 @@ public class PixelEntity extends HudEntity {
 
     @Override
     public void render(DrawContext ctx) {
-
         DrawWithAlphaAccessor context = (DrawWithAlphaAccessor)ctx;
 
         //? <=1.20.2 {
@@ -61,6 +62,7 @@ public class PixelEntity extends HudEntity {
         context.drawTexture(arg1, sprite.getAtlasId(),(int)x,(int)y,u+ sprite.getMinU()* textureSize,v+ sprite.getMinV()* textureSize,size,size,1,1, textureSize, textureSize,getAlpha());
         *///?}
         //?}
+
 
     }
 

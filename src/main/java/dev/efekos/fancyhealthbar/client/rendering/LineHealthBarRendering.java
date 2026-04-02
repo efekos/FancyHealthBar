@@ -130,7 +130,7 @@ public class LineHealthBarRendering implements HealthBarRendering {
             RenderSystem.disableBlend();
         }
 
-        context.getMatrices()./*? >=1.21.11 {*//*popMatrix()*//*?} else {*/pop()/*?}*/;
+        context.getMatrices()./*? >=1.21.10 {*//*popMatrix()*//*?} else {*/pop()/*?}*/;
 
         updateAnimationState(player.getHealth(),player.getMaxHealth());
         updateDeltaWidth(player.getHealth(),player.getMaxHealth(), healthW);
