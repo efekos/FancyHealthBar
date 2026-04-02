@@ -11,7 +11,7 @@ public class IntRange implements Range<Integer> {
 
     @Override
     public Integer random() {
-        return MathHelper.floor(MathHelper.clampedLerp(min, max, Math.random()));
+        return MathHelper.floor(MathHelper.clampedLerp(/*? >=1.21.11 {*//*Math.random(),*//*?}*/min, max /*? <1.21.11 {*/,Math.random()/*?}*/));
     }
 
     private Integer min;

@@ -246,7 +246,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
 
         @Override
         public Double random() {
-            return MathHelper.clampedLerp(min, max, Math.random());
+            return MathHelper.clampedLerp(/*? >=1.21.11 {*//*Math.random(),*//*?}*/min, max /*? <1.21.11 {*/,Math.random()/*?}*/);
         }
 
         @Override
