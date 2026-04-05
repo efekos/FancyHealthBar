@@ -189,6 +189,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
     }
 
     public enum LineStyle implements Supplier<Component> {
+
         DEFAULT(Component.translatable("options.fancyhealthbar.line.style.default"),false,"default",
                 Texture.mod("hud/health_bar/line/default/full","textures/gui/line_bar_default.png",60,9,15,new TextureNineSlice(5,15,15)),
                 Texture.mod("hud/health_bar/line/default/freeze","textures/gui/line_bar_default.png",45,9,15,new TextureNineSlice(5,15,15)),
@@ -200,6 +201,18 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
                 Animation.verticalStrip(Texture.mod("hud/health_bar/line/default/regenerating","textures/gui/line_bar_default.png",0,97,90,9),11),
                 Animation.verticalStrip(Texture.mod("hud/health_bar/line/default/fulled","textures/gui/line_bar_default.png",90,0,90,9),14)
                 ),
+
+        THIN(Component.translatable("options.fancyhealthbar.line.style.thin"),false,"thin",0,
+                Texture.mod("hud/health_bar/line/thin/full","textures/gui/line_bar_thin.png",0,45,90,9),
+                Texture.mod("hud/health_bar/line/thin/freeze","textures/gui/line_bar_thin.png",0,36,90,9),
+                Texture.mod("hud/health_bar/line/thin/fire","textures/gui/line_bar_thin.png",0,27,90,9),
+                Texture.mod("hud/health_bar/line/thin/empty","textures/gui/line_bar_thin.png",0,18,90,9),
+                Texture.mod("hud/health_bar/line/thin/delta","textures/gui/line_bar_thin.png",0,9,90,9),
+                Texture.mod("hud/health_bar/line/thin/blink","textures/gui/line_bar_thin.png",0,0,90,9),
+                TextureList.verticalStrip(Texture.mod("hud/health_bar/line/thin/notches","textures/gui/line_bar_thin.png",0,153,90,9),5),
+                Animation.verticalStrip(Texture.mod("hud/health_bar/line/thin/regenerating","textures/gui/line_bar_thin.png",0,54,90,9),11),
+                Animation.verticalStrip(Texture.mod("hud/health_bar/line/thin/fulled","textures/gui/line_bar_thin.png",90,0,90,9),9)),
+
         HARDCORE(Component.translatable("options.fancyhealthbar.line.style.hardcore"),false,"hardcore",
                 Texture.mod("hud/health_bar/line/hardcore/full","textures/gui/line_bar_default.png",54,33,18,new TextureNineSlice(6,18,18)),
                 Texture.mod("hud/health_bar/line/hardcore/freeze","textures/gui/line_bar_default.png",36,33,18,new TextureNineSlice(6,18,18)),
@@ -243,7 +256,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
                 Texture.mod("hud/health_bar/line/pixelated/blink","textures/gui/line_bar_pixelated.png",0,0,90,9),
                 TextureList.verticalStrip(Texture.mod("hud/health_bar/line/pixelated/notches","textures/gui/line_bar_pixelated.png",0,153,90,9),5),
                 Animation.verticalStrip(Texture.mod("hud/health_bar/line/pixelated/regenerating","textures/gui/line_bar_pixelated.png",0,54,90,9),11),
-                Animation.verticalStrip(Texture.mod("hud/health_bar/line/pixelated/fulled","textures/gui/line_bar_pixelated.png",90,0,90,9),9)),
+                Animation.verticalStrip(Texture.mod("hud/health_bar/line/pixelated/fulled","textures/gui/line_bar_pixelated.png",90,0,90,9),9))
         ;
 
         private final Component text;
