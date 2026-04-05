@@ -10,8 +10,8 @@ import dev.efekos.fancyhealthbar.client.options.FancyHealthBarOptions;
 import dev.efekos.fancyhealthbar.client.options.HealthBarRenderingOptions;
 import net.minecraft.client.Minecraft;
 //? >=1.21.9
-/*import net.minecraft.client.input.MouseButtonEvent;*/
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.gui./*?>=26.1{*/GuiGraphicsExtractor/*?}else{*//*GuiGraphics*//*?}*/;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
@@ -135,7 +135,7 @@ public class FancyHealthBarOptionsScreen extends Screen {
         add(optionsGrid);
         updateRendering();
         //? >=1.21.6
-        /*refreshWidgetPositions();*/
+        refreshWidgetPositions();
     }
 
 
@@ -151,7 +151,7 @@ public class FancyHealthBarOptionsScreen extends Screen {
     }
 
     //? <1.21.9 {
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+    /*public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         return this.getFocused() != null && this.isDragging() && (button == 0 || button == 1) && this.getFocused().mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
     }
 
@@ -169,9 +169,9 @@ public class FancyHealthBarOptionsScreen extends Screen {
 
         return false;
     }
-    //?} else {
+    *///?} else {
 
-    /*@Override
+    @Override
     public boolean mouseDragged(MouseButtonEvent click, double offsetX, double offsetY) {
         return this.getFocused() != null && this.isDragging() && (click.button()==0||click.button()==1) && this.getFocused().mouseDragged(click,offsetX,offsetY);
     }
@@ -187,14 +187,14 @@ public class FancyHealthBarOptionsScreen extends Screen {
         return false;
     }
 
-    *///?}
+    //?}
 
 
     @Override
-    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void /*?>=26.1{*/extractRenderState/*?}else{*//*render*//*?}*/(/*?>=26.1{*/GuiGraphicsExtractor/*?}else{*//*GuiGraphics*//*?}*/ context, int mouseX, int mouseY, float delta) {
         //? <1.20.2
         /*this.renderBackground(context);*/
-        super.render(context, mouseX, mouseY, delta);
+        super./*?>=26.1{*/extractRenderState/*?}else{*//*render*//*?}*/(context, mouseX, mouseY, delta);
         manager.render(context);
         controller.draw(context);
     }

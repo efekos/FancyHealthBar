@@ -18,14 +18,17 @@ public class GridLayoutMixin implements ClearMethod {
     @Final
     private List<GridLayout> children;
 
-    @Shadow
+    //?<26.1{
+    /*@Shadow
     @Final
-    private List<GridLayout.CellInhabitant> cellInhabitants;
+    private List<GridLayout> cellInhabitants;
+    *///?}
 
     @Unique
     public void clear(){
         this.children.clear();
-        this.cellInhabitants.clear();
+        //?<26.1
+        //this.cellInhabitants.clear();
     }
 
 }

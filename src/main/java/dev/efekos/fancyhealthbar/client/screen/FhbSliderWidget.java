@@ -60,7 +60,7 @@ public class FhbSliderWidget extends AbstractSliderButton {
     }
 
     private int clamp() {
-        return Mth.floor(Mth.clampedLerp(/*? <1.21.11 {*/min, max, this.value/*?} else {*//*this.value, min, max*//*?}*/));
+        return Mth.floor(Mth.clampedLerp(/*? <1.21.11 {*//*min, max, this.value*//*?} else {*/this.value, min, max/*?}*/));
     }
 
 }

@@ -1,5 +1,6 @@
 package dev.efekos.fancyhealthbar.client.screen;
 
+//~if>=26.1 'GuiGraphics' -> 'GuiGraphicsExtractor' {
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -76,7 +77,8 @@ public class FhbRangedDoubleSliderWidget extends RangedSliderWidget {
     }
 
     private double clamp(double v) {
-        return new BigDecimal(Mth.clampedLerp(/*? <1.21.11 {*/min, max, v/*?} else {*//*v, min, max*//*?}*/)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        return new BigDecimal(Mth.clampedLerp(/*? <1.21.11 {*//*min, max, v*//*?} else {*/v, min, max/*?}*/)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
     }
 
 }
+//~}

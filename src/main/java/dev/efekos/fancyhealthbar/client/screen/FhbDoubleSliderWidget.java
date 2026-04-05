@@ -62,7 +62,7 @@ public class FhbDoubleSliderWidget extends AbstractSliderButton {
     }
 
     private double clamp() {
-        return new BigDecimal(Mth.clampedLerp(/*? <1.21.11 {*/min, max, this.value/*?} else {*//*this.value, min, max*//*?}*/)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        return new BigDecimal(Mth.clampedLerp(/*? <1.21.11 {*//*min, max, this.value*//*?} else {*/this.value, min, max/*?}*/)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
     }
 
 }

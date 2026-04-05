@@ -1,5 +1,7 @@
 package dev.efekos.fancyhealthbar.client.mixin;
 
+//~if >=26.1 'GuiGraphics' -> 'GuiGraphicsExtractor' {
+
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import dev.efekos.fancyhealthbar.client.accessor.FhbOptionsAccessor;
@@ -8,7 +10,7 @@ import dev.efekos.fancyhealthbar.client.animation.AnimationController;
 import dev.efekos.fancyhealthbar.client.entity.HudEntityManager;
 import dev.efekos.fancyhealthbar.client.rendering.HealthBarRendering;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.Gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.entity.player.Player;
@@ -63,8 +65,9 @@ public abstract class GuiMixin implements InGameHudRenderingAccessor {
         controller.tick();
     }
 
-    @WrapMethod(method = "renderHearts")
-    public void renderHealthBar(GuiGraphics context, Player player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int a, int b, int absorption, boolean blinking, Operation<Void> original) {
+    //~if>=26.1 'renderHearts' -> 'extractHearts'
+    @WrapMethod(method = "extractHearts")
+    public void renderHealthBar(GuiGraphicsExtractor context, Player player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int a, int b, int absorption, boolean blinking, Operation<Void> original) {
         int health = (int) Math.ceil(Minecraft.getInstance().player.getHealth());
         rendering.draw(random,context, player, x, y, lines, regeneratingHeartIndex, maxHealth, a, health, absorption, blinking);
         manager.render(context);
@@ -77,3 +80,5 @@ public abstract class GuiMixin implements InGameHudRenderingAccessor {
     }
 
 }
+
+//~}

@@ -1,0 +1,32 @@
+plugins {
+    id 'fabric-loom' version '1.13-SNAPSHOT'
+    id 'maven-publish'
+    id "com.modrinth.minotaur" version "2.+"
+    id 'net.darkhax.curseforgegradle' version '1.1.15'
+}
+
+project.ext.set("jarTask", remapJar)
+project.ext.set('curseforge_type',net.darkhax.curseforgegradle.TaskPublishCurseForge)
+apply from: '../../common.gradle'
+
+version = project.mod_version
+group = project.maven_group
+
+repositories {
+    maven {
+        name = "Terraformers"
+        url = "https://maven.terraformersmc.com/"
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${stonecutter.current.version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu}"
+}
+
+remapJar {
+    archiveFileName ="FancyHealthBar-"+stonecutter.current.version+"-"+project.version+".jar";
+}

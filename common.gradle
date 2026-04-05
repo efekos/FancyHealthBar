@@ -1,9 +1,4 @@
-plugins {
-    id 'fabric-loom' version '1.13-SNAPSHOT'
-    id 'maven-publish'
-    id "com.modrinth.minotaur" version "2.+"
-    id 'net.darkhax.curseforgegradle' version '1.1.15'
-}
+def targetJavaVersion = 25
 
 def loadProps(path) {
     def p = new Properties()
@@ -13,20 +8,12 @@ def loadProps(path) {
 
 loadProps("../../environment.properties")
 
-version = project.mod_version
-group = project.maven_group
-
-base {
-    archivesName = project.archives_base_name
-}
-def targetJavaVersion = stonecutter.current.parsed.matches(">=1.21.5")?21:17
-
 modrinth {
     token = project.modrinth_token
     projectId = "d5wz0u1I"
     versionNumber = project.version+"+"+stonecutter.current.version
     versionType="release"
-    uploadFile=remapJar
+    uploadFile=project.jarTask
     gameVersions=[stonecutter.current.version]
     loaders=["fabric"]
     changelog=file("../../changelog.txt").text
@@ -37,31 +24,25 @@ modrinth {
 }
 
 
-task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
-    apiToken = project.curseforge_token
+project.afterEvaluate {
 
-    def mainFile =  upload(990963,remapJar)
-    mainFile.changelog = file("../../changelog.txt").text
-    mainFile.addOptional('modmenu')
-    mainFile.releaseType = 'release'
-    mainFile.changelogType = 'markdown'
-    mainFile.addGameVersion(stonecutter.current.version,'Fabric',"Java $targetJavaVersion",'Client')
-}
+    tasks.register('curseforge', project.curseforge_type)
+    curseforge {
+        apiToken = project.curseforge_token
 
-
-repositories {
-    maven {
-        name = "Terraformers"
-        url = "https://maven.terraformersmc.com/"
+        def mainFile = upload(990963, project.jarTask)
+        mainFile.changelog = file("../../changelog.txt").text
+        mainFile.addOptional('modmenu')
+        mainFile.releaseType = 'release'
+        mainFile.changelogType = 'markdown'
+        mainFile.addGameVersion(stonecutter.current.version, 'Fabric', "Java $targetJavaVersion", 'Client')
     }
+
 }
 
-dependencies {
-    minecraft "com.mojang:minecraft:${stonecutter.current.version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu}"
+base {
+    archivesName = project.archives_base_name
 }
 
 def aw_file = "fancyhealthbar."+stonecutter.current.version+".accesswidener"
@@ -95,15 +76,6 @@ java {
     withSourcesJar()
 }
 
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
-    }
-}
-
-remapJar {
-    archiveFileName ="FancyHealthBar-"+stonecutter.current.version+"-"+project.version+".jar";
-}
 
 loom {
     runConfigs.all {
@@ -119,4 +91,11 @@ loom {
     //?}
 
     accessWidenerPath = parent.file("src/main/resources/accessWidener/$aw_file")
+}
+
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}" }
+    }
 }

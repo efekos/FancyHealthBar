@@ -1,9 +1,9 @@
 package dev.efekos.fancyhealthbar.client.screen;
-
-import net.minecraft.client.gui.GuiGraphics;
+//~if>=26.1 'GuiGraphics' -> 'GuiGraphicsExtractor' {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 //? >=1.21.9
-/*import net.minecraft.client.input.InputWithModifiers;*/
+import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
@@ -32,17 +32,21 @@ public class FhbToggleWidget extends Button {
     }
 
     //? >=1.21.11 {
-    /*@Override
-    protected void renderContents(GuiGraphics context, int mouseX, int mouseY, float deltaTicks) {
-        renderDefaultSprite(context);
-        renderScrollingStringOverContents(context.textRenderer(),message,2);
+    //~ if >=26.1 'render' -> 'extract' {
+    @Override
+    protected void extractContents(GuiGraphicsExtractor context, int mouseX, int mouseY, float deltaTicks) {
+        extractDefaultSprite(context);
+        extractScrollingStringOverContents(context.textRenderer(),message,2);
     }
-    *///?}
+    //~ }
+    //?}
 
-    public void onPress(/*? >=1.21.9 {*//*InputWithModifiers input*//*?}*/) {
+    public void onPress(/*? >=1.21.9 {*/InputWithModifiers input/*?}*/) {
         setToggled(!toggled);
         valueConsumer.accept(toggled);
         setMessage(CommonComponents.optionNameValue(text, CommonComponents.optionStatus(toggled)));
     }
 
 }
+
+//~}

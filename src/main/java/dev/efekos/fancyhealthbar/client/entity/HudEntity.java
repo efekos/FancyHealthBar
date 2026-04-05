@@ -1,6 +1,6 @@
 package dev.efekos.fancyhealthbar.client.entity;
-
-import net.minecraft.client.gui.GuiGraphics;
+//~if >=26.1 'GuiGraphics' -> 'GuiGraphicsExtractor' {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.joml.Vector2d;
 import org.joml.Vector2i;
 
@@ -21,7 +21,7 @@ public abstract class HudEntity {
         this.y = y;
     }
 
-    public abstract void render(GuiGraphics context);
+    public abstract void render(GuiGraphicsExtractor context);
 
     public void tick(){
         lifetime++;
@@ -134,3 +134,4 @@ public abstract class HudEntity {
     }
 
 }
+//~}
