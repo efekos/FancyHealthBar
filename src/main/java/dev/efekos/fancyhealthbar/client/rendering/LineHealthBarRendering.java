@@ -133,10 +133,10 @@ public class LineHealthBarRendering implements HealthBarRendering {
     }
 
     private void updatePositions(int x, int y) {
-        regenTrack.setX(x);
-        regenTrack.setY(y);
-        fulledTrack.setX(x);
-        fulledTrack.setY(y);
+        regenTrack.setX(x+options.offset().x);
+        regenTrack.setY(y+options.offset().y);
+        fulledTrack.setX(x+options.offset().x);
+        fulledTrack.setY(y+options.offset().y);
     }
 
     private void updateLastHealth(float health,float maxHealth,LineRenderingOptions.LineStyle lineStyle) {

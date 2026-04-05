@@ -1,12 +1,15 @@
 package dev.efekos.fancyhealthbar.client.mixin;
 //~if >=26.1 'GuiGraphics' -> 'GuiGraphicsExtractor' {
 import dev.efekos.fancyhealthbar.client.accessor.DrawWithAlphaAccessor;
+import dev.efekos.fancyhealthbar.client.compat.CompatKey;
 import net.minecraft.client.gui.GuiGraphics;
 //? <1.21.11
 import net.minecraft.client.renderer.RenderType;
 //? <1.21.11
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(GuiGraphics.class)
 public abstract class DrawContextMixin implements DrawWithAlphaAccessor {
@@ -17,8 +20,8 @@ public abstract class DrawContextMixin implements DrawWithAlphaAccessor {
     abstract void innerBlit(ResourceLocation par1, int par2, int par3, int par4, int par5, int par6, float par7, float par8, float par9, float par10, float par11, float par12, float par13, float par14);
 
     @Unique
-    public void drawTexture(ResourceLocation texture, int x, int y, int width, int height, float u, float v, int regionWidth, int regionHeight, int textureWidth, int textureHeight, float alpha) {
-        this.drawTexture(texture, x, x + width, y, y + height, 0, regionWidth, regionHeight, u, v, textureWidth, textureHeight,alpha);
+    public void drawTexture(CompatKey texture, int x, int y, int width, int height, float u, float v, int regionWidth, int regionHeight, int textureWidth, int textureHeight, float alpha) {
+        this.drawTexture(texture.unwrap(), x, x + width, y, y + height, 0, regionWidth, regionHeight, u, v, textureWidth, textureHeight,alpha);
     }
 
     @Unique

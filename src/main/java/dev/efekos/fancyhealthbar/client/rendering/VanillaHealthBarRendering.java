@@ -189,12 +189,14 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
     }
 
     private void a(HudEntityManager manager, Vector2i location, Texture texture, int a, int b) {
-        PixelEntity entity = new PixelEntity(location.x + a, location.y + b, texture, a, b);
+        PixelEntity entity = new PixelEntity(location.x + a + options.offset().x, location.y + b + options.offset().y, texture, a, b);
         entity.setVelocity(new Vector2d(options.getVelocityX().random(), options.getVelocityY().random()));
         entity.setAcceleration(new Vector2d(options.getAccelerationX().random(),options.getAccelerationY().random()));
         entity.setDrag(options.getDrag().random());
         entity.setMaxLifetime(options.getMaxLifetime().random());
         entity.setSize(options.getSize().random());
+        entity.setX(entity.getX()-entity.getSize()/2d);
+        entity.setY(entity.getY()-entity.getSize()/2d);
         entity.setFadeIn(options.getFadeInTicks().random());
         entity.setFadeOut(options.getFadeOutTicks().random());
         manager.addEntity(entity);

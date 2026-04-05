@@ -77,7 +77,7 @@ public abstract class RangedSliderWidget extends AbstractWidget {
 
     }
 
-    public void /*?>=26.1{*//*extractWidgetRenderState*//*?}else{*/render/*?}*/(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void /*?>=26.1{*//*extractWidgetRenderState*//*?}else{*/renderWidget/*?}*/(GuiGraphics context, int mouseX, int mouseY, float delta) {
         Minecraft minecraftClient = Minecraft.getInstance();
         //? <1.21.5 {
 

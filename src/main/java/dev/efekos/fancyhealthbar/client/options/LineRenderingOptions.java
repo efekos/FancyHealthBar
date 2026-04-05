@@ -45,8 +45,18 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
         adder.addChild(new FhbEnumToggleWidget<>(DeltaBehaviour.class, Component.translatable("options.fancyhealthbar.line.delta_behaviour"),deltaBehaviour,this::setDeltaBehaviour));
         adder.addChild(new FhbEnumToggleWidget<>(LineStyle.class, Component.translatable("options.fancyhealthbar.line.normal_style"),normalLineStyle,this::setNormalLineStyle));
         adder.addChild(new FhbEnumToggleWidget<>(LineStyle.class, Component.translatable("options.fancyhealthbar.line.hardcore_style"),hardcoreLineStyle,this::setHardcoreLineStyle));
-        adder.addChild(new FhbSliderWidget(-200,200, Component.translatable("options.fancyhealthbar.generic.offset_x"),offset().x, v->offset.x = v));
-        adder.addChild(new FhbSliderWidget(-200,200, Component.translatable("options.fancyhealthbar.generic.offset_y"),offset().y, v->offset.y = v));
+        adder.addChild(new FhbSliderWidget(-200,200, Component.translatable("options.fancyhealthbar.generic.offset_x"),offset().x, this::setOffsetX));
+        adder.addChild(new FhbSliderWidget(-200,200, Component.translatable("options.fancyhealthbar.generic.offset_y"),offset().y, this::setOffsetY));
+    }
+
+    public void setOffsetX(int x){
+        offset.x = x;
+        affect();
+    }
+
+    public void setOffsetY(int y){
+        offset.y = y;
+        affect();
     }
 
     public void setOffset(Vector2i offset) {
@@ -67,6 +77,10 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
 
     public void setNormalLineStyle(LineStyle normalLineStyle) {
         this.normalLineStyle = normalLineStyle;
+        affect();
+    }
+
+    private static void affect() {
         Try.ignore(()->{
             ((InGameHudRenderingAccessor) Minecraft.getInstance().gui).fhb$react();
             return null;
@@ -75,10 +89,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
 
     public void setHardcoreLineStyle(LineStyle hardcoreLineStyle) {
         this.hardcoreLineStyle = hardcoreLineStyle;
-        Try.ignore(()->{
-            ((InGameHudRenderingAccessor) Minecraft.getInstance().gui).fhb$react();
-            return null;
-        });
+        affect();
     }
 
     public LineStyle normalLineStyle() {

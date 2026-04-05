@@ -24,7 +24,7 @@ public class FhbArrowButton extends Button {
         this(0, 0, width, height, textures, pressAction, text);
     }
 
-    public void /*?>=26.1{*//*extractContents*//*?}else{*/renderContents/*?}*/(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void /*?>=26.1{*//*extractContents*//*?}else if >=1.21.1{*//*renderContents*//*?}else{*/renderWidget/*?}*/(GuiGraphics context, int mouseX, int mouseY, float delta) {
         Texture texture = this.textures.get(this.isHovered());
         texture.draw(context,this.getX(),this.getY(),this.width,this.height);
     }
