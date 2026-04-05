@@ -42,6 +42,13 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
 
     @Override
     public void drawPreview(RandomSource random, GuiGraphics context, int x, int y, int lines, int lastHealth, int health, boolean blinking, boolean hardcore) {
+
+        //? <1.21.6
+        context.pose().pushPose();
+        //? >=1.21.6
+        //context.pose().pushMatrix();
+        context.pose().translate(options.offset().x,options.offset().y/*? <1.21.6 {*/,0/*?}*/);
+
         HeartTextureSet heartType = HeartTextureSet.NORMAL;
         int maxHearts = 10;
         int absorptionHearts = 0;
@@ -65,6 +72,12 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
                 legacyHeart(context, heartType, heartLoc.x, heartLoc.y, hardcore, false, bl4);
             }
         }
+
+        //? <1.21.6
+        context.pose().popPose();
+        //? >=1.21.6
+        //context.pose().popMatrix();
+
     }
 
     @Override

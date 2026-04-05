@@ -53,6 +53,13 @@ public class LineHealthBarRendering implements HealthBarRendering {
 
     @Override
     public void drawPreview(RandomSource random, GuiGraphics context, int x, int y, int lines, int lastHealth, int health, boolean blinking, boolean hardcore) {
+
+        //? <1.21.6
+        context.pose().pushPose();
+        //? >=1.21.6
+        //context.pose().pushMatrix();
+        context.pose().translate(options.offset().x,options.offset().y/*? <1.21.6 {*/,0/*?}*/);
+
         LineRenderingOptions.LineStyle lineStyle = hardcore ? options.hardcoreLineStyle() : options.normalLineStyle();
         int healthW = (int) Math.floor((health / 20d)*90);
         if (this.healthDeltaW == -1) this.healthDeltaW = healthW;
@@ -72,6 +79,11 @@ public class LineHealthBarRendering implements HealthBarRendering {
             //? <1.21.5
             RenderSystem.disableBlend();
         }
+
+        //? <1.21.6
+        context.pose().popPose();
+        //? >=1.21.6
+        //context.pose().popMatrix();
 
         updateAnimationState(health,20f);
         updateDeltaWidth(health,20f, healthW);

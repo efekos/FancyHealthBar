@@ -137,7 +137,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
         if(object.has("normal_style")) normalLineStyle = Try.orElse(() -> LineStyle.valueOf(object.get("normal_style").getAsString()),LineStyle.DEFAULT);
         if(object.has("hardcore_style")) hardcoreLineStyle = Try.orElse(() -> LineStyle.valueOf(object.get("hardcore_style").getAsString()),LineStyle.HARDCORE);
         if(object.has("delta_behaviour")) deltaBehaviour = Try.orElse(()->DeltaBehaviour.valueOf(object.get("delta_behaviour").getAsString()),DeltaBehaviour.FOLLOW);
-        if(object.has("offset")) offset = readVector(object,"offset");
+        if(object.has("offsetX")&&object.has("offsetY")) offset = readVector(object,"offset");
     }
 
     @Override
