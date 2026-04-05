@@ -1,8 +1,8 @@
 package dev.efekos.fancyhealthbar.client.screen;
 //~ if >=26.1 'GuiGraphics' -> 'GuiGraphicsExtractor' {
 //? >=1.21.9
-import net.minecraft.client.input.MouseButtonEvent;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+//import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -62,7 +62,7 @@ public class FhbScrollWidget extends AbstractWidget implements Renderable {
     }
 
     //? <1.21.9 {
-    /*public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
         AtomicBoolean b = new AtomicBoolean(false);
 
         AtomicBoolean broke = new AtomicBoolean(false);
@@ -91,10 +91,10 @@ public class FhbScrollWidget extends AbstractWidget implements Renderable {
         if(focusedElement!=null)return focusedElement.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
         return false;
     }
-    *///?} else {
+    //?} else {
 
 
-    @Override
+    /*@Override
     public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
         AtomicBoolean b = new AtomicBoolean(false);
 
@@ -126,7 +126,7 @@ public class FhbScrollWidget extends AbstractWidget implements Renderable {
         if(focusedElement!=null)return focusedElement.mouseDragged(click,offsetX,offsetY);
         return false;
     }
-    //?}
+    *///?}
 
     private boolean overlap(){
         return wrapped.getHeight()>height;
@@ -157,12 +157,12 @@ public class FhbScrollWidget extends AbstractWidget implements Renderable {
     }
 
     @Override
-    public void /*?>=26.1{*/extractWidgetRenderState/*?}else{*//*renderWidget*//*?}*/(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
+    public void /*?>=26.1{*//*extractWidgetRenderState*//*?}else{*/renderWidget/*?}*/(GuiGraphics context, int mouseX, int mouseY, float delta) {
         context.fill(getX(),getY()-5,getX()+getWidth(),getY()+getHeight()+5, 128 << 24);
 
         context.enableScissor(getX(),getY(),getX()+getWidth(),getY()+getHeight());
         wrapped.visitChildren(widget -> {
-            if(widget instanceof Renderable d)d./*?>=26.1{*/extractRenderState/*?}else{*//*render*//*?}*/(context,mouseX,mouseY,delta);
+            if(widget instanceof Renderable d)d./*?>=26.1{*//*extractRenderState*//*?}else{*/render/*?}*/(context,mouseX,mouseY,delta);
         });
         context.disableScissor();
     }

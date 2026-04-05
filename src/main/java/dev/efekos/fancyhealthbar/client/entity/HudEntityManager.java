@@ -1,7 +1,7 @@
 package dev.efekos.fancyhealthbar.client.entity;
 
 //~if >=26.1 'GuiGraphics' -> 'GuiGraphicsExtractor' {
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class HudEntityManager {
         }
     }
 
-    public void render(GuiGraphicsExtractor context){
+    public void render(GuiGraphics context){
         for (HudEntity hud : entities) hud.render(context);
     }
 

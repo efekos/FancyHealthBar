@@ -4,7 +4,7 @@ package dev.efekos.fancyhealthbar.client.entity;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.efekos.fancyhealthbar.client.compat.Texture;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import org.joml.Vector2d;
 import org.joml.Vector2i;
 
@@ -29,18 +29,18 @@ public class ScissoredLineJumpEntity extends HudEntity {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor context) {
+    public void render(GuiGraphics context) {
         /*? <1.21.5 {*/
-        /*RenderSystem.setShaderColor(1,1,1,1-(lifetime/(float)getMaxLifetime()));
+        RenderSystem.setShaderColor(1,1,1,1-(lifetime/(float)getMaxLifetime()));
         RenderSystem.enableBlend();
-        *//*?}*/
+        /*?}*/
         context.enableScissor(startX,(int)y,startX+width,(int)y+9);
         texture.draw(context,(int)x,(int)y,90,9);
         context.disableScissor();
         /*? <1.21.5 {*/
-        /*RenderSystem.setShaderColor(1,1,1,1);
+        RenderSystem.setShaderColor(1,1,1,1);
         RenderSystem.disableBlend();
-        *//*?}*/
+        /*?}*/
     }
 
     @Override

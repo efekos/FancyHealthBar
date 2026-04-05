@@ -1,6 +1,6 @@
 package dev.efekos.fancyhealthbar.client.compat;
 
-import net.minecraft.resources./*? >=1.21.11 {*/Identifier/*?} else {*//*ResourceLocation*//*?}*/;
+import net.minecraft.resources./*? >=1.21.11 {*//*Identifier*//*?} else {*/ResourceLocation/*?}*/;
 
 /**
  * Wraps the ID class because it has been renamed from ResourceLocation to Identifier in 1.21.11 which would cause
@@ -8,11 +8,11 @@ import net.minecraft.resources./*? >=1.21.11 {*/Identifier/*?} else {*//*Resourc
  */
 public record CompatKey(String namespace, String key) {
 
-    public /*? >=1.21.11 {*/Identifier/*?} else {*//*ResourceLocation*//*?}*/ unwrap(){
-        return /*? >=1.21.11 {*/Identifier/*?} else {*//*ResourceLocation*//*?}*/.tryBuild(namespace,key);
+    public /*? >=1.21.11 {*//*Identifier*//*?} else {*/ResourceLocation/*?}*/ unwrap(){
+        return /*? >=1.21.11 {*//*Identifier*//*?} else {*/ResourceLocation/*?}*/.tryBuild(namespace,key);
     }
 
-    public static CompatKey of(/*? >=1.21.11 {*/Identifier/*?} else {*//*ResourceLocation*//*?}*/ id){
+    public static CompatKey of(/*? >=1.21.11 {*//*Identifier*//*?} else {*/ResourceLocation/*?}*/ id){
         return new CompatKey(id.getNamespace(),id.getPath());
     }
 

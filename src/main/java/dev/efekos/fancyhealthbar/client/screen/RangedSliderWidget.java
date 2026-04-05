@@ -5,17 +5,17 @@ import dev.efekos.fancyhealthbar.client.FancyHealthBarClient;
 import dev.efekos.fancyhealthbar.client.compat.Texture;
 import dev.efekos.fancyhealthbar.client.compat.TextureNineSlice;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.InputType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.components.AbstractWidget;
 //? <1.21.9
-//import net.minecraft.client.gui.navigation.CommonInputs;
+import net.minecraft.client.gui.navigation.CommonInputs;
 //? >=1.21.9 {
-import net.minecraft.client.input.MouseButtonEvent;
+/*import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.KeyEvent;
-//?}
+*///?}
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Component;
@@ -77,16 +77,16 @@ public abstract class RangedSliderWidget extends AbstractWidget {
 
     }
 
-    public void /*?>=26.1{*/extractWidgetRenderState/*?}else{*//*render*//*?}*/(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
+    public void /*?>=26.1{*//*extractWidgetRenderState*//*?}else{*/render/*?}*/(GuiGraphics context, int mouseX, int mouseY, float delta) {
         Minecraft minecraftClient = Minecraft.getInstance();
         //? <1.21.5 {
 
-        /*//? <1.21.2
-        //context.setColor(1.0F, 1.0F, 1.0F, this.alpha);
+        //? <1.21.2
+        context.setColor(1.0F, 1.0F, 1.0F, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
-        *///?}
+        //?}
         getTexture().draw(context,getX(),getY(),getWidth(),getHeight());
         if(value.min==value.max){
             getHandleTexture().draw(context,getX()+(int)(this.value.min * (double)(this.width - 8)),this.getY(), 8, this.getHeight());
@@ -95,16 +95,16 @@ public abstract class RangedSliderWidget extends AbstractWidget {
             getHandleEndTexture().draw(context, this.getX() + (int)(this.value.max * (double)(this.width - 5)), this.getY(), 5, this.getHeight());
         }
         //? <1.21.2
-        //context.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        context.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         int i = this.active ? 16777215 : 10526880;
 
         //? >=1.21.11 {
-        this./*?>=26.1{*/extractScrollingStringOverContents/*?}else{*//*renderScrollingStringOverContents*//*?}*/
-                (context.textRendererForWidget(this, GuiGraphicsExtractor.HoveredTextEffects.NONE), this.getMessage(), 2);
-        //?} else {
+        /*this./^?>=26.1{^//^extractScrollingStringOverContents^//^?}else{^/renderScrollingStringOverContents/^?}^/
+                (context.textRendererForWidget(this, GuiGraphics.HoveredTextEffects.NONE), this.getMessage(), 2);
+        *///?} else {
         
-        /*this.renderScrollingString(context, minecraftClient.font, 2, i | Mth.ceil(this.alpha * 255.0F) << 24);
-        *///?}
+        this.renderScrollingString(context, minecraftClient.font, 2, i | Mth.ceil(this.alpha * 255.0F) << 24);
+        //?}
     }
 
     public void setFocused(boolean focused) {
@@ -122,7 +122,7 @@ public abstract class RangedSliderWidget extends AbstractWidget {
 
 
     //? >=1.21.9 {
-    public boolean keyPressed(KeyEvent input) {
+    /*public boolean keyPressed(KeyEvent input) {
         if (input.isSelection()) {
             this.sliderFocused = !this.sliderFocused;
             return true;
@@ -141,9 +141,9 @@ public abstract class RangedSliderWidget extends AbstractWidget {
         }
     }
 
-    //?} else {
+    *///?} else {
 
-    /*public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (CommonInputs.selected(keyCode)) {
             this.sliderFocused = !this.sliderFocused;
             return true;
@@ -160,7 +160,7 @@ public abstract class RangedSliderWidget extends AbstractWidget {
             return false;
         }
     }
-    *///?}
+    //?}
 
     private void setValueFromMouse(double mouseX) {
         this.setValue((mouseX - (double)(this.getX() + 4)) / (double)(this.width - 8));
@@ -201,7 +201,7 @@ public abstract class RangedSliderWidget extends AbstractWidget {
     }
 
     //? <1.21.9 {
-    /*protected void onRightDrag(double mouseX, double mouseY, double deltaX, double deltaY) {
+    protected void onRightDrag(double mouseX, double mouseY, double deltaX, double deltaY) {
         this.setMaxValueFromMouse(mouseX);
         super.onDrag(mouseX, mouseY, deltaX, deltaY);
     }
@@ -211,9 +211,9 @@ public abstract class RangedSliderWidget extends AbstractWidget {
         this.setValueFromMouse(mouseX);
         super.onDrag(mouseX, mouseY, deltaX, deltaY);
     }
-    *///?} else {
+    //?} else {
 
-    protected void onRightDrag(MouseButtonEvent click, double offsetX, double offsetY) {
+    /*protected void onRightDrag(MouseButtonEvent click, double offsetX, double offsetY) {
         setMaxValueFromMouse(click.x());
         super.onDrag(click, offsetX, offsetY);
     }
@@ -224,7 +224,7 @@ public abstract class RangedSliderWidget extends AbstractWidget {
         super.onDrag(click, offsetX, offsetY);
     }
 
-    //?}
+    *///?}
 
 
 
@@ -244,7 +244,7 @@ public abstract class RangedSliderWidget extends AbstractWidget {
 
         @Override
         public Double random() {
-            return Mth.clampedLerp(/*? >=1.21.11 {*/Math.random(),/*?}*/min, max /*? <1.21.11 {*//*,Math.random()*//*?}*/);
+            return Mth.clampedLerp(/*? >=1.21.11 {*//*Math.random(),*//*?}*/min, max /*? <1.21.11 {*/,Math.random()/*?}*/);
         }
 
         @Override
@@ -285,19 +285,19 @@ public abstract class RangedSliderWidget extends AbstractWidget {
     }
 
     //? >=1.21.9 {
-    public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
+    /*public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
         return mouseClicked(click.x(),click.y(),click.button());
     }
-    //?}
+    *///?}
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (this.active && this.visible) {
             if (this.isValidClickButton(button)) {
                 //? >=1.21.4 {
-                boolean bl = super.isMouseOver(mouseX, mouseY);
-                //?} else {
-                /*boolean bl = this.clicked(mouseX, mouseY);
-                *///?}
+                /*boolean bl = super.isMouseOver(mouseX, mouseY);
+                *///?} else {
+                boolean bl = this.clicked(mouseX, mouseY);
+                //?}
                 if (bl) {
                     this.playDownSound(Minecraft.getInstance().getSoundManager());
                     if(button==0) this.onClick(mouseX, mouseY);
@@ -312,7 +312,7 @@ public abstract class RangedSliderWidget extends AbstractWidget {
 
     //? <1.21.9 {
 
-    /*public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         if (this.isValidClickButton(button)) {
             if(button==0) this.onDrag(mouseX, mouseY, deltaX, deltaY);
             else this.onRightDrag(mouseX,mouseY,deltaX,deltaY);
@@ -321,8 +321,8 @@ public abstract class RangedSliderWidget extends AbstractWidget {
             return false;
         }
     }
-    *///?} else {
-    public boolean mouseDragged(MouseButtonEvent click, double offsetX, double offsetY) {
+    //?} else {
+    /*public boolean mouseDragged(MouseButtonEvent click, double offsetX, double offsetY) {
         if(click.button()==1||click.button()==0){
             if(click.button()==0)onDrag(click,offsetX,offsetY);
             else onRightDrag(click,offsetX,offsetY);
@@ -330,7 +330,7 @@ public abstract class RangedSliderWidget extends AbstractWidget {
         }
         return false;
     }
-    //?}
+    *///?}
 
 }
 //~}

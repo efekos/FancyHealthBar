@@ -2,7 +2,7 @@ package dev.efekos.fancyhealthbar.client.screen;
 //~if>=26.1 'GuiGraphics' -> 'GuiGraphicsExtractor' {
 import dev.efekos.fancyhealthbar.client.entity.HudEntityManager;
 import dev.efekos.fancyhealthbar.client.rendering.HealthBarRendering;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.layouts.LayoutElement;
@@ -37,7 +37,7 @@ public class HealthBarWidget implements LayoutElement, Renderable {
     }
 
     @Override
-    public void /*?>=26.1{*/extractRenderState/*?}else{*//*render*//*?}*/(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
+    public void /*?>=26.1{*//*extractRenderState*//*?}else{*/render/*?}*/(GuiGraphics context, int mouseX, int mouseY, float delta) {
         rendering.drawPreview(random,context,x,y,1,lastHealth,healthValue,blinkingSupplier.get(),hardcore);
     }
 

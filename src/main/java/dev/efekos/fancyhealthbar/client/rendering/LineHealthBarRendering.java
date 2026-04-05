@@ -11,7 +11,7 @@ import dev.efekos.fancyhealthbar.client.entity.LineJumpEntity;
 import dev.efekos.fancyhealthbar.client.entity.ScissoredLineJumpEntity;
 import dev.efekos.fancyhealthbar.client.options.LineRenderingOptions;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -52,7 +52,7 @@ public class LineHealthBarRendering implements HealthBarRendering {
     }
 
     @Override
-    public void drawPreview(RandomSource random, GuiGraphicsExtractor context, int x, int y, int lines, int lastHealth, int health, boolean blinking, boolean hardcore) {
+    public void drawPreview(RandomSource random, GuiGraphics context, int x, int y, int lines, int lastHealth, int health, boolean blinking, boolean hardcore) {
         LineRenderingOptions.LineStyle lineStyle = hardcore ? options.hardcoreLineStyle() : options.normalLineStyle();
         int healthW = (int) Math.floor((health / 20d)*90);
         if (this.healthDeltaW == -1) this.healthDeltaW = healthW;
@@ -72,10 +72,10 @@ public class LineHealthBarRendering implements HealthBarRendering {
         if(options.notches()>0){
             Texture texture = lineStyle.notches(Mth.clamp(options.notches(), 1, 5));
             //? <1.21.5
-            //RenderSystem.enableBlend();
+            RenderSystem.enableBlend();
             texture.draw(context,x,y,90,9);
             //? <1.21.5
-            //RenderSystem.disableBlend();
+            RenderSystem.disableBlend();
         }
 
         updateAnimationState(health,20f);
@@ -88,14 +88,14 @@ public class LineHealthBarRendering implements HealthBarRendering {
     private float lastHealthL = -1; // still lastHealth but lerped
 
     @Override
-    public void draw(RandomSource random, GuiGraphicsExtractor context, Player player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int a, int health, int absorption, boolean blinking) {
+    public void draw(RandomSource random, GuiGraphics context, Player player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int a, int health, int absorption, boolean blinking) {
 
 
         //? <1.21.6
-        //context.pose().pushPose();
+        context.pose().pushPose();
         //? >=1.21.6
-        context.pose().pushMatrix();
-        context.pose().translate(options.offset().x,options.offset().y/*? <1.21.6 {*//*,0*//*?}*/);
+        //context.pose().pushMatrix();
+        context.pose().translate(options.offset().x,options.offset().y/*? <1.21.6 {*/,0/*?}*/);
 
         boolean hardcore = Try.orElse(()->player.level().getLevelData().isHardcore(),false);
 
@@ -115,17 +115,17 @@ public class LineHealthBarRendering implements HealthBarRendering {
         if(options.notches()>0){
             Texture notches = lineStyle.notches(Mth.clamp(options.notches(), 1,5));
             //? <1.21.5
-            //RenderSystem.enableBlend();
+            RenderSystem.enableBlend();
             notches.draw(context,x,y,90,9);
             //? <1.21.5
-            //RenderSystem.disableBlend();
+            RenderSystem.disableBlend();
         }
 
 
         //? <1.21.6
-        //context.pose().popPose();
+        context.pose().popPose();
         //? >=1.21.6
-        context.pose().popMatrix();
+        //context.pose().popMatrix();
 
         updateAnimationState(player.getHealth(),player.getMaxHealth());
         updateDeltaWidth(player.getHealth(),player.getMaxHealth(), healthW);
@@ -172,7 +172,7 @@ public class LineHealthBarRendering implements HealthBarRendering {
         return player.isFullyFrozen() ? lineStyle.freeze() : (player.isOnFire() || player.isInLava()) ? lineStyle.fire() : lineStyle.full();
     }
 
-    private void drawTxtr(GuiGraphicsExtractor context, Texture texture, int x, int y, int width, LineRenderingOptions.LineStyle lineStyle) {
+    private void drawTxtr(GuiGraphics context, Texture texture, int x, int y, int width, LineRenderingOptions.LineStyle lineStyle) {
         if(lineStyle.scissor()){
             context.enableScissor(x, y, x +width, y +9);
             texture.draw(context,x,y,90,9);

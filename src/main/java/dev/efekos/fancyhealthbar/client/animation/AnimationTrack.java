@@ -1,7 +1,7 @@
 package dev.efekos.fancyhealthbar.client.animation;
 //~if >=26.1 'GuiGraphics' -> 'GuiGraphicsExtractor' {
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
 
@@ -19,19 +19,19 @@ public class AnimationTrack {
         this.animation = animation;
     }
 
-    public void draw(GuiGraphicsExtractor context) {
+    public void draw(GuiGraphics context) {
         if ((!isInvisibleWhenNotPlaying() || !isPaused()) && Mth.clamp(frame, 0, animation.maxFrames()-1) == frame) {
             /*? <1.21.5 {*/
-            /*//? <1.21.2
-            //RenderSystem.setShader(GameRenderer::getRendertypeTranslucentShader);
+            //? <1.21.2
+            RenderSystem.setShader(GameRenderer::getRendertypeTranslucentShader);
             RenderSystem.enableBlend();
             RenderSystem.enableCull();
-            *//*?}*/
+            /*?}*/
             animation.getTexture(frame).draw(context,x,y,animation.width(),animation.height());
             /*? <1.21.5 {*/
-            /*RenderSystem.disableBlend();
+            RenderSystem.disableBlend();
             RenderSystem.disableCull();
-            *//*?}*/
+            /*?}*/
         }
     }
 

@@ -1,6 +1,6 @@
 package dev.efekos.fancyhealthbar.client.animation;
 
-import net.minecraft.client.gui./*?>=26.1{*/GuiGraphicsExtractor/*?}else{*//*GuiGraphics*//*?}*/;
+import net.minecraft.client.gui./*?>=26.1{*//*GuiGraphicsExtractor*//*?}else{*/GuiGraphics/*?}*/;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ public class AnimationController {
         for (AnimationTrack track : tracks) track.tick();
     }
 
-    public void draw(/*?>=26.1{*/GuiGraphicsExtractor/*?}else{*//*GuiGraphics*//*?}*/ context) {
+    public void draw(/*?>=26.1{*//*GuiGraphicsExtractor*//*?}else{*/GuiGraphics/*?}*/ context) {
         for (AnimationTrack track : tracks) track.draw(context);
     }
 

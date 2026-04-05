@@ -3,7 +3,7 @@ package dev.efekos.fancyhealthbar.client.screen;
 //~if>=26.1 'GuiGraphics' -> 'GuiGraphicsExtractor' {
 import dev.efekos.fancyhealthbar.client.compat.BlinkingTextures;
 import dev.efekos.fancyhealthbar.client.compat.Texture;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -24,7 +24,7 @@ public class FhbArrowButton extends Button {
         this(0, 0, width, height, textures, pressAction, text);
     }
 
-    public void /*?>=26.1{*/extractContents/*?}else{*//*renderContents*//*?}*/(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
+    public void /*?>=26.1{*//*extractContents*//*?}else{*/renderContents/*?}*/(GuiGraphics context, int mouseX, int mouseY, float delta) {
         Texture texture = this.textures.get(this.isHovered());
         texture.draw(context,this.getX(),this.getY(),this.width,this.height);
     }

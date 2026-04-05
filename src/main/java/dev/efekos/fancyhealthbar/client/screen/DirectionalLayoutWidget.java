@@ -2,7 +2,7 @@ package dev.efekos.fancyhealthbar.client.screen;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft./*? >=1.21.11 {*/util./*?}*/Util;
+import net.minecraft./*? >=1.21.11 {*//*util.*//*?}*/Util;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.layouts.Layout;
 import net.minecraft.client.gui.layouts.LayoutElement;

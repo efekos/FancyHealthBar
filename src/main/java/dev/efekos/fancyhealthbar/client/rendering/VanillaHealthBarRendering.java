@@ -11,8 +11,8 @@ import dev.efekos.fancyhealthbar.client.entity.PixelEntity;
 import dev.efekos.fancyhealthbar.client.options.VanillaRenderingOptions;
 import net.minecraft.client.Minecraft;
 //? >=1.21.6
-import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+//import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.Mth;
@@ -41,7 +41,7 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
     }
 
     @Override
-    public void drawPreview(RandomSource random, GuiGraphicsExtractor context, int x, int y, int lines, int lastHealth, int health, boolean blinking, boolean hardcore) {
+    public void drawPreview(RandomSource random, GuiGraphics context, int x, int y, int lines, int lastHealth, int health, boolean blinking, boolean hardcore) {
         HeartTextureSet heartType = HeartTextureSet.NORMAL;
         int maxHearts = 10;
         int absorptionHearts = 0;
@@ -68,15 +68,15 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
     }
 
     @Override
-    public void draw(RandomSource random, GuiGraphicsExtractor context, Player player, int x, int y,
+    public void draw(RandomSource random, GuiGraphics context, Player player, int x, int y,
                      int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption,
                      boolean blinking) {
 
         //? <1.21.6
-        //context.pose().pushPose();
+        context.pose().pushPose();
         //? >=1.21.6
-        context.pose().pushMatrix();
-        context.pose().translate(options.offset().x,options.offset().y/*? <1.21.6 {*//*,0*//*?}*/);
+        //context.pose().pushMatrix();
+        context.pose().translate(options.offset().x,options.offset().y/*? <1.21.6 {*/,0/*?}*/);
 
         HeartTextureSet heartType = HeartTextureSet.tryGetFromPlayer(player);
         boolean hardcore = player.level().getLevelData().isHardcore();
@@ -114,9 +114,9 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
 
 
         //? <1.21.6
-        //context.pose().popPose();
+        context.pose().popPose();
         //? >=1.21.6
-        context.pose().popMatrix();
+        //context.pose().popMatrix();
 
     }
 
@@ -201,13 +201,13 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
     }
 
     @Unique
-    private void legacyHeart(GuiGraphicsExtractor context, HeartTextureSet set, int x, int y, boolean hardcore, boolean blinking, boolean half){
+    private void legacyHeart(GuiGraphics context, HeartTextureSet set, int x, int y, boolean hardcore, boolean blinking, boolean half){
         //? <1.21.5
-        //RenderSystem.enableBlend();
+        RenderSystem.enableBlend();
         Texture setTexture = set.getTexture(hardcore, half, blinking);
         setTexture.draw(context,x,y,9,9);
         //? <1.21.5
-        //RenderSystem.disableBlend();
+        RenderSystem.disableBlend();
     }
 
 }
