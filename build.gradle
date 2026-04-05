@@ -19,7 +19,7 @@ group = project.maven_group
 base {
     archivesName = project.archives_base_name
 }
-def targetJavaVersion = stonecutter.eval(stonecutter.current.version,">=1.20.5")?21:17
+def targetJavaVersion = stonecutter.current.parsed.matches(">=1.21.5")?21:17
 
 modrinth {
     token = project.modrinth_token
