@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonObject;
 import dev.efekos.fancyhealthbar.client.rendering.HealthBarRendering;
 import dev.efekos.fancyhealthbar.client.screen.RangedSliderWidget;
-import net.minecraft.client.gui.widget.GridWidget;
+import net.minecraft.client.gui.layouts.GridLayout;
 import org.joml.Vector2i;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public interface HealthBarRenderingOptions {
             .put("line",new LineRenderingOptions())
             .build();
 
-    void fillOptions(GridWidget.Adder adder);
+    void fillOptions(GridLayout.RowHelper adder);
     HealthBarRendering createRendering();
     void read(JsonObject object);
     void write(JsonObject object);

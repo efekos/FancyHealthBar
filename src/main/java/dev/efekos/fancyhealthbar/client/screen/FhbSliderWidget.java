@@ -1,16 +1,16 @@
 package dev.efekos.fancyhealthbar.client.screen;
 
-import net.minecraft.client.gui.widget.SliderWidget;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.components.AbstractSliderButton;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 
 import java.util.function.Consumer;
 
-public class FhbSliderWidget extends SliderWidget {
+public class FhbSliderWidget extends AbstractSliderButton {
 
     private Consumer<Integer> valueConsumer;
-    private final Text text;
+    private final Component text;
     private int min;
     private int max;
 
@@ -32,8 +32,8 @@ public class FhbSliderWidget extends SliderWidget {
         return max;
     }
 
-    public FhbSliderWidget(int min, int max,Text text, int value, Consumer<Integer> valueConsumer) {
-        super(0, 0, 150, 20, ScreenTexts.composeGenericOptionText(text,Text.literal(value+"")), (double) (value - min) /(max-min));
+    public FhbSliderWidget(int min, int max, Component text, int value, Consumer<Integer> valueConsumer) {
+        super(0, 0, 150, 20, CommonComponents.optionNameValue(text, Component.literal(value+"")), (double) (value - min) /(max-min));
         this.text = text;
         this.min = min;
         this.max = max;
@@ -45,8 +45,8 @@ public class FhbSliderWidget extends SliderWidget {
         return this;
     }
 
-    public Text createMessage(){
-        return ScreenTexts.composeGenericOptionText(text,Text.literal(clamp()+""));
+    public Component createMessage(){
+        return CommonComponents.optionNameValue(text, Component.literal(clamp()+""));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class FhbSliderWidget extends SliderWidget {
     }
 
     private int clamp() {
-        return MathHelper.floor(MathHelper.clampedLerp(/*? <1.21.11 {*/min, max, this.value/*?} else {*//*this.value, min, max*//*?}*/));
+        return Mth.floor(Mth.clampedLerp(/*? <1.21.11 {*/min, max, this.value/*?} else {*//*this.value, min, max*//*?}*/));
     }
 
 }

@@ -1,8 +1,8 @@
 package dev.efekos.fancyhealthbar.client.screen;
 
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 
 import java.util.function.Consumer;
 
@@ -10,11 +10,11 @@ public class FhbRangedSliderWidget extends RangedSliderWidget {
 
     private Consumer<Integer> minConsumer;
     private Consumer<Integer> maxConsumer;
-    private final Text text;
+    private final Component text;
     private int min;
     private int max;
 
-    public FhbRangedSliderWidget(int min, int max, Text text, dev.efekos.fancyhealthbar.client.options.Range<Integer> range) {
+    public FhbRangedSliderWidget(int min, int max, Component text, dev.efekos.fancyhealthbar.client.options.Range<Integer> range) {
         this(min,max,text,range.getMin(), range.getMax(), range::setMin,range::setMax);
     }
 
@@ -36,8 +36,8 @@ public class FhbRangedSliderWidget extends RangedSliderWidget {
         return max;
     }
 
-    public FhbRangedSliderWidget(int min, int max, Text text, int vMin,int vMax, Consumer<Integer> minConsumer, Consumer<Integer> maxConsumer) {
-        super(0, 0, 150, 20, ScreenTexts.composeGenericOptionText(text,RangedSliderWidget.rangeText(vMin,vMax)), new Range(inverseLerp(min,max,vMin), inverseLerp(min,max,vMax)));
+    public FhbRangedSliderWidget(int min, int max, Component text, int vMin, int vMax, Consumer<Integer> minConsumer, Consumer<Integer> maxConsumer) {
+        super(0, 0, 150, 20, CommonComponents.optionNameValue(text,RangedSliderWidget.rangeText(vMin,vMax)), new Range(inverseLerp(min,max,vMin), inverseLerp(min,max,vMax)));
         this.text = text;
         this.min = min;
         this.max = max;
@@ -58,8 +58,8 @@ public class FhbRangedSliderWidget extends RangedSliderWidget {
         this.maxConsumer = maxConsumer;
     }
 
-    public Text createMessage(){
-        return ScreenTexts.composeGenericOptionText(text,rangeText(clamp(this.value.min),clamp(this.value.max)));
+    public Component createMessage(){
+        return CommonComponents.optionNameValue(text,rangeText(clamp(this.value.min),clamp(this.value.max)));
     }
 
     @Override
@@ -74,7 +74,7 @@ public class FhbRangedSliderWidget extends RangedSliderWidget {
     }
 
     private int clamp(double v) {
-        return MathHelper.floor(MathHelper.clampedLerp(/*? <1.21.11 {*/min, max, v/*?} else {*//*v, min, max*//*?}*/));
+        return Mth.floor(Mth.clampedLerp(/*? <1.21.11 {*/min, max, v/*?} else {*//*v, min, max*//*?}*/));
     }
 
 }

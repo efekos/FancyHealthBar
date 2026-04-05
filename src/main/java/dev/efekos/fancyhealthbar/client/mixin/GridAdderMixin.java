@@ -1,23 +1,24 @@
 package dev.efekos.fancyhealthbar.client.mixin;
 
-import net.minecraft.client.gui.widget.GridWidget;
-import net.minecraft.util.Clearable;
+import dev.efekos.fancyhealthbar.client.accessor.ClearMethod;
+import net.minecraft.client.gui.layouts.GridLayout;
+import net.minecraft.world.Clearable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin(GridWidget.Adder.class)
-public abstract class GridAdderMixin implements Clearable {
+@Mixin(GridLayout.RowHelper.class)
+public abstract class GridAdderMixin implements ClearMethod {
 
     @Shadow
-    private int totalOccupiedColumns;
+    private int index;
 
     @Shadow
-    public abstract GridWidget getGridWidget();
+    public abstract GridLayout getGrid();
 
     @Override
     public void clear() {
-        ((Clearable) this.getGridWidget()).clear();
-        this.totalOccupiedColumns = 0;
+        ((ClearMethod) this.getGrid()).clear();
+        this.index = 0;
     }
 
 }

@@ -9,7 +9,7 @@ public interface TextureList {
         List<Texture> list = new ArrayList<>();
         int size = texture.atlasPosition().v2() - texture.atlasPosition().v1();
         for (int i = 1; i <= frames; i++) {
-            Texture texture1 = new Texture(texture.baseId().withSuffixedPath("/" + i), texture.atlasId(),
+            Texture texture1 = new Texture(texture.baseId().suffixed("/" + i), texture.atlasId(),
                     texture.atlasPosition().add(0, (i - 1) * size),
                     texture.nineSlice());
             list.add(texture1);

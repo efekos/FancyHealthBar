@@ -1,19 +1,20 @@
 package dev.efekos.fancyhealthbar.client.screen;
 
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 //? >=1.21.9
-/*import net.minecraft.client.input.AbstractInput;*/
-import net.minecraft.screen.ScreenTexts;
+/*import net.minecraft.client.input.InputWithModifiers;*/
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class FhbToggleWidget extends ButtonWidget {
+public class FhbToggleWidget extends Button {
 
     private final Consumer<Boolean> valueConsumer;
     private boolean toggled;
-    private final net.minecraft.text.Text text;
+    private final Component text;
 
     public boolean isToggled() {
         return toggled;
@@ -23,8 +24,8 @@ public class FhbToggleWidget extends ButtonWidget {
         this.toggled = toggled;
     }
 
-    public FhbToggleWidget(net.minecraft.text.Text message,boolean value,Consumer<Boolean> valueConsumer) {
-        super(0, 0, 150, 20, ScreenTexts.composeGenericOptionText(message,ScreenTexts.onOrOff(value)), null, Supplier::get);
+    public FhbToggleWidget(Component message,boolean value,Consumer<Boolean> valueConsumer) {
+        super(0, 0, 150, 20, CommonComponents.optionNameValue(message, CommonComponents.optionStatus(value)), null, Supplier::get);
         this.text = message;
         toggled = value;
         this.valueConsumer = valueConsumer;
@@ -32,16 +33,16 @@ public class FhbToggleWidget extends ButtonWidget {
 
     //? >=1.21.11 {
     /*@Override
-    protected void drawIcon(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
-        drawButton(context);
-        drawTextWithMargin(context.getTextConsumer(),message,2);
+    protected void renderContents(GuiGraphics context, int mouseX, int mouseY, float deltaTicks) {
+        renderDefaultSprite(context);
+        renderScrollingStringOverContents(context.textRenderer(),message,2);
     }
     *///?}
 
-    public void onPress(/*? >=1.21.9 {*//*AbstractInput input*//*?}*/) {
+    public void onPress(/*? >=1.21.9 {*//*InputWithModifiers input*//*?}*/) {
         setToggled(!toggled);
         valueConsumer.accept(toggled);
-        setMessage(ScreenTexts.composeGenericOptionText(text,ScreenTexts.onOrOff(toggled)));
+        setMessage(CommonComponents.optionNameValue(text, CommonComponents.optionStatus(toggled)));
     }
 
 }

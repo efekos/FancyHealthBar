@@ -2,117 +2,113 @@ package dev.efekos.fancyhealthbar.client.screen;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.widget.GridWidget;
-import net.minecraft.client.gui.widget.LayoutWidget;
-import net.minecraft.client.gui.widget.Positioner;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.Util;
+import net.minecraft./*? >=1.21.11 {*//*util.*//*?}*/Util;
+import net.minecraft.client.gui.layouts.GridLayout;
+import net.minecraft.client.gui.layouts.Layout;
+import net.minecraft.client.gui.layouts.LayoutElement;
+import net.minecraft.client.gui.layouts.LayoutSettings;
 
 import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
-public class DirectionalLayoutWidget implements LayoutWidget {
-    public final GridWidget grid;
-    private final DisplayAxis axis;
-    private int currentIndex;
+public class DirectionalLayoutWidget implements Layout {
+    private final GridLayout wrapped;
+    private final Orientation orientation;
+    private int nextChildIndex = 0;
 
-    private DirectionalLayoutWidget(DisplayAxis axis) {
-        this(0, 0, axis);
+    private DirectionalLayoutWidget(final Orientation orientation) {
+        this(0, 0, orientation);
     }
 
-    public DirectionalLayoutWidget(int x, int y, DisplayAxis axis) {
-        this.currentIndex = 0;
-        this.grid = new GridWidget(x, y);
-        this.axis = axis;
+    public DirectionalLayoutWidget(final int x, final int y, final Orientation orientation) {
+        this.wrapped = new GridLayout(x, y);
+        this.orientation = orientation;
     }
 
-    public DirectionalLayoutWidget spacing(int spacing) {
-        this.axis.setSpacing(this.grid, spacing);
+    public DirectionalLayoutWidget spacing(final int spacing) {
+        this.orientation.setSpacing(this.wrapped, spacing);
         return this;
     }
 
-    public Positioner copyPositioner() {
-        return this.grid.copyPositioner();
+    public LayoutSettings newCellSettings() {
+        return this.wrapped.newCellSettings();
     }
 
-    public Positioner getMainPositioner() {
-        return this.grid.getMainPositioner();
+    public LayoutSettings defaultCellSetting() {
+        return this.wrapped.defaultCellSetting();
     }
 
-    public <T extends Widget> T add(T widget, Positioner positioner) {
-        return this.axis.add(this.grid, widget, this.currentIndex++, positioner);
+    public <T extends LayoutElement> T addChild(final T child, final LayoutSettings cellSettings) {
+        return this.orientation.addChild(this.wrapped, child, this.nextChildIndex++, cellSettings);
     }
 
-    public <T extends Widget> T add(T widget) {
-        return this.add(widget, this.copyPositioner());
+    public <T extends LayoutElement> T addChild(final T child) {
+        return this.addChild(child, this.newCellSettings());
     }
 
-    public <T extends Widget> T add(T widget, Consumer<Positioner> callback) {
-        return this.axis.add(this.grid, widget, this.currentIndex++, Util.make(this.copyPositioner(), callback));
+    public <T extends LayoutElement> T addChild(final T child, final Consumer<LayoutSettings> layoutSettingsAdjustments) {
+        return this.orientation.addChild(this.wrapped, child, this.nextChildIndex++, Util.make(this.newCellSettings(), layoutSettingsAdjustments));
     }
 
-    public void forEachElement(Consumer<Widget> consumer) {
-        this.grid.forEachElement(consumer);
+    @Override
+    public void visitChildren(final Consumer<LayoutElement> layoutElementVisitor) {
+        this.wrapped.visitChildren(layoutElementVisitor);
     }
 
-    public void refreshPositions() {
-        this.grid.refreshPositions();
+    @Override
+    public void arrangeElements() {
+        this.wrapped.arrangeElements();
     }
 
+    @Override
     public int getWidth() {
-        return this.grid.getWidth();
+        return this.wrapped.getWidth();
     }
 
+    @Override
     public int getHeight() {
-        return this.grid.getHeight();
+        return this.wrapped.getHeight();
     }
 
-    public void setX(int x) {
-        this.grid.setX(x);
+    @Override
+    public void setX(final int x) {
+        this.wrapped.setX(x);
     }
 
-    public void setY(int y) {
-        this.grid.setY(y);
+    @Override
+    public void setY(final int y) {
+        this.wrapped.setY(y);
     }
 
+    @Override
     public int getX() {
-        return this.grid.getX();
+        return this.wrapped.getX();
     }
 
+    @Override
     public int getY() {
-        return this.grid.getY();
+        return this.wrapped.getY();
     }
 
-    public static DirectionalLayoutWidget vertical() {
-        return new DirectionalLayoutWidget(DirectionalLayoutWidget.DisplayAxis.VERTICAL);
-    }
-
-    public static DirectionalLayoutWidget horizontal() {
-        return new DirectionalLayoutWidget(DirectionalLayoutWidget.DisplayAxis.HORIZONTAL);
-    }
-
-    @Environment(EnvType.CLIENT)
-    public enum DisplayAxis {
+    public static enum Orientation {
         HORIZONTAL,
         VERTICAL;
 
-        void setSpacing(GridWidget grid, int spacing) {
+        private void setSpacing(final GridLayout gridLayout, final int spacing) {
             switch (this) {
-                case HORIZONTAL -> grid.setColumnSpacing(spacing);
-                case VERTICAL -> grid.setRowSpacing(spacing);
+                case HORIZONTAL:
+                    gridLayout.columnSpacing(spacing);
+                    break;
+                case VERTICAL:
+                    gridLayout.rowSpacing(spacing);
             }
-
         }
 
-        public <T extends Widget> T add(GridWidget grid, T widget, int index, Positioner positioner) {
-            T var10000;
-            switch (this) {
-                case HORIZONTAL -> var10000 = grid.add(widget, 0, index, positioner);
-                case VERTICAL -> var10000 = grid.add(widget, index, 0, positioner);
-                default -> throw new IncompatibleClassChangeError();
-            }
-
-            return var10000;
+        public <T extends LayoutElement> T addChild(final GridLayout gridLayout, final T child, final int index, final LayoutSettings cellSettings) {
+            return (T)(switch (this) {
+                case HORIZONTAL -> gridLayout.addChild(child, 0, index, cellSettings);
+                case VERTICAL -> gridLayout.addChild(child, index, 0, cellSettings);
+            });
         }
     }
 }

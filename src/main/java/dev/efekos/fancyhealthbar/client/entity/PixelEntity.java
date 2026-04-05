@@ -2,21 +2,22 @@ package dev.efekos.fancyhealthbar.client.entity;
 
 //? >=1.21.6 {
 /*import com.mojang.blaze3d.pipeline.RenderPipeline;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.RenderPipelines;
+import dev.efekos.fancyhealthbar.client.compat.CompatKey;
+import net.minecraft.client.renderer.RenderPipelines;
 *///?}
 import dev.efekos.fancyhealthbar.client.accessor.DrawWithAlphaAccessor;
+import dev.efekos.fancyhealthbar.client.compat.CompatKey;
 import dev.efekos.fancyhealthbar.client.compat.Texture;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.*;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.util.math.ColorHelper;
+import net.minecraft.client.gui.GuiGraphics;
+//? <1.21.11
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+//? <1.21.6
+import net.minecraft.resources.ResourceLocation;
 import org.joml.Vector2i;
 
 //? >=1.21.2 {
-
-/*import net.minecraft.util.Identifier;
-import java.util.function.Function;
+/*import java.util.function.Function;
 *///?}
 
 public class PixelEntity extends HudEntity {
@@ -43,23 +44,23 @@ public class PixelEntity extends HudEntity {
     }
 
     @Override
-    public void render(DrawContext ctx) {
+    public void render(GuiGraphics ctx) {
         DrawWithAlphaAccessor context = (DrawWithAlphaAccessor)ctx;
 
-        //? <=1.20.2 {
+        //? <1.20.2 {
         /*context.drawTexture(texture.atlasId(),(int)x,(int)y,size,size,u+texture.atlasPosition().u1(),v+texture.atlasPosition().v1(),1,1,256,256,getAlpha());
         *///?} else {
-        Sprite sprite = ctx./*? >=1.21.9 {*//*spriteAtlasTexture*//*?} else {*/guiAtlasManager/*?}*/.getSprite(texture.baseId());
-        float unit=(sprite.getMaxU()-sprite.getMinU())/sprite.getContents().getWidth();
+        TextureAtlasSprite sprite = ctx./*? >=1.21.9 {*//*guiSprites*//*?} else {*/sprites/*?}*/.getSprite(texture.baseId().unwrap());
+        float unit=(sprite.getU1()-sprite.getU0())/sprite.contents().width();
         int textureSize = (int)(1/unit);
         //? <1.21.2
-        context.drawTexture(sprite.getAtlasId(),(int)x,(int)y,size,size,u+ sprite.getMinU()* textureSize,v+ sprite.getMinV()* textureSize,1,1, textureSize, textureSize,getAlpha());
+        context.drawTexture(CompatKey.of(sprite.atlasLocation()),(int)x,(int)y,size,size,u+ sprite.getU0()* textureSize,v+ sprite.getV0()* textureSize,1,1, textureSize, textureSize,getAlpha());
         //? >=1.21.2 {
         /*//? >=1.21.6
         /^RenderPipeline arg1 = RenderPipelines.GUI_TEXTURED;^/
         //? <1.21.6
-        Function<Identifier,RenderLayer> arg1 = RenderLayer::getGuiTextured;
-        context.drawTexture(arg1, sprite.getAtlasId(),(int)x,(int)y,u+ sprite.getMinU()* textureSize,v+ sprite.getMinV()* textureSize,size,size,1,1, textureSize, textureSize,getAlpha());
+        Function<ResourceLocation, RenderType> arg1 = RenderType::guiTextured;
+        context.drawTexture(arg1, CompatKey.of(sprite.atlasLocation()),(int)x,(int)y,u+ sprite.getU0()* textureSize,v+ sprite.getV0()* textureSize,size,size,1,1, textureSize, textureSize,getAlpha());
         *///?}
         //?}
 

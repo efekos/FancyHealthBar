@@ -1,9 +1,8 @@
 package dev.efekos.fancyhealthbar.client;
 
 import dev.efekos.fancyhealthbar.client.compat.Texture;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,12 +78,12 @@ public record HeartTextureSet(Texture full, Texture fullBlinking, Texture half, 
         return new HeartTextureSet[]{CONTAINER,NORMAL,POISONED,WITHERED,ABSORBING,FROZEN};
     }
 
-    public static HeartTextureSet tryGetFromPlayer(PlayerEntity player) {
-        InGameHud.HeartType type = InGameHud.HeartType.fromPlayerState(player);
+    public static HeartTextureSet tryGetFromPlayer(Player player) {
+        Gui.HeartType type = Gui.HeartType.forPlayer(player);
         return switch (type){
             case CONTAINER->CONTAINER;
             case NORMAL->NORMAL;
-            case POISONED->POISONED;
+            case POISIONED->POISONED;
             case WITHERED->WITHERED;
             case ABSORBING->ABSORBING;
             case FROZEN->FROZEN;

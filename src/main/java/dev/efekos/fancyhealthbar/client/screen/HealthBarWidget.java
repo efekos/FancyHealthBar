@@ -2,16 +2,16 @@ package dev.efekos.fancyhealthbar.client.screen;
 
 import dev.efekos.fancyhealthbar.client.entity.HudEntityManager;
 import dev.efekos.fancyhealthbar.client.rendering.HealthBarRendering;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.layouts.LayoutElement;
+import net.minecraft.util.RandomSource;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class HealthBarWidget implements Widget, Drawable {
+public class HealthBarWidget implements LayoutElement, Renderable {
 
     private int x;
     private int y;
@@ -22,7 +22,7 @@ public class HealthBarWidget implements Widget, Drawable {
     private boolean hardcore;
     private final Supplier<Boolean> blinkingSupplier;
     private int lastHealth;
-    private final Random random = Random.create();
+    private final RandomSource random = RandomSource.create();
     private final HudEntityManager entityManager;
 
     public HealthBarWidget(HudEntityManager entityManager,Supplier<Boolean> blinkingSupplier) {
@@ -37,7 +37,7 @@ public class HealthBarWidget implements Widget, Drawable {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         rendering.drawPreview(random,context,x,y,1,lastHealth,healthValue,blinkingSupplier.get(),hardcore);
     }
 
@@ -104,8 +104,7 @@ public class HealthBarWidget implements Widget, Drawable {
     }
 
     @Override
-    public void forEachChild(Consumer<ClickableWidget> consumer) {
+    public void visitWidgets(Consumer<AbstractWidget> consumer) {
 
     }
-
 }

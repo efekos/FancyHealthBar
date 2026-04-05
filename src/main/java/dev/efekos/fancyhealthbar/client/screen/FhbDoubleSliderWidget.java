@@ -1,19 +1,19 @@
 package dev.efekos.fancyhealthbar.client.screen;
 
-import net.minecraft.client.gui.widget.SliderWidget;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.components.AbstractSliderButton;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.function.Consumer;
 
-public class FhbDoubleSliderWidget extends SliderWidget {
+public class FhbDoubleSliderWidget extends AbstractSliderButton {
 
     private Consumer<Double> valueConsumer;
-    private final Text text;
+    private final Component text;
     private double min;
     private double max;
 
@@ -34,8 +34,8 @@ public class FhbDoubleSliderWidget extends SliderWidget {
         return max;
     }
 
-    public FhbDoubleSliderWidget(double min, double max, Text text, double value, Consumer<Double> valueConsumer) {
-        super(0, 0, 150, 20, ScreenTexts.composeGenericOptionText(text, Text.literal(NumberFormat.getInstance().format(MathHelper.clampedLerp(min, max, value)))), (value - min) /(max-min));
+    public FhbDoubleSliderWidget(double min, double max, Component text, double value, Consumer<Double> valueConsumer) {
+        super(0, 0, 150, 20, CommonComponents.optionNameValue(text, Component.literal(NumberFormat.getInstance().format(Mth.clampedLerp(min, max, value)))), (value - min) /(max-min));
         this.text = text;
         this.min = min;
         this.max = max;
@@ -47,8 +47,8 @@ public class FhbDoubleSliderWidget extends SliderWidget {
         return this;
     }
 
-    public Text createMessage(){
-        return ScreenTexts.composeGenericOptionText(text,Text.literal(NumberFormat.getInstance().format(clamp())));
+    public Component createMessage(){
+        return CommonComponents.optionNameValue(text, Component.literal(NumberFormat.getInstance().format(clamp())));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class FhbDoubleSliderWidget extends SliderWidget {
     }
 
     private double clamp() {
-        return new BigDecimal(MathHelper.clampedLerp(/*? <1.21.11 {*/min, max, this.value/*?} else {*//*this.value, min, max*//*?}*/)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        return new BigDecimal(Mth.clampedLerp(/*? <1.21.11 {*/min, max, this.value/*?} else {*//*this.value, min, max*//*?}*/)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
     }
 
 }

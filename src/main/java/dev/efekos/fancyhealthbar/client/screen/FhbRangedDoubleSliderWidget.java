@@ -1,8 +1,8 @@
 package dev.efekos.fancyhealthbar.client.screen;
 
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,11 +12,11 @@ public class FhbRangedDoubleSliderWidget extends RangedSliderWidget {
 
     private Consumer<Double> minConsumer;
     private Consumer<Double> maxConsumer;
-    private final Text text;
+    private final Component text;
     private double min;
     private double max;
 
-    public FhbRangedDoubleSliderWidget(int min, int max, Text text, dev.efekos.fancyhealthbar.client.options.Range<Double> range) {
+    public FhbRangedDoubleSliderWidget(int min, int max, Component text, dev.efekos.fancyhealthbar.client.options.Range<Double> range) {
         this(min,max,text,range.getMin(),range.getMax(),range::setMin,range::setMax);
     }
 
@@ -38,8 +38,8 @@ public class FhbRangedDoubleSliderWidget extends RangedSliderWidget {
         return max;
     }
 
-    public FhbRangedDoubleSliderWidget(double min, double max, Text text, double vMin, double vMax, Consumer<Double> minConsumer, Consumer<Double> maxConsumer) {
-        super(0, 0, 150, 20, ScreenTexts.composeGenericOptionText(text,RangedSliderWidget.rangeText(vMin,vMax)), new Range(inverseLerp(min,max,vMin), inverseLerp(min,max,vMax)));
+    public FhbRangedDoubleSliderWidget(double min, double max, Component text, double vMin, double vMax, Consumer<Double> minConsumer, Consumer<Double> maxConsumer) {
+        super(0, 0, 150, 20, CommonComponents.optionNameValue(text,RangedSliderWidget.rangeText(vMin,vMax)), new Range(inverseLerp(min,max,vMin), inverseLerp(min,max,vMax)));
         this.text = text;
         this.min = min;
         this.max = max;
@@ -60,8 +60,8 @@ public class FhbRangedDoubleSliderWidget extends RangedSliderWidget {
         this.maxConsumer = maxConsumer;
     }
 
-    public Text createMessage(){
-        return ScreenTexts.composeGenericOptionText(text,rangeText(clamp(this.value.min),clamp(this.value.max)));
+    public Component createMessage(){
+        return CommonComponents.optionNameValue(text,rangeText(clamp(this.value.min),clamp(this.value.max)));
     }
 
     @Override
@@ -76,7 +76,7 @@ public class FhbRangedDoubleSliderWidget extends RangedSliderWidget {
     }
 
     private double clamp(double v) {
-        return new BigDecimal(MathHelper.clampedLerp(/*? <1.21.11 {*/min, max, v/*?} else {*//*v, min, max*//*?}*/)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        return new BigDecimal(Mth.clampedLerp(/*? <1.21.11 {*/min, max, v/*?} else {*//*v, min, max*//*?}*/)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
     }
 
 }

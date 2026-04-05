@@ -8,15 +8,14 @@ import dev.efekos.fancyhealthbar.client.compat.Texture;
 import dev.efekos.fancyhealthbar.client.entity.HudEntityManager;
 import dev.efekos.fancyhealthbar.client.entity.PixelEntity;
 import dev.efekos.fancyhealthbar.client.options.VanillaRenderingOptions;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 //? >=1.21.6
-/*import net.minecraft.client.gl.RenderPipelines;*/
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
+/*import net.minecraft.client.renderer.RenderPipelines;*/
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2d;
 import org.joml.Vector2i;
@@ -27,12 +26,12 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
     private final VanillaRenderingOptions options;
 
     @Override
-    public VanillaHealthBarRendering initialize(HudEntityManager manager, AnimationController controller, MinecraftClient client) {
+    public VanillaHealthBarRendering initialize(HudEntityManager manager, AnimationController controller, Minecraft client) {
         return this;
     }
 
     @Override
-    public void react(HudEntityManager manager, AnimationController controller, MinecraftClient client) {
+    public void react(HudEntityManager manager, AnimationController controller, Minecraft client) {
 
     }
 
@@ -41,7 +40,7 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
     }
 
     @Override
-    public void drawPreview(Random random, DrawContext context, int x, int y, int lines, int lastHealth, int health, boolean blinking,boolean hardcore) {
+    public void drawPreview(RandomSource random, GuiGraphics context, int x, int y, int lines, int lastHealth, int health, boolean blinking, boolean hardcore) {
         HeartTextureSet heartType = HeartTextureSet.NORMAL;
         int maxHearts = 10;
         int absorptionHearts = 0;
@@ -68,26 +67,21 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
     }
 
     @Override
-    public void draw(Random random, DrawContext context, PlayerEntity player, int x, int y,
+    public void draw(RandomSource random, GuiGraphics context, Player player, int x, int y,
                      int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption,
                      boolean blinking) {
 
-        //? >=1.21.1 {
-        /*context.getMatrices().pushMatrix();
-        context.getMatrices().translate(options.offset().x,options.offset().y);
-        *///?} else {
-        context.getMatrices().push();
-        context.getMatrices().translate(options.offset().x,options.offset().y,0);
-        //?}
+        //? <1.21.6
+        context.pose().pushPose();
+        //? >=1.21.6
+        /*context.pose().pushMatrix();*/
+        context.pose().translate(options.offset().x,options.offset().y/*? <1.21.6 {*/,0/*?}*/);
 
         HeartTextureSet heartType = HeartTextureSet.tryGetFromPlayer(player);
-        //? <1.21.9 {
-        boolean hardcore = player.getWorld().getLevelProperties().isHardcore();
-        //?} else {
-        /*boolean hardcore = player.getEntityWorld().getLevelProperties().isHardcore();
-        *///?}
-        int maxHearts = MathHelper.ceil((double)maxHealth / 2.0);
-        int absorptionHearts = MathHelper.ceil((double)absorption / 2.0);
+        boolean hardcore = player.level().getLevelData().isHardcore();
+
+        int maxHearts = Mth.ceil((double)maxHealth / 2.0);
+        int absorptionHearts = Mth.ceil((double)absorption / 2.0);
         int maxHealthI = maxHearts * 2;
         blinking = blinking&& options.isBlinking();
         if(options.getHardcoreHearts()== VanillaRenderingOptions.HardcoreHearts.ON) hardcore = true;
@@ -117,11 +111,15 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
             }
         }
 
-        context.getMatrices()./*? >=1.21.10 {*//*popMatrix()*//*?} else {*/pop()/*?}*/;
+
+        //? <1.21.6
+        context.pose().popPose();
+        //? >=1.21.6
+        /*context.pose().popMatrix();*/
 
     }
 
-    private @NotNull Vector2i getHeartLocation(Random random, int x, int y, int lines, int regeneratingHeartIndex, int lastHealth, int absorption, int i, int maxHearts) {
+    private @NotNull Vector2i getHeartLocation(RandomSource random, int x, int y, int lines, int regeneratingHeartIndex, int lastHealth, int absorption, int i, int maxHearts) {
         int m = i / 10;
         int n = i % 10;
         int heartX = x + n * 8;
@@ -144,12 +142,12 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
 
     @Override
     public void onDamage(HudEntityManager manager, int x, int y, int lines, int regenHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking) {
-        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+        LocalPlayer player = Minecraft.getInstance().player;
         HeartTextureSet heartType = player==null?HeartTextureSet.NORMAL:HeartTextureSet.tryGetFromPlayer(player);
-        boolean hardcore = (player!=null&&options.getHardcoreHearts()!=VanillaRenderingOptions.HardcoreHearts.AUTO&&player/*? <1.21.9 {*/.getWorld()/*?} else {*//*.getEntityWorld()*//*?}*/.getLevelProperties().isHardcore())||options.getHardcoreHearts()== VanillaRenderingOptions.HardcoreHearts.ON;
-        int maxHearts = MathHelper.ceil((double)maxHealth / 2.0);
-        int hearts = MathHelper.ceil(health/2d);
-        int lastHearts = MathHelper.ceil(lastHealth/2d);
+        boolean hardcore = (player!=null&&options.getHardcoreHearts()!=VanillaRenderingOptions.HardcoreHearts.AUTO&&player.level().getLevelData().isHardcore())||options.getHardcoreHearts()== VanillaRenderingOptions.HardcoreHearts.ON;
+        int maxHearts = Mth.ceil((double)maxHealth / 2.0);
+        int hearts = Mth.ceil(health/2d);
+        int lastHearts = Mth.ceil(lastHealth/2d);
         int heartDif = lastHealth-health==1?1:lastHearts-hearts;
         int healthDif = lastHealth-health;
 
@@ -159,25 +157,25 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
         boolean endHalfLost = lastHealth % 2 == 0 && health % 2 != 0;
         boolean startHalfLost = lastHealth % 2 != 0 && health % 2 == 0;
         if(bothLost){ // both halves lost
-            Vector2i location = getHeartLocation(Random.create(), x, y, lines, regenHeartIndex, lastHealth, absorption, hearts-1, maxHearts);
+            Vector2i location = getHeartLocation(RandomSource.create(), x, y, lines, regenHeartIndex, lastHealth, absorption, hearts-1, maxHearts);
             spawnHeart(4, 9, manager, location, texture);
-            Vector2i location2 = getHeartLocation(Random.create(), x, y, lines, regenHeartIndex, lastHealth, absorption, hearts+heartDif-1, maxHearts);
+            Vector2i location2 = getHeartLocation(RandomSource.create(), x, y, lines, regenHeartIndex, lastHealth, absorption, hearts+heartDif-1, maxHearts);
             spawnHeart(0, 5, manager, location2, texture);
         }
 
         if(endHalfLost){ // end half lost
-            Vector2i location = getHeartLocation(Random.create(), x, y, lines, regenHeartIndex, lastHealth, absorption, hearts-1, maxHearts);
+            Vector2i location = getHeartLocation(RandomSource.create(), x, y, lines, regenHeartIndex, lastHealth, absorption, hearts-1, maxHearts);
             spawnHeart(4, 9, manager, location, texture);
         }
 
         if(startHalfLost){ // start half lost
-            Vector2i location = getHeartLocation(Random.create(), x, y, lines, regenHeartIndex, lastHealth, absorption, hearts+heartDif-1, maxHearts);
+            Vector2i location = getHeartLocation(RandomSource.create(), x, y, lines, regenHeartIndex, lastHealth, absorption, hearts+heartDif-1, maxHearts);
             spawnHeart(0, 5, manager, location, texture);
         }
 
         if(healthDif>1) for (int i = 0; i < heartDif; i++) {
             if((startHalfLost||bothLost)&&i+1==heartDif)continue;
-            Vector2i location = getHeartLocation(Random.create(), x, y, lines, regenHeartIndex, lastHealth, absorption, hearts + i, maxHearts);
+            Vector2i location = getHeartLocation(RandomSource.create(), x, y, lines, regenHeartIndex, lastHealth, absorption, hearts + i, maxHearts);
             spawnHeart(0, 9, manager, location, texture);
         }
 
@@ -202,7 +200,7 @@ public class VanillaHealthBarRendering implements HealthBarRendering {
     }
 
     @Unique
-    private void legacyHeart(DrawContext context,HeartTextureSet set,int x,int y,boolean hardcore,boolean blinking,boolean half){
+    private void legacyHeart(GuiGraphics context, HeartTextureSet set, int x, int y, boolean hardcore, boolean blinking, boolean half){
         //? <1.21.5
         RenderSystem.enableBlend();
         Texture setTexture = set.getTexture(hardcore, half, blinking);

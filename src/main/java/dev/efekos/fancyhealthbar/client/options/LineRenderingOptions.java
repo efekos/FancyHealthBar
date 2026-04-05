@@ -14,11 +14,10 @@ import dev.efekos.fancyhealthbar.client.rendering.LineHealthBarRendering;
 import dev.efekos.fancyhealthbar.client.screen.FhbEnumToggleWidget;
 import dev.efekos.fancyhealthbar.client.screen.FhbSliderWidget;
 import dev.efekos.fancyhealthbar.client.screen.FhbToggleWidget;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.widget.GridWidget;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.layouts.GridLayout;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import org.joml.Vector2i;
 
 import java.util.List;
@@ -39,15 +38,15 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
     private Vector2i offset;
 
     @Override
-    public void fillOptions(GridWidget.Adder adder) {
-        adder.add(new FhbToggleWidget(Text.translatable("options.fancyhealthbar.vanilla.blinking"),blinking(),this::setBlinking));
-        adder.add(new FhbToggleWidget(Text.translatable("options.fancyhealthbar.line.delta"),yellowDelta,this::setYellowDelta));
-        adder.add(new FhbSliderWidget(0,5,Text.translatable("options.fancyhealthbar.line.notches"),notches,this::setNotches));
-        adder.add(new FhbEnumToggleWidget<>(DeltaBehaviour.class,Text.translatable("options.fancyhealthbar.line.delta_behaviour"),deltaBehaviour,this::setDeltaBehaviour));
-        adder.add(new FhbEnumToggleWidget<>(LineStyle.class,Text.translatable("options.fancyhealthbar.line.normal_style"),normalLineStyle,this::setNormalLineStyle));
-        adder.add(new FhbEnumToggleWidget<>(LineStyle.class,Text.translatable("options.fancyhealthbar.line.hardcore_style"),hardcoreLineStyle,this::setHardcoreLineStyle));
-        adder.add(new FhbSliderWidget(-200,200,Text.translatable("options.fancyhealthbar.generic.offset_x"),offset().x,v->offset.x = v));
-        adder.add(new FhbSliderWidget(-200,200,Text.translatable("options.fancyhealthbar.generic.offset_y"),offset().y,v->offset.y = v));
+    public void fillOptions(GridLayout.RowHelper adder) {
+        adder.addChild(new FhbToggleWidget(Component.translatable("options.fancyhealthbar.vanilla.blinking"),blinking(),this::setBlinking));
+        adder.addChild(new FhbToggleWidget(Component.translatable("options.fancyhealthbar.line.delta"),yellowDelta,this::setYellowDelta));
+        adder.addChild(new FhbSliderWidget(0,5, Component.translatable("options.fancyhealthbar.line.notches"),notches,this::setNotches));
+        adder.addChild(new FhbEnumToggleWidget<>(DeltaBehaviour.class, Component.translatable("options.fancyhealthbar.line.delta_behaviour"),deltaBehaviour,this::setDeltaBehaviour));
+        adder.addChild(new FhbEnumToggleWidget<>(LineStyle.class, Component.translatable("options.fancyhealthbar.line.normal_style"),normalLineStyle,this::setNormalLineStyle));
+        adder.addChild(new FhbEnumToggleWidget<>(LineStyle.class, Component.translatable("options.fancyhealthbar.line.hardcore_style"),hardcoreLineStyle,this::setHardcoreLineStyle));
+        adder.addChild(new FhbSliderWidget(-200,200, Component.translatable("options.fancyhealthbar.generic.offset_x"),offset().x, v->offset.x = v));
+        adder.addChild(new FhbSliderWidget(-200,200, Component.translatable("options.fancyhealthbar.generic.offset_y"),offset().y, v->offset.y = v));
     }
 
     public void setOffset(Vector2i offset) {
@@ -69,7 +68,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
     public void setNormalLineStyle(LineStyle normalLineStyle) {
         this.normalLineStyle = normalLineStyle;
         Try.ignore(()->{
-            ((InGameHudRenderingAccessor) MinecraftClient.getInstance().inGameHud).fhb$react();
+            ((InGameHudRenderingAccessor) Minecraft.getInstance().gui).fhb$react();
             return null;
         });
     }
@@ -77,7 +76,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
     public void setHardcoreLineStyle(LineStyle hardcoreLineStyle) {
         this.hardcoreLineStyle = hardcoreLineStyle;
         Try.ignore(()->{
-            ((InGameHudRenderingAccessor) MinecraftClient.getInstance().inGameHud).fhb$react();
+            ((InGameHudRenderingAccessor) Minecraft.getInstance().gui).fhb$react();
             return null;
         });
     }
@@ -152,11 +151,11 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
         offset = new Vector2i(0,0);
     }
 
-    public enum DeltaBehaviour implements Supplier<Text> {
-        FOLLOW(Text.translatable("options.fancyhealthbar.line.delta_behaviour.follow"),true),
-        LERP(Text.translatable("options.fancyhealthbar.line.delta_behaviour.lerp"),true),
-        BLINK(Text.translatable("options.fancyhealthbar.line.delta_behaviour.blink"),false),
-        JUMP(Text.translatable("options.fancyhealthbar.line.delta_behaviour.jump"),false),
+    public enum DeltaBehaviour implements Supplier<Component> {
+        FOLLOW(Component.translatable("options.fancyhealthbar.line.delta_behaviour.follow"),true),
+        LERP(Component.translatable("options.fancyhealthbar.line.delta_behaviour.lerp"),true),
+        BLINK(Component.translatable("options.fancyhealthbar.line.delta_behaviour.blink"),false),
+        JUMP(Component.translatable("options.fancyhealthbar.line.delta_behaviour.jump"),false),
         ;
         private final boolean liveUpdates;
 
@@ -164,22 +163,22 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
             return liveUpdates;
         }
 
-        DeltaBehaviour(Text name,boolean liveUpdates) {
+        DeltaBehaviour(Component name, boolean liveUpdates) {
             this.name = name;
             this.liveUpdates = liveUpdates;
         }
 
-        private final Text name;
+        private final Component name;
 
         @Override
-        public Text get() {
+        public Component get() {
             return name;
         }
 
     }
 
-    public enum LineStyle implements Supplier<Text> {
-        DEFAULT(Text.translatable("options.fancyhealthbar.line.style.default"),false,"default",
+    public enum LineStyle implements Supplier<Component> {
+        DEFAULT(Component.translatable("options.fancyhealthbar.line.style.default"),false,"default",
                 Texture.mod("hud/health_bar/line/default/full","textures/gui/line_bar_default.png",60,9,15,new TextureNineSlice(5,15,15)),
                 Texture.mod("hud/health_bar/line/default/freeze","textures/gui/line_bar_default.png",45,9,15,new TextureNineSlice(5,15,15)),
                 Texture.mod("hud/health_bar/line/default/fire","textures/gui/line_bar_default.png",30,9,15,new TextureNineSlice(5,15,15)),
@@ -190,7 +189,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
                 Animation.verticalStrip(Texture.mod("hud/health_bar/line/default/regenerating","textures/gui/line_bar_default.png",0,97,90,9),11),
                 Animation.verticalStrip(Texture.mod("hud/health_bar/line/default/fulled","textures/gui/line_bar_default.png",90,0,90,9),14)
                 ),
-        HARDCORE(Text.translatable("options.fancyhealthbar.line.style.hardcore"),false,"hardcore",
+        HARDCORE(Component.translatable("options.fancyhealthbar.line.style.hardcore"),false,"hardcore",
                 Texture.mod("hud/health_bar/line/hardcore/full","textures/gui/line_bar_default.png",54,33,18,new TextureNineSlice(6,18,18)),
                 Texture.mod("hud/health_bar/line/hardcore/freeze","textures/gui/line_bar_default.png",36,33,18,new TextureNineSlice(6,18,18)),
                 Texture.mod("hud/health_bar/line/hardcore/fire","textures/gui/line_bar_default.png",18,33,18,new TextureNineSlice(6,18,18)),
@@ -202,7 +201,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
                 Animation.verticalStrip(Texture.mod("hud/health_bar/line/hardcore/fulled","textures/gui/line_bar_default.png",90,0,90,9),14)
                 ),
 
-        FLAT(Text.translatable("options.fancyhealthbar.line.style.flat"),false,"flat",0,
+        FLAT(Component.translatable("options.fancyhealthbar.line.style.flat"),false,"flat",0,
                 Texture.mod("hud/health_bar/line/flat/full","textures/gui/line_bar_flat.png",60,9,15,new TextureNineSlice(5,15,15)),
                 Texture.mod("hud/health_bar/line/flat/freeze","textures/gui/line_bar_flat.png",45,9,15,new TextureNineSlice(5,15,15)),
                 Texture.mod("hud/health_bar/line/flat/fire","textures/gui/line_bar_flat.png",30,9,15,new TextureNineSlice(5,15,15)),
@@ -213,7 +212,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
                 Animation.verticalStrip(Texture.mod("hud/health_bar/line/flat/regenerating","textures/gui/line_bar_flat.png",0,48,90,9),10),
                 Animation.verticalStrip(Texture.mod("hud/health_bar/line/flat/fulled","textures/gui/line_bar_flat.png",90,0,90,9),14)),
 
-        FLAT_HARDCORE(Text.translatable("options.fancyhealthbar.line.style.flat_hardcore"),false,"flat_hardcore",0,
+        FLAT_HARDCORE(Component.translatable("options.fancyhealthbar.line.style.flat_hardcore"),false,"flat_hardcore",0,
                 Texture.mod("hud/health_bar/line/flat_hardcore/full","textures/gui/line_bar_flat.png",60,33,15,new TextureNineSlice(5,15,15)),
                 Texture.mod("hud/health_bar/line/flat_hardcore/freeze","textures/gui/line_bar_flat.png",45,33,15,new TextureNineSlice(5,15,15)),
                 Texture.mod("hud/health_bar/line/flat_hardcore/fire","textures/gui/line_bar_flat.png",30,33,15,new TextureNineSlice(5,15,15)),
@@ -224,7 +223,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
                 Animation.verticalStrip(Texture.mod("hud/health_bar/line/flat_hardcore/regenerating","textures/gui/line_bar_flat.png",0,48,90,9),11),
                 Animation.verticalStrip(Texture.mod("hud/health_bar/line/flat_hardcore/fulled","textures/gui/line_bar_flat.png",90,0,90,9),14)),
 
-        PIXELATED(Text.translatable("options.fancyhealthbar.line.style.pixelated"),true,"pixelated",0,
+        PIXELATED(Component.translatable("options.fancyhealthbar.line.style.pixelated"),true,"pixelated",0,
                 Texture.mod("hud/health_bar/line/pixelated/full","textures/gui/line_bar_pixelated.png",0,45,90,9),
                 Texture.mod("hud/health_bar/line/pixelated/freeze","textures/gui/line_bar_pixelated.png",0,36,90,9),
                 Texture.mod("hud/health_bar/line/pixelated/fire","textures/gui/line_bar_pixelated.png",0,27,90,9),
@@ -236,7 +235,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
                 Animation.verticalStrip(Texture.mod("hud/health_bar/line/pixelated/fulled","textures/gui/line_bar_pixelated.png",90,0,90,9),9)),
         ;
 
-        private final Text text;
+        private final Component text;
         private final String id;
 
         private final int jumpOffset;
@@ -251,7 +250,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
         private final Texture blink;
         private final List<Texture> notches;
 
-        LineStyle(Text text,boolean scissor, String id,int offset,Texture full,Texture freeze,Texture fire,Texture empty,Texture delta,Texture blink,List<Texture> notches,Animation regenAnim,Animation fulledAnim) {
+        LineStyle(Component text, boolean scissor, String id, int offset, Texture full, Texture freeze, Texture fire, Texture empty, Texture delta, Texture blink, List<Texture> notches, Animation regenAnim, Animation fulledAnim) {
             this.text = text;
             this.id = id;
             this.scissor = scissor;
@@ -267,7 +266,7 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
             this.freeze = freeze;
         }
 
-        LineStyle(Text text,boolean scissor, String id,Texture full,Texture freeze,Texture fire,Texture empty,Texture delta,Texture blink,List<Texture> notches,Animation regenAnim,Animation fulledAnim) {
+        LineStyle(Component text, boolean scissor, String id, Texture full, Texture freeze, Texture fire, Texture empty, Texture delta, Texture blink, List<Texture> notches, Animation regenAnim, Animation fulledAnim) {
             this.text = text;
             this.id = id;
             this.scissor = scissor;
@@ -327,12 +326,12 @@ public class LineRenderingOptions implements HealthBarRenderingOptions {
             return scissor;
         }
 
-        public Text text(){
+        public Component text(){
             return text;
         }
 
         @Override
-        public Text get() {
+        public Component get() {
             return text;
         }
 

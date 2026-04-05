@@ -1,6 +1,6 @@
 package dev.efekos.fancyhealthbar.client.options;
 
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 public class IntRange implements Range<Integer> {
 
@@ -11,7 +11,7 @@ public class IntRange implements Range<Integer> {
 
     @Override
     public Integer random() {
-        return MathHelper.floor(MathHelper.clampedLerp(/*? >=1.21.11 {*//*Math.random(),*//*?}*/min, max /*? <1.21.11 {*/,Math.random()/*?}*/));
+        return Mth.floor(Mth.clampedLerp(/*? >=1.21.11 {*//*Math.random(),*//*?}*/min, max /*? <1.21.11 {*/,Math.random()/*?}*/));
     }
 
     private Integer min;

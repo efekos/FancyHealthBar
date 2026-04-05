@@ -2,29 +2,29 @@ package dev.efekos.fancyhealthbar.client.screen;
 
 import dev.efekos.fancyhealthbar.client.compat.BlinkingTextures;
 import dev.efekos.fancyhealthbar.client.compat.Texture;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 
-public class FhbArrowButton extends ButtonWidget {
+public class FhbArrowButton extends Button {
     protected final BlinkingTextures textures;
 
-    public FhbArrowButton(int x, int y, int width, int height, BlinkingTextures textures, ButtonWidget.PressAction pressAction) {
-        this(x, y, width, height, textures, pressAction, ScreenTexts.EMPTY);
+    public FhbArrowButton(int x, int y, int width, int height, BlinkingTextures textures, Button.OnPress pressAction) {
+        this(x, y, width, height, textures, pressAction, CommonComponents.EMPTY);
     }
 
-    public FhbArrowButton(int x, int y, int width, int height, BlinkingTextures textures, ButtonWidget.PressAction pressAction, net.minecraft.text.Text text) {
-        super(x, y, width, height, text, pressAction, DEFAULT_NARRATION_SUPPLIER);
+    public FhbArrowButton(int x, int y, int width, int height, BlinkingTextures textures, Button.OnPress pressAction, net.minecraft.network.chat.Component text) {
+        super(x, y, width, height, text, pressAction, DEFAULT_NARRATION);
         this.textures = textures;
     }
 
-    public FhbArrowButton(int width, int height, BlinkingTextures textures, ButtonWidget.PressAction pressAction, net.minecraft.text.Text text) {
+    public FhbArrowButton(int width, int height, BlinkingTextures textures, Button.OnPress pressAction, net.minecraft.network.chat.Component text) {
         this(0, 0, width, height, textures, pressAction, text);
     }
 
-    public void /*? <1.20.3 {*//*renderButton*//*?} else if <1.21.11 {*/renderWidget/*?} else {*//*drawIcon*//*?}*/(DrawContext context, int mouseX, int mouseY, float delta) {
-        Texture texture = this.textures.get(this.isSelected());
+    public void renderContents(GuiGraphics context, int mouseX, int mouseY, float delta) {
+        Texture texture = this.textures.get(this.isHovered());
         texture.draw(context,this.getX(),this.getY(),this.width,this.height);
     }
 

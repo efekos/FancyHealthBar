@@ -9,12 +9,11 @@ import dev.efekos.fancyhealthbar.client.entity.HudEntityManager;
 import dev.efekos.fancyhealthbar.client.entity.LineJumpEntity;
 import dev.efekos.fancyhealthbar.client.entity.ScissoredLineJumpEntity;
 import dev.efekos.fancyhealthbar.client.options.LineRenderingOptions;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
 import java.util.Objects;
 
@@ -24,7 +23,7 @@ public class LineHealthBarRendering implements HealthBarRendering {
     private HudEntityManager manager;
 
     @Override
-    public void react(HudEntityManager manager,AnimationController controller,MinecraftClient client) {
+    public void react(HudEntityManager manager, AnimationController controller, Minecraft client) {
         controller.reset();
         initialize(manager,controller,client);
     }
@@ -38,12 +37,8 @@ public class LineHealthBarRendering implements HealthBarRendering {
     private int healthDeltaW = -1;
 
     @Override
-    public LineHealthBarRendering initialize(HudEntityManager manager, AnimationController controller, MinecraftClient client) {
-        //? <1.21.9 {
-        boolean hardcore = Try.orElse(()->client.player.getWorld().getLevelProperties().isHardcore(),false);
-        //?} else {
-        /*boolean hardcore = Try.orElse(()->client.player.getEntityWorld().getLevelProperties().isHardcore(),false);
-        *///?}
+    public LineHealthBarRendering initialize(HudEntityManager manager, AnimationController controller, Minecraft client) {
+        boolean hardcore = Try.orElse(()->client.player.level().getLevelData().isHardcore(),false);
 
         LineRenderingOptions.LineStyle lineStyle = hardcore ? options.hardcoreLineStyle() : options.normalLineStyle();
         regenTrack = controller.createTrack(lineStyle.regenAnim());
@@ -56,7 +51,7 @@ public class LineHealthBarRendering implements HealthBarRendering {
     }
 
     @Override
-    public void drawPreview(Random random, DrawContext context, int x, int y, int lines, int lastHealth, int health, boolean blinking, boolean hardcore) {
+    public void drawPreview(RandomSource random, GuiGraphics context, int x, int y, int lines, int lastHealth, int health, boolean blinking, boolean hardcore) {
         LineRenderingOptions.LineStyle lineStyle = hardcore ? options.hardcoreLineStyle() : options.normalLineStyle();
         int healthW = (int) Math.floor((health / 20d)*90);
         if (this.healthDeltaW == -1) this.healthDeltaW = healthW;
@@ -74,7 +69,7 @@ public class LineHealthBarRendering implements HealthBarRendering {
         if(options.blinking()&&blinking)
             lineStyle.blink().draw(context,x,y,90,9);
         if(options.notches()>0){
-            Texture texture = lineStyle.notches(MathHelper.clamp(options.notches(), 1, 5));
+            Texture texture = lineStyle.notches(Mth.clamp(options.notches(), 1, 5));
             //? <1.21.5
             RenderSystem.enableBlend();
             texture.draw(context,x,y,90,9);
@@ -92,21 +87,16 @@ public class LineHealthBarRendering implements HealthBarRendering {
     private float lastHealthL = -1; // still lastHealth but lerped
 
     @Override
-    public void draw(Random random, DrawContext context, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int a, int health, int absorption, boolean blinking) {
+    public void draw(RandomSource random, GuiGraphics context, Player player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int a, int health, int absorption, boolean blinking) {
 
-        //? >=1.21.1 {
-        /*context.getMatrices().pushMatrix();
-        context.getMatrices().translate(options.offset().x,options.offset().y);
-        *///?} else {
-        context.getMatrices().push();
-        context.getMatrices().translate(options.offset().x,options.offset().y,0);
-        //?}
 
-        //? <1.21.9 {
-        boolean hardcore = Try.orElse(()->player.getWorld().getLevelProperties().isHardcore(),false);
-        //?} else {
-        /*boolean hardcore = Try.orElse(()->player.getEntityWorld().getLevelProperties().isHardcore(),false);
-        *///?}
+        //? <1.21.6
+        context.pose().pushPose();
+        //? >=1.21.6
+        /*context.pose().pushMatrix();*/
+        context.pose().translate(options.offset().x,options.offset().y/*? <1.21.6 {*/,0/*?}*/);
+
+        boolean hardcore = Try.orElse(()->player.level().getLevelData().isHardcore(),false);
 
         LineRenderingOptions.LineStyle lineStyle = hardcore ? options.hardcoreLineStyle() : options.normalLineStyle();
         int healthW = (int) Math.floor((player.getHealth() / player.getMaxHealth()) * 90);
@@ -122,7 +112,7 @@ public class LineHealthBarRendering implements HealthBarRendering {
             lineStyle.blink().draw(context,x,y,90,9);
 
         if(options.notches()>0){
-            Texture notches = lineStyle.notches(MathHelper.clamp(options.notches(), 1,5));
+            Texture notches = lineStyle.notches(Mth.clamp(options.notches(), 1,5));
             //? <1.21.5
             RenderSystem.enableBlend();
             notches.draw(context,x,y,90,9);
@@ -130,7 +120,11 @@ public class LineHealthBarRendering implements HealthBarRendering {
             RenderSystem.disableBlend();
         }
 
-        context.getMatrices()./*? >=1.21.10 {*//*popMatrix()*//*?} else {*/pop()/*?}*/;
+
+        //? <1.21.6
+        context.pose().popPose();
+        //? >=1.21.6
+        /*context.pose().popMatrix();*/
 
         updateAnimationState(player.getHealth(),player.getMaxHealth());
         updateDeltaWidth(player.getHealth(),player.getMaxHealth(), healthW);
@@ -158,7 +152,7 @@ public class LineHealthBarRendering implements HealthBarRendering {
             }
         }
         if (Objects.requireNonNull(options.deltaBehaviour()) == LineRenderingOptions.DeltaBehaviour.LERP)
-            this.lastHealthL = (float) MathHelper.lerp(0.1, lastHealthL, health);
+            this.lastHealthL = (float) Mth.lerp(0.1, lastHealthL, health);
         this.lastHealth = health;
     }
 
@@ -173,11 +167,11 @@ public class LineHealthBarRendering implements HealthBarRendering {
         }
     }
 
-    private static Texture determineTexture(PlayerEntity player, LineRenderingOptions.LineStyle lineStyle) {
-        return player.isFrozen() ? lineStyle.freeze() : (player.isOnFire() || player.isInLava()) ? lineStyle.fire() : lineStyle.full();
+    private static Texture determineTexture(Player player, LineRenderingOptions.LineStyle lineStyle) {
+        return player.isFullyFrozen() ? lineStyle.freeze() : (player.isOnFire() || player.isInLava()) ? lineStyle.fire() : lineStyle.full();
     }
 
-    private void drawTxtr(DrawContext context, Texture texture, int x, int y, int width, LineRenderingOptions.LineStyle lineStyle) {
+    private void drawTxtr(GuiGraphics context, Texture texture, int x, int y, int width, LineRenderingOptions.LineStyle lineStyle) {
         if(lineStyle.scissor()){
             context.enableScissor(x, y, x +width, y +9);
             texture.draw(context,x,y,90,9);

@@ -1,5 +1,6 @@
 package dev.efekos.fancyhealthbar.client.screen;
 
+import dev.efekos.fancyhealthbar.client.accessor.ClearMethod;
 import dev.efekos.fancyhealthbar.client.accessor.InGameHudRenderingAccessor;
 import dev.efekos.fancyhealthbar.client.animation.AnimationController;
 import dev.efekos.fancyhealthbar.client.compat.BlinkingTextures;
@@ -7,59 +8,65 @@ import dev.efekos.fancyhealthbar.client.compat.Texture;
 import dev.efekos.fancyhealthbar.client.entity.HudEntityManager;
 import dev.efekos.fancyhealthbar.client.options.FancyHealthBarOptions;
 import dev.efekos.fancyhealthbar.client.options.HealthBarRenderingOptions;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 //? >=1.21.9
-/*import net.minecraft.client.gui.Click;*/
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.*;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
-import net.minecraft.util.Clearable;
+/*import net.minecraft.client.input.MouseButtonEvent;*/
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.StringWidget;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.layouts.GridLayout;
+import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
+import net.minecraft.client.gui.layouts.LayoutElement;
+import net.minecraft.client.gui.layouts.LayoutSettings;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.Clearable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FancyHealthBarOptionsScreen extends Screen {
 
-    private static final Text TITLE_TEXT = Text.translatable("options.fancyhealthbar.title");
+    private static final Component TITLE_TEXT = Component.translatable("options.fancyhealthbar.title");
 
     private final List<String> typeSet = new ArrayList<>(HealthBarRenderingOptions.TYPES.keySet());
 
-    private GridWidget healthBars;
+    private GridLayout healthBars;
     private HudEntityManager manager;
     private AnimationController controller;
     private final FancyHealthBarOptions options;
-    private final ThreePartsLayoutWidget layout = new ThreePartsLayoutWidget(this,40);
+    private final HeaderAndFooterLayout layout = new HeaderAndFooterLayout(this,40);
     private final Screen parent;
 
-    public FancyHealthBarOptionsScreen(Screen parent,FancyHealthBarOptions options) {
+    public FancyHealthBarOptionsScreen(Screen parent, FancyHealthBarOptions options) {
         super(TITLE_TEXT);
         this.options = options;
         this.parent = parent;
     }
 
     @Override
-    public void close() {
-        this.client.setScreen(parent);
+    public void onClose() {
+        this.minecraft.setScreen(parent);
     }
 
-    protected void initTabNavigation() {
+    protected void repositionElements() {
         scrollWidget.setWidth(width);
         scrollWidget.setHeight(height-80-27-24-16);
         scrollWidget.setX(0);
-        layout.refreshPositions();
-        healthBars.refreshPositions();
+        layout.arrangeElements();
+        healthBars.arrangeElements();
     }
 
     protected void refreshWidgetPositions() {
         scrollWidget.setWidth(width);
         scrollWidget.setHeight(height-80-27-24-16);
         scrollWidget.setX(0);
-        layout.refreshPositions();
-        healthBars.refreshPositions();
+        layout.arrangeElements();
+        healthBars.arrangeElements();
     }
 
     public static final BlinkingTextures LEFT_ARROW_TEXTURES = new BlinkingTextures(
@@ -76,55 +83,55 @@ public class FancyHealthBarOptionsScreen extends Screen {
     private HealthBarWidget damage2;
     private HealthBarWidget damage3;
 
-    private TextWidget healthBarName;
+    private StringWidget healthBarName;
     private FhbScrollWidget scrollWidget;
-    private GridWidget.Adder adder;
+    private GridLayout.RowHelper adder;
 
     @Override
     protected void init() {
         manager = new HudEntityManager();
         controller = new AnimationController();
 
-        healthBarName = new TextWidget(Text.literal("healthBarName"),textRenderer);
+        healthBarName = new StringWidget(Component.literal("healthBarName"),font);
         healthBarName.setWidth(100);
 
         //? >=1.21
-        layout.addHeader(TITLE_TEXT,textRenderer);
+        layout.addTitleHeader(TITLE_TEXT,font);
         //? <1.21
-        /*layout.addHeader(new TextWidget(TITLE_TEXT,textRenderer));*/
+        /*layout.addToHeader(new StringWidget(TITLE_TEXT,font));*/
 
-        DirectionalLayoutWidget bodyLayout = new DirectionalLayoutWidget(0, 0, DirectionalLayoutWidget.DisplayAxis.VERTICAL).spacing(8);
-        DirectionalLayoutWidget healthBarsWidget = new DirectionalLayoutWidget(0,0, DirectionalLayoutWidget.DisplayAxis.HORIZONTAL).spacing(8);
-        healthBarsWidget.add(new FhbArrowButton(16,15,LEFT_ARROW_TEXTURES, this::previousRendering, Text.empty()),Positioner::alignVerticalCenter);
-        healthBars = new GridWidget(0,0);
-        healthBars.setColumnSpacing(8);
-        healthBars.setRowSpacing(8);
-        GridWidget.Adder adder = healthBars.createAdder(3);
-        adder.add(new HealthBarWidget(manager,() -> false).setHealthValue(20));
-        adder.add(new HealthBarWidget(manager,() -> false).setHealthValue(10));
-        adder.add(new HealthBarWidget(manager,() -> false).setHealthValue(0));
-        damage1 =adder.add(new HealthBarWidget(manager,this::shouldBlink).setHealthValue(20));
-        damage2=adder.add(new HealthBarWidget(manager,this::shouldBlink).setHealthValue(10));
-        damage3=adder.add(new HealthBarWidget(manager,this::shouldBlink).setHealthValue(5));
-        healthBarsWidget.add(healthBars);
-        healthBarsWidget.add(new FhbArrowButton(16,15,RIGHT_ARROW_TEXTURES, this::nextRendering, Text.empty()),Positioner::alignVerticalCenter);
+        DirectionalLayoutWidget bodyLayout = new DirectionalLayoutWidget(0, 0, DirectionalLayoutWidget.Orientation.VERTICAL).spacing(8);
+        DirectionalLayoutWidget healthBarsWidget = new DirectionalLayoutWidget(0,0, DirectionalLayoutWidget.Orientation.HORIZONTAL).spacing(8);
+        healthBarsWidget.addChild(new FhbArrowButton(16,15,LEFT_ARROW_TEXTURES, this::previousRendering, Component.empty()),LayoutSettings::alignVerticallyMiddle);
+        healthBars = new GridLayout(0,0);
+        healthBars.columnSpacing(8);
+        healthBars.rowSpacing(8);
+        GridLayout.RowHelper adder = healthBars.createRowHelper(3);
+        adder.addChild(new HealthBarWidget(manager,() -> false).setHealthValue(20));
+        adder.addChild(new HealthBarWidget(manager,() -> false).setHealthValue(10));
+        adder.addChild(new HealthBarWidget(manager,() -> false).setHealthValue(0));
+        damage1 =adder.addChild(new HealthBarWidget(manager,this::shouldBlink).setHealthValue(20));
+        damage2=adder.addChild(new HealthBarWidget(manager,this::shouldBlink).setHealthValue(10));
+        damage3=adder.addChild(new HealthBarWidget(manager,this::shouldBlink).setHealthValue(5));
+        healthBarsWidget.addChild(healthBars);
+        healthBarsWidget.addChild(new FhbArrowButton(16,15,RIGHT_ARROW_TEXTURES, this::nextRendering, Component.empty()),LayoutSettings::alignVerticallyMiddle);
 
-        bodyLayout.add(healthBarsWidget,Positioner::alignHorizontalCenter);
-        bodyLayout.add(healthBarName,Positioner::alignHorizontalCenter);
+        bodyLayout.addChild(healthBarsWidget, LayoutSettings::alignHorizontallyCenter);
+        bodyLayout.addChild(healthBarName,LayoutSettings::alignHorizontallyCenter);
         FhbScrollWidget optionsGrid = createRenderingOptionsGrid();
         scrollWidget = optionsGrid;
-        bodyLayout.add(optionsGrid);
+        bodyLayout.addChild(optionsGrid);
 
 
         //? <1.20.2 {
-        /*layout.addBody(bodyLayout,Positioner.create().alignHorizontalCenter());
+        /*layout.addToContents(bodyLayout,LayoutSettings.defaults().alignHorizontallyCenter());
         *///?} else {
-        layout.addBody(bodyLayout,Positioner::alignHorizontalCenter);
+        layout.addToContents(bodyLayout,LayoutSettings::alignHorizontallyCenter);
         //?}
 
-        layout.addFooter(ButtonWidget.builder(ScreenTexts.DONE, button -> close()).build());
-        healthBars.forEachElement(this::add);
-        layout.forEachChild(this::add);
+        layout.addToFooter(Button.builder(CommonComponents.GUI_DONE, button -> onClose()).build());
+        healthBars.visitChildren(this::add);
+        layout.visitWidgets(this::add);
         add(optionsGrid);
         updateRendering();
         //? >=1.21.6
@@ -133,10 +140,10 @@ public class FancyHealthBarOptionsScreen extends Screen {
 
 
     private FhbScrollWidget createRenderingOptionsGrid() {
-        GridWidget grid = new GridWidget();
-        grid.setColumnSpacing(4);
-        grid.setRowSpacing(2);
-        GridWidget.Adder adder = grid.createAdder(2);
+        GridLayout grid = new GridLayout();
+        grid.columnSpacing(4);
+        grid.rowSpacing(2);
+        GridLayout.RowHelper adder = grid.createRowHelper(2);
         this.adder = adder;
         options.getRenderingOptions().fillOptions(adder);
 
@@ -149,7 +156,7 @@ public class FancyHealthBarOptionsScreen extends Screen {
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        for(Element element : this.children()) {
+        for(GuiEventListener element : this.children()) {
             if (element.mouseClicked(mouseX, mouseY, button)) {
                 this.setFocused(element);
                 if (button == 0||button==1) {
@@ -165,13 +172,13 @@ public class FancyHealthBarOptionsScreen extends Screen {
     //?} else {
 
     /*@Override
-    public boolean mouseDragged(Click click, double offsetX, double offsetY) {
+    public boolean mouseDragged(MouseButtonEvent click, double offsetX, double offsetY) {
         return this.getFocused() != null && this.isDragging() && (click.button()==0||click.button()==1) && this.getFocused().mouseDragged(click,offsetX,offsetY);
     }
 
     @Override
-    public boolean mouseClicked(Click click, boolean doubled) {
-        for(Element element : this.children())
+    public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
+        for(GuiEventListener element : this.children())
             if (element.mouseClicked(click,doubled)) {
                 this.setFocused(element);
                 if (click.button()==0||click.button()==1) this.setDragging(true);
@@ -184,7 +191,7 @@ public class FancyHealthBarOptionsScreen extends Screen {
 
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         //? <1.20.2
         /*this.renderBackground(context);*/
         super.render(context, mouseX, mouseY, delta);
@@ -192,23 +199,23 @@ public class FancyHealthBarOptionsScreen extends Screen {
         controller.draw(context);
     }
 
-    private void nextRendering(ButtonWidget widget) {
+    private void nextRendering(Button widget) {
         int i = typeSet.indexOf(options.getSelectedRendering())+1;
         if(i>=typeSet.size())i=0;
         options.selectRendering(typeSet.get(i));
         updateRendering();
     }
 
-    private void previousRendering(ButtonWidget widget) {
+    private void previousRendering(Button widget) {
         int i = typeSet.indexOf(options.getSelectedRendering())-1;
         if(i<0)i=typeSet.size()-1;
         options.selectRendering(typeSet.get(i));
         updateRendering();
     }
 
-    private void add(Widget widget){
-        if(widget instanceof ClickableWidget cl)addSelectableChild(cl);
-        if(widget instanceof Drawable d)addDrawable(d);
+    private void add(LayoutElement widget){
+        if(widget instanceof AbstractWidget cl)addWidget(cl);
+        if(widget instanceof Renderable d)addRenderableOnly(d);
     }
 
     @Override
@@ -225,7 +232,7 @@ public class FancyHealthBarOptionsScreen extends Screen {
 
     @Override
     public void tick() {
-        healthBars.forEachElement(widget -> ((HealthBarWidget) widget).tick());
+        healthBars.visitChildren(widget -> ((HealthBarWidget) widget).tick());
         manager.tick();
         controller.tick();
         this.ticks++;
@@ -243,18 +250,18 @@ public class FancyHealthBarOptionsScreen extends Screen {
     }
 
     private void updateRendering() {
-        GridWidget gridWidget = adder.getGridWidget();
-        gridWidget.forEachChild(this::remove);
-        ((Clearable) (Object)adder).clear();
+        GridLayout gridWidget = adder.getGrid();
+        gridWidget.visitWidgets(this::removeWidget);
+        ((ClearMethod) (Object)adder).clear();
         options.getRenderingOptions().fillOptions(adder);
-        layout.refreshPositions();
+        layout.arrangeElements();
         manager.reset();
         controller.reset();
-        healthBars.forEachElement(widget ->
-            ((HealthBarWidget) widget).setRendering(this.options.getRenderingOptions().createRendering().initialize(manager,controller,client))
+        healthBars.visitChildren(widget ->
+            ((HealthBarWidget) widget).setRendering(this.options.getRenderingOptions().createRendering().initialize(manager,controller,minecraft))
         );
-        ((InGameHudRenderingAccessor) MinecraftClient.getInstance().inGameHud).fhb$setRendering(options.getRenderingOptions().createRendering());
-        healthBarName.setMessage(Text.translatable("options.fancyhealthbar.rendering."+this.options.getSelectedRendering()));
+        ((InGameHudRenderingAccessor) Minecraft.getInstance().gui).fhb$setRendering(options.getRenderingOptions().createRendering());
+        healthBarName.setMessage(Component.translatable("options.fancyhealthbar.rendering."+this.options.getSelectedRendering()));
         scrollWidget.setScrollY(0);
     }
 

@@ -1,11 +1,9 @@
 package dev.efekos.fancyhealthbar.client.animation;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-//? >=1.21.6
-/*import net.minecraft.client.gl.RenderPipelines;*/
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.util.Mth;
 
 public class AnimationTrack {
 
@@ -21,11 +19,11 @@ public class AnimationTrack {
         this.animation = animation;
     }
 
-    public void draw(DrawContext context) {
-        if ((!isInvisibleWhenNotPlaying() || !isPaused()) && MathHelper.clamp(frame, 0, animation.maxFrames()-1) == frame) {
+    public void draw(GuiGraphics context) {
+        if ((!isInvisibleWhenNotPlaying() || !isPaused()) && Mth.clamp(frame, 0, animation.maxFrames()-1) == frame) {
             /*? <1.21.5 {*/
             //? <1.21.2
-            RenderSystem.setShader(GameRenderer::getRenderTypeTranslucentProgram);
+            RenderSystem.setShader(GameRenderer::getRendertypeTranslucentShader);
             RenderSystem.enableBlend();
             RenderSystem.enableCull();
             /*?}*/
@@ -82,7 +80,7 @@ public class AnimationTrack {
     }
 
     public void setFrame(int frame) {
-        this.frame = MathHelper.clamp(frame, 0, animation.maxFrames() + 1);
+        this.frame = Mth.clamp(frame, 0, animation.maxFrames() + 1);
     }
 
     public boolean isPlaying() {

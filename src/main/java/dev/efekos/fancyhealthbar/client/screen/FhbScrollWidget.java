@@ -1,25 +1,24 @@
 package dev.efekos.fancyhealthbar.client.screen;
 
 //? >=1.21.9
-/*import net.minecraft.client.gui.Click;*/
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.gui.widget.LayoutWidget;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.util.math.ColorHelper;
-import net.minecraft.util.math.MathHelper;
+/*import net.minecraft.client.input.MouseButtonEvent;*/
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.layouts.Layout;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.util.Mth;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
-public class FhbScrollWidget extends ClickableWidget implements Drawable {
+public class FhbScrollWidget extends AbstractWidget implements Renderable {
 
-    private final LayoutWidget wrapped;
+    private final Layout wrapped;
     private boolean focused = false;
-    private Element focusedElement;
+    private GuiEventListener focusedElement;
     private int scrollY;
 
     @Override
@@ -37,26 +36,27 @@ public class FhbScrollWidget extends ClickableWidget implements Drawable {
     }
 
     @Override
-    protected void appendClickableNarrations(NarrationMessageBuilder builder) {
+    protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
+
     }
 
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
         if(!overlap())return false;
-        scrollY=MathHelper.clamp(scrollY-(int)(verticalAmount*8),0,(wrapped.getHeight()-height));
+        scrollY= Mth.clamp(scrollY-(int)(verticalAmount*8),0,(wrapped.getHeight()-height));
         refreshScroll();
         return true;
     }
 
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
         if(!overlap())return false;
-        scrollY=MathHelper.clamp(scrollY-(int)(amount*8),0,(wrapped.getHeight()-height));
+        scrollY= Mth.clamp(scrollY-(int)(amount*8),0,(wrapped.getHeight()-height));
         refreshScroll();
         return true;
     }
 
     @Override
     public void mouseMoved(double mouseX, double mouseY) {
-        wrapped.forEachChild(clickableWidget -> {
+        wrapped.visitWidgets(clickableWidget -> {
             if(clickableWidget.isMouseOver(mouseX, mouseY)) clickableWidget.mouseMoved(mouseX, mouseY);
         });
     }
@@ -66,7 +66,7 @@ public class FhbScrollWidget extends ClickableWidget implements Drawable {
         AtomicBoolean b = new AtomicBoolean(false);
 
         AtomicBoolean broke = new AtomicBoolean(false);
-        wrapped.forEachChild(clickableWidget -> {
+        wrapped.visitWidgets(clickableWidget -> {
             if(broke.get())return;
             if(clickableWidget.isMouseOver(mouseX, mouseY)){
                 b.set(clickableWidget.mouseClicked(mouseX, mouseY, button));
@@ -95,11 +95,11 @@ public class FhbScrollWidget extends ClickableWidget implements Drawable {
 
 
     /*@Override
-    public boolean mouseClicked(Click click, boolean doubled) {
+    public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
         AtomicBoolean b = new AtomicBoolean(false);
 
         AtomicBoolean broke = new AtomicBoolean(false);
-        wrapped.forEachChild(clickableWidget -> {
+        wrapped.visitWidgets(clickableWidget -> {
             if(broke.get())return;
             if(clickableWidget.isMouseOver(click.x(),click.y())){
                 b.set(clickableWidget.mouseClicked(click,doubled));
@@ -112,7 +112,7 @@ public class FhbScrollWidget extends ClickableWidget implements Drawable {
     }
 
     @Override
-    public boolean mouseReleased(Click click) {
+    public boolean mouseReleased(MouseButtonEvent click) {
         if(focusedElement!=null){
             focusedElement.mouseReleased(click);
             focusedElement.setFocused(false);
@@ -122,7 +122,7 @@ public class FhbScrollWidget extends ClickableWidget implements Drawable {
     }
 
     @Override
-    public boolean mouseDragged(Click click, double offsetX, double offsetY) {
+    public boolean mouseDragged(MouseButtonEvent click, double offsetX, double offsetY) {
         if(focusedElement!=null)return focusedElement.mouseDragged(click,offsetX,offsetY);
         return false;
     }
@@ -132,8 +132,8 @@ public class FhbScrollWidget extends ClickableWidget implements Drawable {
         return wrapped.getHeight()>height;
     }
 
-    public FhbScrollWidget(int width, int height, LayoutWidget wrapped) {
-        super(0,0, width, height, ScreenTexts.EMPTY);
+    public FhbScrollWidget(int width, int height, Layout wrapped) {
+        super(0,0, width, height, CommonComponents.EMPTY);
         this.wrapped = wrapped;
     }
 
@@ -141,34 +141,34 @@ public class FhbScrollWidget extends ClickableWidget implements Drawable {
     public void setX(int x) {
         super.setX(x);
         wrapped.setX(getWidth()/2- wrapped.getWidth()/2);
-        wrapped.refreshPositions();
+        wrapped.arrangeElements();
     }
 
     @Override
     public void setY(int y) {
         super.setY(y);
         wrapped.setY(y-scrollY);
-        wrapped.refreshPositions();
+        wrapped.arrangeElements();
     }
 
     private void refreshScroll(){
         wrapped.setY(getY()-scrollY);
-        wrapped.refreshPositions();
+        wrapped.arrangeElements();
     }
 
     @Override
-    public void /*? <1.20.3 {*//*renderButton*//*?} else {*/renderWidget/*?}*/(DrawContext context, int mouseX, int mouseY, float delta) {
-        context.fill(getX(),getY()-5,getX()+getWidth(),getY()+getHeight()+5, ColorHelper/*? <1.21.2 {*/.Argb/*?}*/.getArgb(128,0,0,0));
+    public void renderWidget(GuiGraphics context, int mouseX, int mouseY, float delta) {
+        context.fill(getX(),getY()-5,getX()+getWidth(),getY()+getHeight()+5, 128 << 24);
 
         context.enableScissor(getX(),getY(),getX()+getWidth(),getY()+getHeight());
-        wrapped.forEachElement(widget -> {
-            if(widget instanceof Drawable d)d.render(context,mouseX,mouseY,delta);
+        wrapped.visitChildren(widget -> {
+            if(widget instanceof Renderable d)d.render(context,mouseX,mouseY,delta);
         });
         context.disableScissor();
     }
 
     @Override
-    public void forEachChild(Consumer<ClickableWidget> consumer) {
+    public void visitWidgets(Consumer<AbstractWidget> consumer) {
 
     }
 

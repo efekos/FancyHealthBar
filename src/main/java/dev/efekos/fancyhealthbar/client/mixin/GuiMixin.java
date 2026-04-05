@@ -7,38 +7,38 @@ import dev.efekos.fancyhealthbar.client.accessor.InGameHudRenderingAccessor;
 import dev.efekos.fancyhealthbar.client.animation.AnimationController;
 import dev.efekos.fancyhealthbar.client.entity.HudEntityManager;
 import dev.efekos.fancyhealthbar.client.rendering.HealthBarRendering;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.Gui;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.util.RandomSource;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(InGameHud.class)
-public abstract class InGameHudMixin implements InGameHudRenderingAccessor {
+@Mixin(Gui.class)
+public abstract class GuiMixin implements InGameHudRenderingAccessor {
 
     @Shadow
     @Final
-    private Random random;
+    private RandomSource random;
 
     @Shadow
     @Final
-    private MinecraftClient client;
+    private Minecraft minecraft;
     private int ticks;
     @Unique
     private final HudEntityManager manager = new HudEntityManager();
     @Unique
     private final AnimationController controller = new AnimationController();
     @Unique
-    private HealthBarRendering rendering = ((FhbOptionsAccessor) MinecraftClient.getInstance()).fhb$getOptions().getRenderingOptions().createRendering().initialize(manager,controller,MinecraftClient.getInstance());
+    private HealthBarRendering rendering = ((FhbOptionsAccessor) Minecraft.getInstance()).fhb$getOptions().getRenderingOptions().createRendering().initialize(manager,controller, Minecraft.getInstance());
 
     @Override
     public void fhb$react() {
-        rendering.react(manager,controller,client);
+        rendering.react(manager,controller, minecraft);
     }
 
     @Override
@@ -51,7 +51,7 @@ public abstract class InGameHudMixin implements InGameHudRenderingAccessor {
         this.rendering = rendering;
         manager.reset();
         controller.reset();
-        rendering.initialize(manager,controller,client);
+        rendering.initialize(manager,controller, minecraft);
     }
 
     @Unique
@@ -63,9 +63,9 @@ public abstract class InGameHudMixin implements InGameHudRenderingAccessor {
         controller.tick();
     }
 
-    @WrapMethod(method = "renderHealthBar")
-    public void renderHealthBar(DrawContext context, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int a, int b, int absorption, boolean blinking, Operation<Void> original) {
-        int health = (int) Math.ceil(MinecraftClient.getInstance().player.getHealth());
+    @WrapMethod(method = "renderHearts")
+    public void renderHealthBar(GuiGraphics context, Player player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int a, int b, int absorption, boolean blinking, Operation<Void> original) {
+        int health = (int) Math.ceil(Minecraft.getInstance().player.getHealth());
         rendering.draw(random,context, player, x, y, lines, regeneratingHeartIndex, maxHealth, a, health, absorption, blinking);
         manager.render(context);
         controller.draw(context);

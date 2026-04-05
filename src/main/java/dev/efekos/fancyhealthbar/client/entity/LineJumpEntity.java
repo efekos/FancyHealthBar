@@ -2,8 +2,7 @@ package dev.efekos.fancyhealthbar.client.entity;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.efekos.fancyhealthbar.client.compat.Texture;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
 import org.joml.Vector2d;
 import org.joml.Vector2i;
 
@@ -26,7 +25,7 @@ public class LineJumpEntity extends HudEntity {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(GuiGraphics context) {
         texture.draw(context,(int)x,(int)y,width,9,1-(lifetime/(float)getMaxLifetime()));
     }
 

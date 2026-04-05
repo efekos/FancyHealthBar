@@ -4,29 +4,26 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import dev.efekos.fancyhealthbar.client.FancyHealthBarClient;
 import dev.efekos.fancyhealthbar.client.compat.Texture;
 import dev.efekos.fancyhealthbar.client.compat.TextureNineSlice;
-import net.minecraft.client.MinecraftClient;
-//? >=1.21.6
-/*import net.minecraft.client.gl.RenderPipelines;*/
-//? >=1.21.9
-/*import net.minecraft.client.gui.Click;*/
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.navigation.GuiNavigationType;
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.screen.narration.NarrationPart;
-import net.minecraft.client.gui.widget.ClickableWidget;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.InputType;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.narration.NarratedElementType;
+import net.minecraft.client.gui.components.AbstractWidget;
 //? <1.21.9
-import net.minecraft.client.input.KeyCodes;
-//? >=1.21.9
-/*import net.minecraft.client.input.KeyInput;*/
-import net.minecraft.client.sound.SoundManager;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.navigation.CommonInputs;
+//? >=1.21.9 {
+/*import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.KeyEvent;
+*///?}
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 
 import java.text.NumberFormat;
 
-public abstract class RangedSliderWidget extends ClickableWidget {
+public abstract class RangedSliderWidget extends AbstractWidget {
     private static final Texture TEXTURE = Texture.vanilla("widget/slider","textures/gui/widgets.png",0,46,200,20,new TextureNineSlice(3,200,20));
     private static final Texture HIGHLIGHTED_TEXTURE = Texture.vanilla("widget/slider_highlighted","textures/gui/widgets.png",0,46,200,20,new TextureNineSlice(3,200,20));;
     private static final Texture HANDLE_TEXTURE = Texture.vanilla("widget/slider_handle","textures/gui/widgets.png",0,66,200,20,new TextureNineSlice(3,200,20));
@@ -38,11 +35,11 @@ public abstract class RangedSliderWidget extends ClickableWidget {
     protected Range value;
     private boolean sliderFocused;
 
-    public static Text rangeText(double min, double max) {
-        return min==max?Text.literal(NumberFormat.getInstance().format(min)):Text.translatable("options.range",NumberFormat.getInstance().format(min),NumberFormat.getInstance().format(max));
+    public static MutableComponent rangeText(double min, double max) {
+        return min==max? Component.literal(NumberFormat.getInstance().format(min)): Component.translatable("options.range",NumberFormat.getInstance().format(min),NumberFormat.getInstance().format(max));
     }
 
-    public RangedSliderWidget(int x, int y, int width, int height, Text text, Range value) {
+    public RangedSliderWidget(int x, int y, int width, int height, MutableComponent text, Range value) {
         super(x, y, width, height, text);
         this.value = value;
     }
@@ -53,39 +50,39 @@ public abstract class RangedSliderWidget extends ClickableWidget {
 
 
     private Texture getHandleStartTexture() {
-        return this.hovered || this.sliderFocused ? HANDLE_START_HIGHLIGHTED_TEXTURE : HANDLE_START_TEXTURE;
+        return this.isHovered || this.sliderFocused ? HANDLE_START_HIGHLIGHTED_TEXTURE : HANDLE_START_TEXTURE;
     }
 
     private Texture getHandleEndTexture() {
-        return this.hovered || this.sliderFocused ? HANDLE_END_HIGHLIGHTED_TEXTURE : HANDLE_END_TEXTURE;
+        return this.isHovered || this.sliderFocused ? HANDLE_END_HIGHLIGHTED_TEXTURE : HANDLE_END_TEXTURE;
     }
 
     private Texture getHandleTexture() {
-        return this.hovered || this.sliderFocused ? HANDLE_HIGHLIGHTED_TEXTURE : HANDLE_TEXTURE;
+        return this.isHovered || this.sliderFocused ? HANDLE_HIGHLIGHTED_TEXTURE : HANDLE_TEXTURE;
     }
 
-    protected MutableText getNarrationMessage() {
-        return Text.translatable("gui.narrate.slider", this.getMessage());
+    protected MutableComponent getNarrationMessage() {
+        return Component.translatable("gui.narrate.slider", this.getMessage());
     }
 
-    public void appendClickableNarrations(NarrationMessageBuilder builder) {
-        builder.put(NarrationPart.TITLE, this.getNarrationMessage());
+    public void updateWidgetNarration(NarrationElementOutput builder) {
+        builder.add(NarratedElementType.TITLE, this.getNarrationMessage());
         if (this.active) {
             if (this.isFocused()) {
-                builder.put(NarrationPart.USAGE, Text.translatable("narration.slider.usage.focused"));
+                builder.add(NarratedElementType.USAGE, Component.translatable("narration.slider.usage.focused"));
             } else {
-                builder.put(NarrationPart.USAGE, Text.translatable("narration.slider.usage.hovered"));
+                builder.add(NarratedElementType.USAGE, Component.translatable("narration.slider.usage.hovered"));
             }
         }
 
     }
 
-    public void /*? <1.20.3 {*//*renderButton*//*?} else {*/renderWidget/*?}*/(DrawContext context, int mouseX, int mouseY, float delta) {
-        MinecraftClient minecraftClient = MinecraftClient.getInstance();
+    public void renderWidget(GuiGraphics context, int mouseX, int mouseY, float delta) {
+        Minecraft minecraftClient = Minecraft.getInstance();
         //? <1.21.5 {
 
         //? <1.21.2
-        context.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
+        context.setColor(1.0F, 1.0F, 1.0F, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
@@ -98,14 +95,14 @@ public abstract class RangedSliderWidget extends ClickableWidget {
             getHandleEndTexture().draw(context, this.getX() + (int)(this.value.max * (double)(this.width - 5)), this.getY(), 5, this.getHeight());
         }
         //? <1.21.2
-        context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        context.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         int i = this.active ? 16777215 : 10526880;
 
         //? >=1.21.11 {
-        /*this.drawTextWithMargin(context.getHoverListener(this, DrawContext.HoverType.NONE), this.getMessage(), 2);
+        /*this.renderScrollingStringOverContents(context.textRendererForWidget(this, GuiGraphics.HoveredTextEffects.NONE), this.getMessage(), 2);
         *///?} else {
         
-        this.drawScrollableText(context, minecraftClient.textRenderer, 2, i | MathHelper.ceil(this.alpha * 255.0F) << 24);
+        this.renderScrollingString(context, minecraftClient.font, 2, i | Mth.ceil(this.alpha * 255.0F) << 24);
         //?}
     }
 
@@ -114,8 +111,8 @@ public abstract class RangedSliderWidget extends ClickableWidget {
         if (!focused) {
             this.sliderFocused = false;
         } else {
-            GuiNavigationType guiNavigationType = MinecraftClient.getInstance().getNavigationType();
-            if (guiNavigationType == GuiNavigationType.MOUSE || guiNavigationType == GuiNavigationType.KEYBOARD_TAB) {
+            InputType guiNavigationType = Minecraft.getInstance().getLastInputType();
+            if (guiNavigationType == InputType.MOUSE || guiNavigationType == InputType.KEYBOARD_TAB) {
                 this.sliderFocused = true;
             }
 
@@ -124,8 +121,8 @@ public abstract class RangedSliderWidget extends ClickableWidget {
 
 
     //? >=1.21.9 {
-    /*public boolean keyPressed(KeyInput input) {
-        if (input.isEnterOrSpace()) {
+    /*public boolean keyPressed(KeyEvent input) {
+        if (input.isSelection()) {
             this.sliderFocused = !this.sliderFocused;
             return true;
         } else {
@@ -146,7 +143,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
     *///?} else {
 
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (KeyCodes.isToggle(keyCode)) {
+        if (CommonInputs.selected(keyCode)) {
             this.sliderFocused = !this.sliderFocused;
             return true;
         } else {
@@ -174,7 +171,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
 
     private void setMaxValue(double value) {
         double d = this.value.max;
-        this.value.setMax(MathHelper.clamp(value, this.value.min, 1.0F));
+        this.value.setMax(Mth.clamp(value, this.value.min, 1.0F));
         if (d != this.value.max) {
             this.applyValue();
         }
@@ -185,7 +182,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
 
     private void setValue(double value) {
         double d = this.value.min;
-        this.value.set(MathHelper.clamp(value, 0.0F, 1.0F));
+        this.value.set(Mth.clamp(value, 0.0F, 1.0F));
         if (d != this.value.min) {
             this.applyValue();
         }
@@ -215,13 +212,13 @@ public abstract class RangedSliderWidget extends ClickableWidget {
     }
     //?} else {
 
-    /*protected void onRightDrag(Click click, double offsetX, double offsetY) {
+    /*protected void onRightDrag(MouseButtonEvent click, double offsetX, double offsetY) {
         setMaxValueFromMouse(click.x());
         super.onDrag(click, offsetX, offsetY);
     }
 
     @Override
-    protected void onDrag(Click click, double offsetX, double offsetY) {
+    protected void onDrag(MouseButtonEvent click, double offsetX, double offsetY) {
         setValueFromMouse(click.x());
         super.onDrag(click, offsetX, offsetY);
     }
@@ -231,7 +228,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
 
 
     public void onRelease(double mouseX, double mouseY) {
-        super.playDownSound(MinecraftClient.getInstance().getSoundManager());
+        super.playDownSound(Minecraft.getInstance().getSoundManager());
     }
 
     public void playDownSound(SoundManager soundManager) {
@@ -246,7 +243,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
 
         @Override
         public Double random() {
-            return MathHelper.clampedLerp(/*? >=1.21.11 {*//*Math.random(),*//*?}*/min, max /*? <1.21.11 {*/,Math.random()/*?}*/);
+            return Mth.clampedLerp(/*? >=1.21.11 {*//*Math.random(),*//*?}*/min, max /*? <1.21.11 {*/,Math.random()/*?}*/);
         }
 
         @Override
@@ -287,7 +284,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
     }
 
     //? >=1.21.9 {
-    /*public boolean mouseClicked(Click click, boolean doubled) {
+    /*public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
         return mouseClicked(click.x(),click.y(),click.button());
     }
     *///?}
@@ -301,7 +298,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
                 boolean bl = this.clicked(mouseX, mouseY);
                 //?}
                 if (bl) {
-                    this.playDownSound(MinecraftClient.getInstance().getSoundManager());
+                    this.playDownSound(Minecraft.getInstance().getSoundManager());
                     if(button==0) this.onClick(mouseX, mouseY);
                     else this.onRightClick(mouseX,mouseY);
                     return true;
@@ -324,7 +321,7 @@ public abstract class RangedSliderWidget extends ClickableWidget {
         }
     }
     //?} else {
-    /*public boolean mouseDragged(Click click, double offsetX, double offsetY) {
+    /*public boolean mouseDragged(MouseButtonEvent click, double offsetX, double offsetY) {
         if(click.button()==1||click.button()==0){
             if(click.button()==0)onDrag(click,offsetX,offsetY);
             else onRightDrag(click,offsetX,offsetY);
