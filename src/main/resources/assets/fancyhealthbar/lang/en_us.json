@@ -41,5 +41,6 @@
   "options.fancyhealthbar.vanilla.fade_in": "Fade In Ticks",
   "options.fancyhealthbar.generic.offset_x": "X Offset",
   "options.fancyhealthbar.generic.offset_y": "Y Offset",
-  "options.fancyhealthbar.line.style.thin": "Thin"
+  "options.fancyhealthbar.line.style.thin": "Thin",
+  "options.fancyhealthbar.line.style.line": "Line"
 }

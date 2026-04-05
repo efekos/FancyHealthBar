@@ -60,12 +60,7 @@ public class LineHealthBarRendering implements HealthBarRendering {
         updatePositions(x,y);
         if(options.yellowDelta()&&health>0&&(options.deltaBehaviour()!= LineRenderingOptions.DeltaBehaviour.BLINK||blinking))
             drawTxtr(context,lineStyle.delta(), x, y,this.healthDeltaW, lineStyle);
-        if(lineStyle.scissor()){
-            context.enableScissor(x,y,x+healthW,y+9);
-            lineStyle.full().draw(context,x,y,90,9);
-            context.disableScissor();
-        } else
-            lineStyle.full().draw(context,x,y,healthW,9);
+        drawTxtr(context,lineStyle.full(),x,y,healthW,lineStyle);
 
         if(options.blinking()&&blinking)
             lineStyle.blink().draw(context,x,y,90,9);
@@ -174,7 +169,7 @@ public class LineHealthBarRendering implements HealthBarRendering {
 
     private void drawTxtr(GuiGraphics context, Texture texture, int x, int y, int width, LineRenderingOptions.LineStyle lineStyle) {
         if(lineStyle.scissor()){
-            context.enableScissor(x, y, x +width, y +9);
+            context.enableScissor(x+options.offset().x, y+options.offset().y, x+options.offset().x+width, y+options.offset().y +9);
             texture.draw(context,x,y,90,9);
             context.disableScissor();
         } else

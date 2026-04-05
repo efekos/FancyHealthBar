@@ -98,7 +98,7 @@ public class FancyHealthBarOptionsScreen extends Screen {
         //? >=1.21
         layout.addTitleHeader(TITLE_TEXT,font);
         //? <1.21
-        /*layout.addToHeader(new StringWidget(TITLE_TEXT,font));*/
+        //layout.addToHeader(new StringWidget(TITLE_TEXT,font));
 
         DirectionalLayoutWidget bodyLayout = new DirectionalLayoutWidget(0, 0, DirectionalLayoutWidget.Orientation.VERTICAL).spacing(8);
         DirectionalLayoutWidget healthBarsWidget = new DirectionalLayoutWidget(0,0, DirectionalLayoutWidget.Orientation.HORIZONTAL).spacing(8);
@@ -193,7 +193,7 @@ public class FancyHealthBarOptionsScreen extends Screen {
     @Override
     public void /*?>=26.1{*//*extractRenderState*//*?}else{*/render/*?}*/(/*?>=26.1{*//*GuiGraphicsExtractor*//*?}else{*/GuiGraphics/*?}*/ context, int mouseX, int mouseY, float delta) {
         //? <1.20.2
-        /*this.renderBackground(context);*/
+        //this.renderBackground(context);
         super./*?>=26.1{*//*extractRenderState*//*?}else{*/render/*?}*/(context, mouseX, mouseY, delta);
         manager.render(context);
         controller.draw(context);
